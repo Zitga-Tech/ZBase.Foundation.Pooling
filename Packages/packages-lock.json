@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.laicasaane.unity.pooling": {
+      "version": "file:Unity.Pooling",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.2d.animation": {
       "version": "7.0.5",
       "depth": 1,
