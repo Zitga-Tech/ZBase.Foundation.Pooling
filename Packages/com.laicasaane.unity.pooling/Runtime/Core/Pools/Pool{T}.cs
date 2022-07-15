@@ -4,7 +4,8 @@ using Collections.Pooled.Generic;
 
 namespace Unity.Pooling
 {
-    public class Pool<T> : IPool<T>, IDisposable where T : class
+    public class Pool<T> : IPool<T>, IDisposable
+        where T : class
     {
         public static readonly Pool<T> Shared = new Pool<T>();
 

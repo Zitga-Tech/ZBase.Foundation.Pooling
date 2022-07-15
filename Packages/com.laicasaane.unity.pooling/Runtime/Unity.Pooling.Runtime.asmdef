@@ -4,6 +4,7 @@
     "references": [
         "Collections.Pooled",
         "Collections.Pooled.Generic",
+        "Collections.Pooled.Generic.Internals",
         "UniTask"
     ],
     "includePlatforms": [],

@@ -5,33 +5,36 @@ using Cysharp.Threading.Tasks;
 
 namespace Unity.Pooling
 {
-    public class PoolAsync<T> : IAsyncPool<T>, IDisposable
+    public class AsyncPool<T> : IAsyncPool<T>, IDisposable
         where T : class
     {
-        public static readonly PoolAsync<T> Shared = new PoolAsync<T>();
+        public static readonly AsyncPool<T> Shared = new AsyncPool<T>();
 
         private readonly UniTaskFunc<T> _instantiate;
         private readonly Queue<T> _queue;
 
-        public PoolAsync()
+        public AsyncPool()
             : this(Instantiator.Instantiate, ArrayPool<T>.Shared)
         { }
 
-        public PoolAsync(UniTaskFunc<T> instantiate)
+        public AsyncPool(UniTaskFunc<T> instantiate)
             : this(instantiate, ArrayPool<T>.Shared)
         { }
 
-        public PoolAsync(ArrayPool<T> pool)
+        public AsyncPool(ArrayPool<T> pool)
             : this(Instantiator.Instantiate, pool)
         { }
 
-        public PoolAsync(UniTaskFunc<T> instantiate, ArrayPool<T> pool)
+        public AsyncPool(UniTaskFunc<T> instantiate, ArrayPool<T> pool)
         {
             _instantiate = instantiate ?? Instantiator.Instantiate;
             _queue = new Queue<T>(pool ?? ArrayPool<T>.Shared);
         }
 
         public int Count() => _queue.Count;
+
+        public AsyncDisposableContext<T> Poolable()
+            => new AsyncDisposableContext<T>(this);
 
         public void Dispose()
         {

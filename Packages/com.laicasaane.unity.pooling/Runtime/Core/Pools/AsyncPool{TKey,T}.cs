@@ -2,40 +2,41 @@
 using System.Buffers;
 using Collections.Pooled;
 using Collections.Pooled.Generic;
+using Collections.Pooled.Generic.Internals;
 using Cysharp.Threading.Tasks;
 
 namespace Unity.Pooling
 {
-    public class PoolAsync<TKey, T> : IAsyncPool<TKey, T>
+    public class AsyncPool<TKey, T> : IAsyncPool<TKey, T>, IDisposable
         where T : class, new()
     {
-        public static readonly PoolAsync<TKey, T> Shared = new PoolAsync<TKey, T>();
+        public static readonly AsyncPool<TKey, T> Shared = new AsyncPool<TKey, T>();
 
         private readonly UniTaskFunc<T> _instantiate;
         private readonly ArrayPool<T> _pool;
         private readonly Dictionary<TKey, Queue<T>> _queueMap;
 
-        public PoolAsync()
+        public AsyncPool()
             : this(Instantiator.Instantiate, ArrayPool<T>.Shared)
         { }
 
-        public PoolAsync(ArrayPool<T> pool)
+        public AsyncPool(ArrayPool<T> pool)
             : this(Instantiator.Instantiate, pool)
         { }
 
-        public PoolAsync(UniTaskFunc<T> instantiate)
+        public AsyncPool(UniTaskFunc<T> instantiate)
             : this(instantiate, ArrayPool<T>.Shared)
         { }
 
-        public PoolAsync(UniTaskFunc<T> instantiate, ArrayPool<T> pool)
+        public AsyncPool(UniTaskFunc<T> instantiate, ArrayPool<T> pool)
             : this(instantiate, pool, ArrayPool<int>.Shared, ArrayPool<Entry<TKey, Queue<T>>>.Shared)
         { }
 
-        public PoolAsync(ArrayPool<T> pool, ArrayPool<int> poolBucket, ArrayPool<Entry<TKey, Queue<T>>> poolEntry)
+        public AsyncPool(ArrayPool<T> pool, ArrayPool<int> poolBucket, ArrayPool<Entry<TKey, Queue<T>>> poolEntry)
             : this(Instantiator.Instantiate, pool, poolBucket, poolEntry)
         { }
 
-        public PoolAsync(UniTaskFunc<T> instantiate, ArrayPool<T> pool, ArrayPool<int> poolBucket, ArrayPool<Entry<TKey, Queue<T>>> poolEntry)
+        public AsyncPool(UniTaskFunc<T> instantiate, ArrayPool<T> pool, ArrayPool<int> poolBucket, ArrayPool<Entry<TKey, Queue<T>>> poolEntry)
         {
             _instantiate = instantiate ?? Instantiator.Instantiate;
             _pool = pool ?? ArrayPool<T>.Shared;
@@ -52,6 +53,21 @@ namespace Unity.Pooling
                 return queue.Count;
 
             return 0;
+        }
+
+        public AsyncDisposableContext<TKey, T> Poolable()
+            => new AsyncDisposableContext<TKey, T>(this);
+
+        public void Dispose()
+        {
+            var entries = CollectionInternals.GetRef(_queueMap).Entries;
+
+            for (int i = 0, len = entries.Length; i < len; i++)
+            {
+                entries[i].Value.Dispose();
+            }
+
+            _queueMap.Dispose();
         }
 
         public void ReleaseInstances(TKey key, int keep, Action<T> onReleased = null)
@@ -83,7 +99,10 @@ namespace Unity.Pooling
         public void Return(TKey key, T instance)
         {
             if (_queueMap.TryGetValue(key, out var queue) == false)
+            {
                 queue = new Queue<T>(_pool);
+                _queueMap[key] = queue;
+            }
 
             ReturnPreprocess(instance);
             queue.Enqueue(instance);

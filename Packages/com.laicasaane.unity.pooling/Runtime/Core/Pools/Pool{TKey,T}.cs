@@ -2,10 +2,11 @@
 using System.Buffers;
 using Collections.Pooled;
 using Collections.Pooled.Generic;
+using Collections.Pooled.Generic.Internals;
 
 namespace Unity.Pooling
 {
-    public class Pool<TKey, T> : IPool<TKey, T>
+    public class Pool<TKey, T> : IPool<TKey, T>, IDisposable
         where T : class, new()
     {
         public static readonly Pool<TKey, T> Shared = new Pool<TKey, T>();
@@ -53,6 +54,18 @@ namespace Unity.Pooling
             return 0;
         }
 
+        public void Dispose()
+        {
+            var entries = CollectionInternals.GetRef(_queueMap).Entries;
+
+            for (int i = 0, len = entries.Length; i < len; i++)
+            {
+                entries[i].Value.Dispose();
+            }
+
+            _queueMap.Dispose();
+        }
+
         public void ReleaseInstances(TKey key, int keep, Action<T> onReleased = null)
         {
             if (_queueMap.TryGetValue(key, out var queue))
@@ -82,7 +95,10 @@ namespace Unity.Pooling
         public void Return(TKey key, T instance)
         {
             if (_queueMap.TryGetValue(key, out var queue) == false)
+            {
                 queue = new Queue<T>(_pool);
+                _queueMap[key] = queue;
+            }
 
             ReturnPreprocess(instance);
             queue.Enqueue(instance);

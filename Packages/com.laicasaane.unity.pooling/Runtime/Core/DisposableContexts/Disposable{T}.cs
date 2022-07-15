@@ -3,14 +3,13 @@ using System.Runtime.CompilerServices;
 
 namespace Unity.Pooling
 {
-    public readonly struct Poolable<TPool, T> : IDisposable
-        where TPool : IReturnable<T>
+    public readonly struct Disposable<T> : IDisposable
         where T : class
     {
-        public readonly TPool Pool;
+        public readonly IReturnable<T> Pool;
         public readonly T Instance;
 
-        internal Poolable(TPool pool, T instance)
+        internal Disposable(IReturnable<T> pool, T instance)
         {
             Pool = pool;
             Instance = instance;
@@ -22,7 +21,7 @@ namespace Unity.Pooling
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator T(in Poolable<TPool, T> poolable)
+        public static implicit operator T(in Disposable<T> poolable)
             => poolable.Instance;
     }
 }
