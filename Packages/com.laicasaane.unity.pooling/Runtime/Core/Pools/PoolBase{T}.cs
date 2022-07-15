@@ -65,7 +65,18 @@ namespace Unity.Pooling
             _queue.Enqueue(instance);
         }
 
+        public void Return<TEnumerable>(TEnumerable instances)
+            where TEnumerable : System.Collections.Generic.IEnumerable<T>
+        {
+            foreach (var instance in instances)
+            {
+                Return(instance);
+            }
+        }
+
         protected virtual void ReturnPreprocess(T instance) { }
+
+        protected abstract Func<T> GetDefaultInstantiator();
 
         protected static class Instantiator
         {

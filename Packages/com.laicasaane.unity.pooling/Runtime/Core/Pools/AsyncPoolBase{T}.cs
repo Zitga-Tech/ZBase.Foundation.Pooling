@@ -70,6 +70,8 @@ namespace Unity.Pooling
 
         protected virtual void ReturnPreprocess(T instance) { }
 
+        protected abstract Func<T> GetDefaultInstantiator();
+
         protected static class Instantiator
         {
             private static readonly Type s_type = typeof(T);

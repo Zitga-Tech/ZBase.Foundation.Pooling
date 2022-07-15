@@ -9,7 +9,7 @@ namespace Collections.Pooled.Generic.Pooling
         public static readonly ListPool<T> Shared = new ListPool<T>();
 
         public ListPool()
-            : base(Instantiator.Instantiate, ArrayPool<List<T>>.Shared)
+            : base(Instantiate, ArrayPool<List<T>>.Shared)
         { }
 
         public ListPool(Func<List<T>> instantiate)
@@ -17,12 +17,15 @@ namespace Collections.Pooled.Generic.Pooling
         { }
 
         public ListPool(ArrayPool<List<T>> pool)
-            : base(Instantiator.Instantiate, pool)
+            : base(Instantiate, pool)
         { }
 
         public ListPool(Func<List<T>> instantiate, ArrayPool<List<T>> pool)
             : base(instantiate, pool)
         { }
+
+        private static List<T> Instantiate()
+            => new List<T>();
     }
 
     public sealed class QueuePool<T> : PoolBase<Queue<T>>
