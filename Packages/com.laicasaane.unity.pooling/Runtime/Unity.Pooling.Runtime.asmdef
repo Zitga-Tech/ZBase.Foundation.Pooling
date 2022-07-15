@@ -1,7 +1,11 @@
 {
     "name": "Unity.Pooling.Runtime",
     "rootNamespace": "Unity.Pooling",
-    "references": [],
+    "references": [
+        "Collections.Pooled",
+        "Collections.Pooled.Generic",
+        "UniTask"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
