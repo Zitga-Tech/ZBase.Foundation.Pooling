@@ -58,6 +58,9 @@ namespace Unity.Pooling
 
         public void Return(T instance)
         {
+            if (instance is null)
+                return;
+
             ReturnPreprocess(instance);
             _queue.Enqueue(instance);
         }

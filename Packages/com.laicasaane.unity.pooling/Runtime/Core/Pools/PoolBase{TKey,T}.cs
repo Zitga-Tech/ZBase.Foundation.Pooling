@@ -46,6 +46,9 @@ namespace Unity.Pooling
 
         public int Count(TKey key)
         {
+            if (key is null)
+                throw new ArgumentNullException(nameof(key));
+
             if (_queueMap.TryGetValue(key, out var queue))
                 return queue.Count;
 
@@ -66,6 +69,9 @@ namespace Unity.Pooling
 
         public void ReleaseInstances(TKey key, int keep, Action<T> onReleased = null)
         {
+            if (key is null)
+                throw new ArgumentNullException(nameof(key));
+
             if (_queueMap.TryGetValue(key, out var queue))
             {
                 var countRemove = queue.Count - keep;
@@ -81,6 +87,9 @@ namespace Unity.Pooling
 
         public T Rent(TKey key)
         {
+            if (key is null)
+                throw new ArgumentNullException(nameof(key));
+
             if (_queueMap.TryGetValue(key, out var queue))
             {
                 if (queue.Count > 0)
@@ -92,6 +101,12 @@ namespace Unity.Pooling
 
         public void Return(TKey key, T instance)
         {
+            if (key is null)
+                throw new ArgumentNullException(nameof(key));
+
+            if (instance is null)
+                return;
+
             if (_queueMap.TryGetValue(key, out var queue) == false)
             {
                 queue = new Queue<T>(_pool);
