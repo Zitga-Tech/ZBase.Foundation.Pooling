@@ -30,6 +30,7 @@ MonoBehaviour:
     m_Url: https://package.openupm.com
     m_Scopes:
     - com.cysharp.unitask
+    - com.faster-games.t4
     - com.laicasaane.collections.pooled
     - com.openupm
     - org.nuget.system.runtime.compilerservices.unsafe
