@@ -8,7 +8,7 @@ namespace Unity.Pooling
         public static readonly AsyncPool<T> Shared = new AsyncPool<T>();
 
         public AsyncPool()
-            : base(Instantiator.Instantiate, ArrayPool<T>.Shared)
+            : base(null, ArrayPool<T>.Shared)
         { }
 
         public AsyncPool(UniTaskFunc<T> instantiate)
@@ -16,7 +16,7 @@ namespace Unity.Pooling
         { }
 
         public AsyncPool(ArrayPool<T> pool)
-            : base(Instantiator.Instantiate, pool)
+            : base(null, pool)
         { }
 
         public AsyncPool(UniTaskFunc<T> instantiate, ArrayPool<T> pool)

@@ -11,11 +11,11 @@ namespace Unity.Pooling
         public static readonly Pool<TKey, T> Shared = new Pool<TKey, T>();
 
         public Pool()
-            : base(Instantiator.Instantiate, ArrayPool<T>.Shared)
+            : base(null, ArrayPool<T>.Shared)
         { }
 
         public Pool(ArrayPool<T> pool)
-            : base(Instantiator.Instantiate, pool)
+            : base(null, pool)
         { }
 
         public Pool(Func<T> instantiate)
@@ -27,7 +27,7 @@ namespace Unity.Pooling
         { }
 
         public Pool(ArrayPool<T> pool, ArrayPool<int> poolBucket, ArrayPool<Entry<TKey, Queue<T>>> poolEntry)
-            : base(Instantiator.Instantiate, pool, poolBucket, poolEntry)
+            : base(null, pool, poolBucket, poolEntry)
         { }
 
         public Pool(Func<T> instantiate, ArrayPool<T> pool, ArrayPool<int> poolBucket, ArrayPool<Entry<TKey, Queue<T>>> poolEntry)

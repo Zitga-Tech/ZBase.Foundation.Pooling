@@ -9,7 +9,7 @@ namespace Unity.Pooling
         public static readonly Pool<T> Shared = new Pool<T>();
 
         public Pool()
-            : base(Instantiator.Instantiate, ArrayPool<T>.Shared)
+            : base(null, ArrayPool<T>.Shared)
         { }
 
         public Pool(Func<T> instantiate)
@@ -17,7 +17,7 @@ namespace Unity.Pooling
         { }
 
         public Pool(ArrayPool<T> pool)
-            : base(Instantiator.Instantiate, pool)
+            : base(null, pool)
         { }
 
         public Pool(Func<T> instantiate, ArrayPool<T> pool)

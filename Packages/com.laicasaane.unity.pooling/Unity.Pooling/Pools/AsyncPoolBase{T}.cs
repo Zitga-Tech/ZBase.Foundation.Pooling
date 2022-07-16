@@ -12,7 +12,7 @@ namespace Unity.Pooling
         private readonly Queue<T> _queue;
 
         public AsyncPoolBase()
-            : this(Instantiator.Instantiate, ArrayPool<T>.Shared)
+            : this(null, ArrayPool<T>.Shared)
         { }
 
         public AsyncPoolBase(UniTaskFunc<T> instantiate)
@@ -20,12 +20,12 @@ namespace Unity.Pooling
         { }
 
         public AsyncPoolBase(ArrayPool<T> pool)
-            : this(Instantiator.Instantiate, pool)
+            : this(null, pool)
         { }
 
         public AsyncPoolBase(UniTaskFunc<T> instantiate, ArrayPool<T> pool)
         {
-            _instantiate = instantiate ?? Instantiator.Instantiate;
+            _instantiate = instantiate ?? GetDefaultInstantiator() ?? DefaultAsyncInstantiator<T>.Instantiate;
             _queue = new Queue<T>(pool ?? ArrayPool<T>.Shared);
         }
 
@@ -70,17 +70,6 @@ namespace Unity.Pooling
 
         protected virtual void ReturnPreprocess(T instance) { }
 
-        protected abstract Func<T> GetDefaultInstantiator();
-
-        protected static class Instantiator
-        {
-            private static readonly Type s_type = typeof(T);
-
-            public static async UniTask<T> Instantiate()
-            {
-                var result = (T)Activator.CreateInstance(s_type);
-                return await UniTask.FromResult(result);
-            }
-        }
+        protected virtual UniTaskFunc<T> GetDefaultInstantiator() => DefaultAsyncInstantiator<T>.Instantiate;
     }
 }

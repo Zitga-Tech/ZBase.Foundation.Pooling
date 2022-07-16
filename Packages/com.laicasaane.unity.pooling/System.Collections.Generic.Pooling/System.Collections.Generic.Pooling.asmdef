@@ -1,0 +1,16 @@
+{
+    "name": "System.Collections.Generic.Pooling",
+    "rootNamespace": "System.Collections.Generic.Pooling",
+    "references": [
+        "Unity.Pooling"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
