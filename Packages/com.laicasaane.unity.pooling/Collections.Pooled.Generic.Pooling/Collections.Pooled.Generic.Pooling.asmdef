@@ -2,8 +2,8 @@
     "name": "Collections.Pooled.Generic.Pooling",
     "rootNamespace": "",
     "references": [
-        "Unity.Pooling",
-        "Collections.Pooled.Generic"
+        "Collections.Pooled.Generic",
+        "System.Pooling"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

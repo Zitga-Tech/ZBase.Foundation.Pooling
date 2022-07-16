@@ -1,8 +1,11 @@
 {
-    "name": "System.Collections.Generic.Pooling",
-    "rootNamespace": "System.Collections.Generic.Pooling",
+    "name": "System.Pooling",
+    "rootNamespace": "System.Pooling",
     "references": [
-        "System.Pooling"
+        "Collections.Pooled",
+        "Collections.Pooled.Generic",
+        "Collections.Pooled.Generic.Internals",
+        "UniTask"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
