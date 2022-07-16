@@ -1,5 +1,5 @@
 {
-    "name": "Unity.Pooling.Runtime",
+    "name": "Unity.Pooling",
     "rootNamespace": "Unity.Pooling",
     "references": [
         "Collections.Pooled",
