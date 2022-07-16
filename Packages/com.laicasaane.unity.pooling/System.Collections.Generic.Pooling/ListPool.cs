@@ -23,7 +23,7 @@ namespace System.Collections.Generic.Pooling
             : base(instantiate, pool)
         { }
 
-        protected override Func<List<T>> GetDefaultInstantiator()
+        protected override Func<List<T>> GetInstantiator()
             => Instantiate;
 
         private static List<T> Instantiate()

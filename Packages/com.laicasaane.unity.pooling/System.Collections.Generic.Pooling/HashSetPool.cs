@@ -23,7 +23,7 @@ namespace System.Collections.Generic.Pooling
             : base(instantiate, pool)
         { }
 
-        protected override Func<HashSet<T>> GetDefaultInstantiator()
+        protected override Func<HashSet<T>> GetInstantiator()
             => Instantiate;
 
         private static HashSet<T> Instantiate()

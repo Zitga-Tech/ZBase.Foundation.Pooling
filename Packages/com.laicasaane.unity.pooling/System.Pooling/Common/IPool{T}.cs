@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace System.Pooling
+﻿namespace System.Pooling
 {
     public interface IPool<T>
         : IPool, IRentable<T>, IReturnable<T>, ICountable

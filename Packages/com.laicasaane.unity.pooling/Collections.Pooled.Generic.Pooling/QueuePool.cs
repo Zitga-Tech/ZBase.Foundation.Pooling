@@ -24,7 +24,7 @@ namespace Collections.Pooled.Generic.Pooling
             : base(instantiate, pool)
         { }
 
-        protected override Func<Queue<T>> GetDefaultInstantiator()
+        protected override Func<Queue<T>> GetInstantiator()
             => Instantiate;
 
         private static Queue<T> Instantiate()

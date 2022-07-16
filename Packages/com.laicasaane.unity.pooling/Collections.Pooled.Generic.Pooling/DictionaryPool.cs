@@ -24,7 +24,7 @@ namespace Collections.Pooled.Generic.Pooling
             : base(instantiate, pool)
         { }
 
-        protected override Func<Dictionary<TKey, TValue>> GetDefaultInstantiator()
+        protected override Func<Dictionary<TKey, TValue>> GetInstantiator()
             => Instantiate;
 
         private static Dictionary<TKey, TValue> Instantiate()

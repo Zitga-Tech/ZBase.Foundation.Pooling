@@ -1,5 +1,4 @@
-﻿using System;
-using System.Buffers;
+﻿using System.Buffers;
 using Collections.Pooled.Generic;
 
 namespace System.Pooling
@@ -24,7 +23,7 @@ namespace System.Pooling
 
         public PoolBase(Func<T> instantiate, ArrayPool<T> pool)
         {
-            _instantiate = instantiate ?? GetDefaultInstantiator() ?? DefaultInstantiator<T>.Instantiate;
+            _instantiate = instantiate ?? GetInstantiator() ?? DefaultInstantiator<T>.Get();
             _queue = new Queue<T>(pool ?? ArrayPool<T>.Shared);
         }
 
@@ -76,6 +75,6 @@ namespace System.Pooling
 
         protected virtual void ReturnPreprocess(T instance) { }
 
-        protected virtual Func<T> GetDefaultInstantiator() => DefaultInstantiator<T>.Instantiate;
+        protected virtual Func<T> GetInstantiator() => DefaultInstantiator<T>.Get();
     }
 }

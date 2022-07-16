@@ -1,5 +1,4 @@
-﻿using System;
-using System.Buffers;
+﻿using System.Buffers;
 using Collections.Pooled;
 using Collections.Pooled.Generic;
 

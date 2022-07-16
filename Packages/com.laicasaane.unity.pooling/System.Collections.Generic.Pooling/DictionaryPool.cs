@@ -1,5 +1,4 @@
-﻿using System;
-using System.Buffers;
+﻿using System.Buffers;
 using System.Pooling;
 
 namespace System.Collections.Generic.Pooling
@@ -24,7 +23,7 @@ namespace System.Collections.Generic.Pooling
             : base(instantiate, pool)
         { }
 
-        protected override Func<Dictionary<TKey, TValue>> GetDefaultInstantiator()
+        protected override Func<Dictionary<TKey, TValue>> GetInstantiator()
             => Instantiate;
 
         private static Dictionary<TKey, TValue> Instantiate()
