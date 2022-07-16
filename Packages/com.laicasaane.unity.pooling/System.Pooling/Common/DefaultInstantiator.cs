@@ -1,6 +1,6 @@
 ﻿namespace System.Pooling
 {
-    public static class DefaultInstantiator<T>
+    public static class DefaultInstantiator<T> where T : class
     {
         private static readonly Type s_type = typeof(T);
         private static Func<T> s_default = Instantiate;

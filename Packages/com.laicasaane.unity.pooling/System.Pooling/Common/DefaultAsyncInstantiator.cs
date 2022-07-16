@@ -2,7 +2,7 @@
 
 namespace System.Pooling
 {
-    public static class DefaultAsyncInstantiator<T>
+    public static class DefaultAsyncInstantiator<T> where T : class
     {
         private static readonly Type s_type = typeof(T);
         private static UniTaskFunc<T> s_default = Instantiate;
