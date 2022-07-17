@@ -1,5 +1,6 @@
 ﻿using System.Buffers;
 using System.Pooling;
+using System.Runtime.CompilerServices;
 
 namespace System.Collections.Generic.Pooling
 {
@@ -23,8 +24,13 @@ namespace System.Collections.Generic.Pooling
             : base(instantiate, pool)
         { }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override Func<HashSet<T>> GetInstantiator()
             => Instantiate;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected override void ReturnPreprocess(HashSet<T> instance)
+            => instance.Clear();
 
         private static HashSet<T> Instantiate()
             => new HashSet<T>();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Buffers;
 using System.Pooling;
+using System.Runtime.CompilerServices;
 
 namespace Collections.Pooled.Generic.Pooling
 {
@@ -24,8 +25,13 @@ namespace Collections.Pooled.Generic.Pooling
             : base(instantiate, pool)
         { }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override Func<Dictionary<TKey, TValue>> GetInstantiator()
             => Instantiate;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected override void ReturnPreprocess(Dictionary<TKey, TValue> instance)
+            => instance.Clear();
 
         private static Dictionary<TKey, TValue> Instantiate()
             => new Dictionary<TKey, TValue>();

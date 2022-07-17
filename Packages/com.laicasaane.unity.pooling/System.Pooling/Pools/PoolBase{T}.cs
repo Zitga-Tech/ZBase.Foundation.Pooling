@@ -1,4 +1,5 @@
 ﻿using System.Buffers;
+using System.Runtime.CompilerServices;
 using Collections.Pooled.Generic;
 
 namespace System.Pooling
@@ -73,6 +74,7 @@ namespace System.Pooling
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected virtual void ReturnPreprocess(T instance) { }
 
         protected virtual Func<T> GetInstantiator() => DefaultInstantiator<T>.Get();

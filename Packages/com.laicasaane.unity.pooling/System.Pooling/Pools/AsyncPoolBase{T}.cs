@@ -1,4 +1,5 @@
 ﻿using System.Buffers;
+using System.Runtime.CompilerServices;
 using Collections.Pooled.Generic;
 using Cysharp.Threading.Tasks;
 
@@ -67,6 +68,7 @@ namespace System.Pooling
             _queue.Enqueue(instance);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected virtual void ReturnPreprocess(T instance) { }
 
         protected virtual UniTaskFunc<T> GetInstantiator() => DefaultAsyncInstantiator<T>.Get();

@@ -1,4 +1,5 @@
 ﻿using System.Buffers;
+using System.Runtime.CompilerServices;
 using Collections.Pooled;
 using Collections.Pooled.Generic;
 using Collections.Pooled.Generic.Internals;
@@ -116,6 +117,7 @@ namespace System.Pooling
             queue.Enqueue(instance);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected virtual void ReturnPreprocess(T instance) { }
 
         protected virtual Func<T> GetInstantiator() => DefaultInstantiator<T>.Get();

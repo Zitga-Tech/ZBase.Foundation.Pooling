@@ -1,5 +1,6 @@
 ﻿using System.Buffers;
 using System.Pooling;
+using System.Runtime.CompilerServices;
 
 namespace System.Collections.Generic.Pooling
 {
@@ -23,8 +24,13 @@ namespace System.Collections.Generic.Pooling
             : base(instantiate, pool)
         { }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override Func<Stack<T>> GetInstantiator()
             => Instantiate;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected override void ReturnPreprocess(Stack<T> instance)
+            => instance.Clear();
 
         private static Stack<T> Instantiate()
             => new Stack<T>();
