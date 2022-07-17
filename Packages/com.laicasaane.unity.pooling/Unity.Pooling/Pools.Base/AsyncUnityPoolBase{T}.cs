@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 
 namespace Unity.Pooling
 {
-    public abstract partial class AsyncUnityPoolBase<T> : IAsyncPool<T>, IDisposable
+    public abstract partial class AsyncUnityPoolBase<T> : IAsyncPool<T>, IAsyncNamedRentable<T>, IDisposable
         where T : UnityEngine.Object
     {
         private readonly UniTaskFunc<T> _instantiate;
@@ -61,9 +61,16 @@ namespace Unity.Pooling
             return await _instantiate();
         }
 
+        public async UniTask<T> RentAsync(string name)
+        {
+            var instance = await RentAsync();
+            instance.name = name;
+            return instance;
+        }
+
         public void Return(T instance)
         {
-            if (instance is null)
+            if (instance == false)
                 return;
 
             ReturnPreprocess(instance);

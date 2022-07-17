@@ -5,7 +5,7 @@ using Collections.Pooled.Generic;
 
 namespace Unity.Pooling
 {
-    public abstract partial class UnityPoolBase<T> : IPool<T>, IDisposable
+    public abstract partial class UnityPoolBase<T> : IPool<T>, INamedRentable<T>, IDisposable
         where T : UnityEngine.Object
     {
         private readonly Func<T> _instantiate;
@@ -57,9 +57,16 @@ namespace Unity.Pooling
             return _instantiate();
         }
 
+        public T Rent(string name)
+        {
+            var instance = Rent();
+            instance.name = name;
+            return instance;
+        }
+
         public void Return(T instance)
         {
-            if (instance is null)
+            if (instance == false)
                 return;
 
             ReturnPreprocess(instance);
