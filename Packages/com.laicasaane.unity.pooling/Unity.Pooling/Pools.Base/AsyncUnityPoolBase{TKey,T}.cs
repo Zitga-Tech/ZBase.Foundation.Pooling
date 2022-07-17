@@ -8,7 +8,7 @@ using Cysharp.Threading.Tasks;
 
 namespace Unity.Pooling
 {
-    public abstract partial class AsyncUnityPoolBase<TKey, T> : IAsyncPool<TKey, T>, IAsyncNamedRentable<TKey, T>, IDisposable
+    public abstract partial class AsyncUnityPoolBase<TKey, T> : IAsyncUnityPool<TKey, T>, IDisposable
         where T : UnityEngine.Object
     {
         private readonly ArrayPool<T> _pool;

@@ -7,7 +7,7 @@ using Collections.Pooled.Generic.Internals;
 
 namespace Unity.Pooling
 {
-    public abstract partial class UnityPoolBase<TKey, T> : IPool<TKey, T>, INamedRentable<TKey, T>, IDisposable
+    public abstract partial class UnityPoolBase<TKey, T> : IUnityPool<TKey, T>, IDisposable
         where T : UnityEngine.Object
     {
         private readonly ArrayPool<T> _pool;

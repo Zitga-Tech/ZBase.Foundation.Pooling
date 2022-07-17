@@ -2,7 +2,7 @@
 
 namespace Unity.Pooling
 {
-    public interface IUnityPool<T> : IPool<T>, INamedRentable<T>
+    public interface IUnityPool<T> : IUnityPool, IPool<T>, INamedRentable<T>
         where T : UnityEngine.Object
     {
     }
