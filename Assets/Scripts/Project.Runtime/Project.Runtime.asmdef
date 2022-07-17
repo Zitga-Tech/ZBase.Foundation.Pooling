@@ -3,7 +3,8 @@
     "rootNamespace": "Project.Runtime",
     "references": [
         "Unity.TextMeshPro",
-        "UnityEngine.UI"
+        "UnityEngine.UI",
+        "Unity.Pooling"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
