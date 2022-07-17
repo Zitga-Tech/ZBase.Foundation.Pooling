@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace Unity.Pooling
 {
-    public class ComponentPool<T> : UnityPoolBase<T>
+    public class ComponentPool<TKey, T> : UnityPoolBase<TKey, T>
         where T : UnityEngine.Component
     {
-        public static readonly ComponentPool<T> Shared  = new ComponentPool<T>();
+        public static readonly ComponentPool<TKey, T> Shared  = new ComponentPool<TKey, T>();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override void ReturnPreprocess(T instance)

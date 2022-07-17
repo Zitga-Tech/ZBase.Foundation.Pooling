@@ -4,11 +4,11 @@ using Collections.Pooled.Generic;
 
 namespace System.Pooling
 {
-    public abstract partial class PoolBase<T> : IPool<T>, IDisposable
+    public abstract partial class PoolBase<T> : IPool<T>, IInstantiatorSetable<T>, IDisposable
         where T : class
     {
-        private readonly Func<T> _instantiate;
         private readonly Queue<T> _queue;
+        private Func<T> _instantiate;
 
         public PoolBase()
             : this(null, ArrayPool<T>.Shared)
@@ -27,6 +27,9 @@ namespace System.Pooling
             _instantiate = instantiate ?? GetDefaultInstantiator() ?? DefaultInstantiator<T>.Get();
             _queue = new Queue<T>(pool ?? ArrayPool<T>.Shared);
         }
+
+        public void SetInstantiator(Func<T> instantiator)
+            => _instantiate = instantiator ?? GetDefaultInstantiator();
 
         public int Count() => _queue.Count;
 

@@ -9,8 +9,8 @@ namespace Unity.Pooling
     public abstract partial class AsyncUnityPoolBase<T> : IAsyncPool<T>, IAsyncNamedRentable<T>, IDisposable
         where T : UnityEngine.Object
     {
-        private UniTaskFunc<T> _instantiate;
         private readonly Queue<T> _queue;
+        private UniTaskFunc<T> _instantiate;
 
         public AsyncUnityPoolBase()
             : this(null, ArrayPool<T>.Shared)

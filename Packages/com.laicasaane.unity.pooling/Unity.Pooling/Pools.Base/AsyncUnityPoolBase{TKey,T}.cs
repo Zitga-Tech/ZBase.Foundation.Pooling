@@ -11,9 +11,9 @@ namespace Unity.Pooling
     public abstract partial class AsyncUnityPoolBase<TKey, T> : IAsyncPool<TKey, T>, IAsyncNamedRentable<TKey, T>, IDisposable
         where T : UnityEngine.Object
     {
-        private readonly UniTaskFunc<T> _instantiate;
         private readonly ArrayPool<T> _pool;
         private readonly Dictionary<TKey, Queue<T>> _queueMap;
+        private UniTaskFunc<T> _instantiate;
 
         public AsyncUnityPoolBase()
             : this(null, ArrayPool<T>.Shared)
@@ -45,6 +45,9 @@ namespace Unity.Pooling
                 , poolEntry ?? ArrayPool<Entry<TKey, Queue<T>>>.Shared
             );
         }
+
+        public void SetInstantiator(UniTaskFunc<T> instantiator)
+            => _instantiate = instantiator ?? GetDefaultInstantiator();
 
         public int Count(TKey key)
         {

@@ -6,12 +6,12 @@ using Collections.Pooled.Generic.Internals;
 
 namespace System.Pooling
 {
-    public abstract partial class PoolBase<TKey, T> : IPool<TKey, T>, IDisposable
+    public abstract partial class PoolBase<TKey, T> : IPool<TKey, T>, IInstantiatorSetable<T>, IDisposable
         where T : class
     {
-        private readonly Func<T> _instantiate;
         private readonly ArrayPool<T> _pool;
         private readonly Dictionary<TKey, Queue<T>> _queueMap;
+        private Func<T> _instantiate;
 
         public PoolBase()
             : this(null, ArrayPool<T>.Shared)
@@ -43,6 +43,9 @@ namespace System.Pooling
                 , poolEntry ?? ArrayPool<Entry<TKey, Queue<T>>>.Shared
             );
         }
+
+        public void SetInstantiator(Func<T> instantiator)
+            => _instantiate = instantiator ?? GetDefaultInstantiator();
 
         public int Count(TKey key)
         {

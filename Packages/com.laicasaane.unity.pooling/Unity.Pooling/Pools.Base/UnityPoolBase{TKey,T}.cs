@@ -10,9 +10,9 @@ namespace Unity.Pooling
     public abstract partial class UnityPoolBase<TKey, T> : IPool<TKey, T>, INamedRentable<TKey, T>, IDisposable
         where T : UnityEngine.Object
     {
-        private readonly Func<T> _instantiate;
         private readonly ArrayPool<T> _pool;
         private readonly Dictionary<TKey, Queue<T>> _queueMap;
+        private Func<T> _instantiate;
 
         public UnityPoolBase()
             : this(null, ArrayPool<T>.Shared)
@@ -44,6 +44,9 @@ namespace Unity.Pooling
                 , poolEntry ?? ArrayPool<Entry<TKey, Queue<T>>>.Shared
             );
         }
+
+        public void SetInstantiator(Func<T> instantiator)
+            => _instantiate = instantiator ?? GetDefaultInstantiator();
 
         public int Count(TKey key)
         {

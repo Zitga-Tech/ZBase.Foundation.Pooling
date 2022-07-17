@@ -8,8 +8,8 @@ namespace Unity.Pooling
     public abstract partial class UnityPoolBase<T> : IPool<T>, INamedRentable<T>, IDisposable
         where T : UnityEngine.Object
     {
-        private readonly Func<T> _instantiate;
         private readonly Queue<T> _queue;
+        private Func<T> _instantiate;
 
         public UnityPoolBase()
             : this(null, ArrayPool<T>.Shared)
@@ -28,6 +28,9 @@ namespace Unity.Pooling
             _instantiate = instantiate ?? GetDefaultInstantiator();
             _queue = new Queue<T>(pool ?? ArrayPool<T>.Shared);
         }
+
+        public void SetInstantiator(Func<T> instantiator)
+            => _instantiate = instantiator ?? GetDefaultInstantiator();
 
         public int Count() => _queue.Count;
 

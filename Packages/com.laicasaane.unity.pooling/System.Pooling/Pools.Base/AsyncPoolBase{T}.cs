@@ -5,11 +5,11 @@ using Cysharp.Threading.Tasks;
 
 namespace System.Pooling
 {
-    public abstract partial class AsyncPoolBase<T> : IAsyncPool<T>, IDisposable
+    public abstract partial class AsyncPoolBase<T> : IAsyncPool<T>, IAsyncInstantiatorSetable<T>, IDisposable
         where T : class
     {
-        private readonly UniTaskFunc<T> _instantiate;
         private readonly Queue<T> _queue;
+        private UniTaskFunc<T> _instantiate;
 
         public AsyncPoolBase()
             : this(null, ArrayPool<T>.Shared)
@@ -28,6 +28,9 @@ namespace System.Pooling
             _instantiate = instantiate ?? GetDefaultInstantiator() ?? DefaultAsyncInstantiator<T>.Get();
             _queue = new Queue<T>(pool ?? ArrayPool<T>.Shared);
         }
+
+        public void SetInstantiator(UniTaskFunc<T> instantiator)
+            => _instantiate = instantiator ?? GetDefaultInstantiator();
 
         public int Count() => _queue.Count;
 
