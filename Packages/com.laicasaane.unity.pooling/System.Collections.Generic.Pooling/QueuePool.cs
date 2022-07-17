@@ -32,6 +32,7 @@ namespace System.Collections.Generic.Pooling
         protected override void ReturnPreprocess(Queue<T> instance)
             => instance.Clear();
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Queue<T> Instantiate()
             => new Queue<T>();
     }

@@ -32,6 +32,7 @@ namespace System.Collections.Generic.Pooling
         protected override void ReturnPreprocess(Dictionary<TKey, TValue> instance)
             => instance.Clear();
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Dictionary<TKey, TValue> Instantiate()
             => new Dictionary<TKey, TValue>();
     }

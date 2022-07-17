@@ -33,6 +33,7 @@ namespace Collections.Pooled.Generic.Pooling
         protected override void ReturnPreprocess(HashSet<T> instance)
             => instance.Clear();
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static HashSet<T> Instantiate()
             => new HashSet<T>();
     }

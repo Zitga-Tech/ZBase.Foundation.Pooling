@@ -33,6 +33,7 @@ namespace Collections.Pooled.Generic.Pooling
         protected override void ReturnPreprocess(List<T> instance)
             => instance.Clear();
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static List<T> Instantiate()
             => new List<T>();
     }

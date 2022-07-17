@@ -32,6 +32,7 @@ namespace System.Collections.Generic.Pooling
         protected override void ReturnPreprocess(Stack<T> instance)
             => instance.Clear();
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Stack<T> Instantiate()
             => new Stack<T>();
     }
