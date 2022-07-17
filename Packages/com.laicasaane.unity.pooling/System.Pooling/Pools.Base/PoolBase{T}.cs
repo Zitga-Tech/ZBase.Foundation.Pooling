@@ -24,7 +24,7 @@ namespace System.Pooling
 
         public PoolBase(Func<T> instantiate, ArrayPool<T> pool)
         {
-            _instantiate = instantiate ?? GetInstantiator() ?? DefaultInstantiator<T>.Get();
+            _instantiate = instantiate ?? GetDefaultInstantiator() ?? DefaultInstantiator<T>.Get();
             _queue = new Queue<T>(pool ?? ArrayPool<T>.Shared);
         }
 
@@ -68,6 +68,6 @@ namespace System.Pooling
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected virtual void ReturnPreprocess(T instance) { }
 
-        protected virtual Func<T> GetInstantiator() => DefaultInstantiator<T>.Get();
+        protected virtual Func<T> GetDefaultInstantiator() => DefaultInstantiator<T>.Get();
     }
 }

@@ -26,7 +26,7 @@ namespace Collections.Pooled.Generic.Pooling
         { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected override Func<Queue<T>> GetInstantiator()
+        protected override Func<Queue<T>> GetDefaultInstantiator()
             => Instantiate;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

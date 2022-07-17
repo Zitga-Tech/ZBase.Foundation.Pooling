@@ -36,7 +36,7 @@ namespace Unity.Pooling
 
         public UnityPoolBase(Func<T> instantiate, ArrayPool<T> pool, ArrayPool<int> poolBucket, ArrayPool<Entry<TKey, Queue<T>>> poolEntry)
         {
-            _instantiate = instantiate ?? GetInstantiator();
+            _instantiate = instantiate ?? GetDefaultInstantiator();
             _pool = pool ?? ArrayPool<T>.Shared;
 
             _queueMap = new Dictionary<TKey, Queue<T>>(
@@ -128,6 +128,6 @@ namespace Unity.Pooling
 
         protected abstract void ReturnPreprocess(T instance);
 
-        protected abstract Func<T> GetInstantiator();
+        protected abstract Func<T> GetDefaultInstantiator();
     }
 }

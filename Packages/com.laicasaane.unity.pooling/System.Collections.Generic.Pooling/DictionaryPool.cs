@@ -25,7 +25,7 @@ namespace System.Collections.Generic.Pooling
         { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected override Func<Dictionary<TKey, TValue>> GetInstantiator()
+        protected override Func<Dictionary<TKey, TValue>> GetDefaultInstantiator()
             => Instantiate;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

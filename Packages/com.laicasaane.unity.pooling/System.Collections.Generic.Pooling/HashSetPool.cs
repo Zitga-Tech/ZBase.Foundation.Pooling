@@ -25,7 +25,7 @@ namespace System.Collections.Generic.Pooling
         { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected override Func<HashSet<T>> GetInstantiator()
+        protected override Func<HashSet<T>> GetDefaultInstantiator()
             => Instantiate;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

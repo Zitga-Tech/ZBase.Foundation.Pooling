@@ -9,7 +9,7 @@ namespace Unity.Pooling
     public abstract partial class AsyncUnityPoolBase<T> : IAsyncPool<T>, IAsyncNamedRentable<T>, IDisposable
         where T : UnityEngine.Object
     {
-        private readonly UniTaskFunc<T> _instantiate;
+        private UniTaskFunc<T> _instantiate;
         private readonly Queue<T> _queue;
 
         public AsyncUnityPoolBase()
@@ -26,9 +26,12 @@ namespace Unity.Pooling
 
         public AsyncUnityPoolBase(UniTaskFunc<T> instantiate, ArrayPool<T> pool)
         {
-            _instantiate = instantiate ?? GetInstantiator();
+            _instantiate = instantiate ?? GetDefaultInstantiator();
             _queue = new Queue<T>(pool ?? ArrayPool<T>.Shared);
         }
+
+        public void SetInstantiator(UniTaskFunc<T> instantiator)
+            => _instantiate = instantiator ?? GetDefaultInstantiator();
 
         public int Count() => _queue.Count;
 
@@ -79,6 +82,6 @@ namespace Unity.Pooling
 
         protected abstract void ReturnPreprocess(T instance);
 
-        protected abstract UniTaskFunc<T> GetInstantiator();
+        protected abstract UniTaskFunc<T> GetDefaultInstantiator();
     }
 }

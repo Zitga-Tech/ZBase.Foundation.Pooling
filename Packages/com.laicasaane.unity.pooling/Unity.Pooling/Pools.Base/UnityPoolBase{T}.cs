@@ -25,7 +25,7 @@ namespace Unity.Pooling
 
         public UnityPoolBase(Func<T> instantiate, ArrayPool<T> pool)
         {
-            _instantiate = instantiate ?? GetInstantiator();
+            _instantiate = instantiate ?? GetDefaultInstantiator();
             _queue = new Queue<T>(pool ?? ArrayPool<T>.Shared);
         }
 
@@ -75,6 +75,6 @@ namespace Unity.Pooling
 
         protected abstract void ReturnPreprocess(T instance);
 
-        protected abstract Func<T> GetInstantiator();
+        protected abstract Func<T> GetDefaultInstantiator();
     }
 }

@@ -16,7 +16,7 @@ namespace Unity.Pooling
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected override Func<GameObject> GetInstantiator()
+        protected override Func<GameObject> GetDefaultInstantiator()
             => Instantiator;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
