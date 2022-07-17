@@ -1,6 +1,6 @@
 namespace System.Pooling
 {
-    public static partial class Pool_T_Extensions
+    public static partial class Pool_T_Returns
     {
         public static TPool Return<TPool, T>(this TPool pool
             , T p1
@@ -14,7 +14,7 @@ namespace System.Pooling
 
             pool.Return(p1);
             pool.Return(p2);
-    
+
             return pool;
         }
 
@@ -32,7 +32,7 @@ namespace System.Pooling
             pool.Return(p1);
             pool.Return(p2);
             pool.Return(p3);
-    
+
             return pool;
         }
 
@@ -52,7 +52,7 @@ namespace System.Pooling
             pool.Return(p2);
             pool.Return(p3);
             pool.Return(p4);
-    
+
             return pool;
         }
 
@@ -74,7 +74,7 @@ namespace System.Pooling
             pool.Return(p3);
             pool.Return(p4);
             pool.Return(p5);
-    
+
             return pool;
         }
 
@@ -98,7 +98,7 @@ namespace System.Pooling
             pool.Return(p4);
             pool.Return(p5);
             pool.Return(p6);
-    
+
             return pool;
         }
 
@@ -124,7 +124,7 @@ namespace System.Pooling
             pool.Return(p5);
             pool.Return(p6);
             pool.Return(p7);
-    
+
             return pool;
         }
 
@@ -152,7 +152,7 @@ namespace System.Pooling
             pool.Return(p6);
             pool.Return(p7);
             pool.Return(p8);
-    
+
             return pool;
         }
 
@@ -182,7 +182,7 @@ namespace System.Pooling
             pool.Return(p7);
             pool.Return(p8);
             pool.Return(p9);
-    
+
             return pool;
         }
 
@@ -214,7 +214,7 @@ namespace System.Pooling
             pool.Return(p8);
             pool.Return(p9);
             pool.Return(p10);
-    
+
             return pool;
         }
 
