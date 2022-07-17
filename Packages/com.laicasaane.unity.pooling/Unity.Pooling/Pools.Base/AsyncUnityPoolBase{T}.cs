@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 
 namespace Unity.Pooling
 {
-    public abstract partial class AsyncUnityPoolBase<T> : IAsyncUnityPool<T>, IDisposable
+    public abstract partial class AsyncUnityPoolBase<T> : IAsyncUnityPool<T>, IAsyncInstantiatorSetable<T>, IDisposable
         where T : UnityEngine.Object
     {
         private readonly Queue<T> _queue;

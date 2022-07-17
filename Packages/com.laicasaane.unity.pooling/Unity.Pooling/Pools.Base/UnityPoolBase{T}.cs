@@ -5,7 +5,7 @@ using Collections.Pooled.Generic;
 
 namespace Unity.Pooling
 {
-    public abstract partial class UnityPoolBase<T> : IUnityPool<T>, IDisposable
+    public abstract partial class UnityPoolBase<T> : IUnityPool<T>, IInstantiatorSetable<T>, IDisposable
         where T : UnityEngine.Object
     {
         private readonly Queue<T> _queue;
