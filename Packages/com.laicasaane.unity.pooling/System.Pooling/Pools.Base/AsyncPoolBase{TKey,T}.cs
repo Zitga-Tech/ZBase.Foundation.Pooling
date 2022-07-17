@@ -71,6 +71,7 @@ namespace System.Pooling
             _queueMap.Dispose();
         }
 
+        /// <inheritdoc/>
         public void ReleaseInstances(TKey key, int keep, Action<T> onReleased = null)
         {
             if (key is null)

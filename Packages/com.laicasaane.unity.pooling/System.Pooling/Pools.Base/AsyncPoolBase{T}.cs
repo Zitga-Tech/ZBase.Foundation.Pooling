@@ -39,6 +39,7 @@ namespace System.Pooling
             _queue.Dispose();
         }
 
+        /// <inheritdoc/>
         public void ReleaseInstances(int keep, Action<T> onReleased = null)
         {
             var countRemove = _queue.Count - keep;
