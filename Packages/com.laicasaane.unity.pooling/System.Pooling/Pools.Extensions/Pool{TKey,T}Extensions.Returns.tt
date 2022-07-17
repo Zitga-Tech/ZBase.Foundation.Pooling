@@ -9,19 +9,25 @@
 #>
 namespace System.Pooling
 {
-    partial class PoolExtensions
+    public static partial class Pool_TKey_T_Extensions
     {
     <# for (var i = 2; i <= ParamCount; i++) { #>
-    public static TPool Return<TPool, T>(this TPool pool
+    public static TPool Return<TPool, TKey, T>(this TPool pool, TKey key
     <# for (var k = 1; k <= i; k++) { #>
         , T p<#= k #>
     <# } #>
     )
-            where TPool : IReturnable<T>
+            where TPool : IReturnable<TKey, T>
             where T : class
         {
+            if (pool is null)
+                throw new ArgumentNullException(nameof(pool));
+
+            if (key is null)
+                throw new ArgumentNullException(nameof(key));
+
     <# for (var k = 1; k <= i; k++) { #>
-        pool.Return(p<#= k #>);
+        pool.Return(key, p<#= k #>);
     <# } #>
 
             return pool;

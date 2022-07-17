@@ -5,7 +5,7 @@ using Collections.Pooled.Generic;
 namespace System.Pooling
 {
     public sealed class AsyncPool<TKey, T> : AsyncPoolBase<TKey, T>
-        where T : class, new()
+        where T : class
     {
         public static readonly AsyncPool<TKey, T> Shared = new AsyncPool<TKey, T>();
 

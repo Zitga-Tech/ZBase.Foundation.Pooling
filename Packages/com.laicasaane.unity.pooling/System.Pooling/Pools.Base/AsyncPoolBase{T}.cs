@@ -1,41 +1,44 @@
 ﻿using System.Buffers;
 using System.Runtime.CompilerServices;
 using Collections.Pooled.Generic;
+using Cysharp.Threading.Tasks;
 
 namespace System.Pooling
 {
-    public abstract class PoolBase<T> : IPool<T>, IDisposable
+    public abstract partial class AsyncPoolBase<T> : IAsyncPool<T>, IDisposable
         where T : class
     {
-        private readonly Func<T> _instantiate;
+        private readonly UniTaskFunc<T> _instantiate;
         private readonly Queue<T> _queue;
 
-        public PoolBase()
+        public AsyncPoolBase()
             : this(null, ArrayPool<T>.Shared)
         { }
 
-        public PoolBase(Func<T> instantiate)
+        public AsyncPoolBase(UniTaskFunc<T> instantiate)
             : this(instantiate, ArrayPool<T>.Shared)
         { }
 
-        public PoolBase(ArrayPool<T> pool)
+        public AsyncPoolBase(ArrayPool<T> pool)
             : this(null, pool)
         { }
 
-        public PoolBase(Func<T> instantiate, ArrayPool<T> pool)
+        public AsyncPoolBase(UniTaskFunc<T> instantiate, ArrayPool<T> pool)
         {
-            _instantiate = instantiate ?? GetInstantiator() ?? DefaultInstantiator<T>.Get();
+            _instantiate = instantiate ?? GetInstantiator() ?? DefaultAsyncInstantiator<T>.Get();
             _queue = new Queue<T>(pool ?? ArrayPool<T>.Shared);
         }
 
         public int Count() => _queue.Count;
+
+        public AsyncDisposableContext<T> Poolable()
+            => new AsyncDisposableContext<T>(this);
 
         public void Dispose()
         {
             _queue.Dispose();
         }
 
-        /// <inheritdoc/>
         public void ReleaseInstances(int keep, Action<T> onReleased = null)
         {
             var countRemove = _queue.Count - keep;
@@ -48,12 +51,12 @@ namespace System.Pooling
             }
         }
 
-        public T Rent()
+        public async UniTask<T> RentAsync()
         {
             if (_queue.Count > 0)
                 return _queue.Dequeue();
 
-            return _instantiate();
+            return await _instantiate();
         }
 
         public void Return(T instance)
@@ -65,18 +68,9 @@ namespace System.Pooling
             _queue.Enqueue(instance);
         }
 
-        public void Return<TEnumerable>(TEnumerable instances)
-            where TEnumerable : System.Collections.Generic.IEnumerable<T>
-        {
-            foreach (var instance in instances)
-            {
-                Return(instance);
-            }
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected virtual void ReturnPreprocess(T instance) { }
 
-        protected virtual Func<T> GetInstantiator() => DefaultInstantiator<T>.Get();
+        protected virtual UniTaskFunc<T> GetInstantiator() => DefaultAsyncInstantiator<T>.Get();
     }
 }

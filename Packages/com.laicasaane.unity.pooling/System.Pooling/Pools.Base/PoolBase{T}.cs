@@ -1,44 +1,41 @@
 ﻿using System.Buffers;
 using System.Runtime.CompilerServices;
 using Collections.Pooled.Generic;
-using Cysharp.Threading.Tasks;
 
 namespace System.Pooling
 {
-    public abstract class AsyncPoolBase<T> : IAsyncPool<T>, IDisposable
+    public abstract partial class PoolBase<T> : IPool<T>, IDisposable
         where T : class
     {
-        private readonly UniTaskFunc<T> _instantiate;
+        private readonly Func<T> _instantiate;
         private readonly Queue<T> _queue;
 
-        public AsyncPoolBase()
+        public PoolBase()
             : this(null, ArrayPool<T>.Shared)
         { }
 
-        public AsyncPoolBase(UniTaskFunc<T> instantiate)
+        public PoolBase(Func<T> instantiate)
             : this(instantiate, ArrayPool<T>.Shared)
         { }
 
-        public AsyncPoolBase(ArrayPool<T> pool)
+        public PoolBase(ArrayPool<T> pool)
             : this(null, pool)
         { }
 
-        public AsyncPoolBase(UniTaskFunc<T> instantiate, ArrayPool<T> pool)
+        public PoolBase(Func<T> instantiate, ArrayPool<T> pool)
         {
-            _instantiate = instantiate ?? GetInstantiator() ?? DefaultAsyncInstantiator<T>.Get();
+            _instantiate = instantiate ?? GetInstantiator() ?? DefaultInstantiator<T>.Get();
             _queue = new Queue<T>(pool ?? ArrayPool<T>.Shared);
         }
 
         public int Count() => _queue.Count;
-
-        public AsyncDisposableContext<T> Poolable()
-            => new AsyncDisposableContext<T>(this);
 
         public void Dispose()
         {
             _queue.Dispose();
         }
 
+        /// <inheritdoc/>
         public void ReleaseInstances(int keep, Action<T> onReleased = null)
         {
             var countRemove = _queue.Count - keep;
@@ -51,12 +48,12 @@ namespace System.Pooling
             }
         }
 
-        public async UniTask<T> RentAsync()
+        public T Rent()
         {
             if (_queue.Count > 0)
                 return _queue.Dequeue();
 
-            return await _instantiate();
+            return _instantiate();
         }
 
         public void Return(T instance)
@@ -71,6 +68,6 @@ namespace System.Pooling
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected virtual void ReturnPreprocess(T instance) { }
 
-        protected virtual UniTaskFunc<T> GetInstantiator() => DefaultAsyncInstantiator<T>.Get();
+        protected virtual Func<T> GetInstantiator() => DefaultInstantiator<T>.Get();
     }
 }

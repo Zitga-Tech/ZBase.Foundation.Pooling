@@ -20,4 +20,12 @@ namespace System.Pooling
             return new Disposable<TKey, T>(_pool, key, result);
         }
     }
+
+    partial class AsyncPoolDisposableExtensions
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static AsyncDisposableContext<TKey, T> Disposable<TKey, T>(this IAsyncPool<TKey, T> pool)
+            where T : class
+            => new AsyncDisposableContext<TKey, T>(pool);
+    }
 }

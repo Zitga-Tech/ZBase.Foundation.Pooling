@@ -1,6 +1,6 @@
 namespace System.Pooling
 {
-    partial class PoolExtensions
+    public static partial class Pool_T_Extensions
     {
         public static TPool Return<TPool, T>(this TPool pool
             , T p1
@@ -9,6 +9,9 @@ namespace System.Pooling
             where TPool : IReturnable<T>
             where T : class
         {
+            if (pool is null)
+                throw new ArgumentNullException(nameof(pool));
+
             pool.Return(p1);
             pool.Return(p2);
     
@@ -23,6 +26,9 @@ namespace System.Pooling
             where TPool : IReturnable<T>
             where T : class
         {
+            if (pool is null)
+                throw new ArgumentNullException(nameof(pool));
+
             pool.Return(p1);
             pool.Return(p2);
             pool.Return(p3);
@@ -39,6 +45,9 @@ namespace System.Pooling
             where TPool : IReturnable<T>
             where T : class
         {
+            if (pool is null)
+                throw new ArgumentNullException(nameof(pool));
+
             pool.Return(p1);
             pool.Return(p2);
             pool.Return(p3);
@@ -57,6 +66,9 @@ namespace System.Pooling
             where TPool : IReturnable<T>
             where T : class
         {
+            if (pool is null)
+                throw new ArgumentNullException(nameof(pool));
+
             pool.Return(p1);
             pool.Return(p2);
             pool.Return(p3);
@@ -77,6 +89,9 @@ namespace System.Pooling
             where TPool : IReturnable<T>
             where T : class
         {
+            if (pool is null)
+                throw new ArgumentNullException(nameof(pool));
+
             pool.Return(p1);
             pool.Return(p2);
             pool.Return(p3);
@@ -99,6 +114,9 @@ namespace System.Pooling
             where TPool : IReturnable<T>
             where T : class
         {
+            if (pool is null)
+                throw new ArgumentNullException(nameof(pool));
+
             pool.Return(p1);
             pool.Return(p2);
             pool.Return(p3);
@@ -123,6 +141,9 @@ namespace System.Pooling
             where TPool : IReturnable<T>
             where T : class
         {
+            if (pool is null)
+                throw new ArgumentNullException(nameof(pool));
+
             pool.Return(p1);
             pool.Return(p2);
             pool.Return(p3);
@@ -149,6 +170,9 @@ namespace System.Pooling
             where TPool : IReturnable<T>
             where T : class
         {
+            if (pool is null)
+                throw new ArgumentNullException(nameof(pool));
+
             pool.Return(p1);
             pool.Return(p2);
             pool.Return(p3);
@@ -177,6 +201,9 @@ namespace System.Pooling
             where TPool : IReturnable<T>
             where T : class
         {
+            if (pool is null)
+                throw new ArgumentNullException(nameof(pool));
+
             pool.Return(p1);
             pool.Return(p2);
             pool.Return(p3);

@@ -16,4 +16,12 @@ namespace System.Pooling
         public Disposable<TKey, T> Rent(TKey key)
             => new Disposable<TKey, T>(_pool, key, _pool.Rent(key));
     }
+
+    partial class PoolDisposableExtensions
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static DisposableContext<TKey, T> Disposable<TKey, T>(this IPool<TKey, T> pool)
+            where T : class
+            => new DisposableContext<TKey, T>(pool);
+    }
 }
