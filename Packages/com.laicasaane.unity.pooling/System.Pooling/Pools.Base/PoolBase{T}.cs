@@ -44,16 +44,17 @@ namespace System.Pooling
 
             while (countRemove > 0)
             {
-                var instance = _queue.Dequeue();
-                onReleased?.Invoke(instance);
+                if (_queue.TryDequeue(out var instance))
+                    onReleased?.Invoke(instance);
+
                 countRemove--;
             }
         }
 
         public T Rent()
         {
-            if (_queue.Count > 0)
-                return _queue.Dequeue();
+            if (_queue.TryDequeue(out var instance))
+                return instance;
 
             return _instantiate();
         }

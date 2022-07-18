@@ -7,14 +7,14 @@ namespace Unity.Pooling
     public abstract partial class AsyncUnityPoolBase<T> : IAsyncUnityPool<T>, IAsyncInstantiatorSetable<T>, IDisposable
         where T : UnityEngine.Object
     {
-        private readonly UniqueQueue<T> _queue;
+        private readonly UniqueQueue<int, T> _queue;
         private UniTaskFunc<T> _instantiate;
 
         public AsyncUnityPoolBase()
             : this(null, null)
         { }
 
-        public AsyncUnityPoolBase(UniqueQueue<T> queue)
+        public AsyncUnityPoolBase(UniqueQueue<int, T> queue)
             : this(queue, null)
         { }
 
@@ -22,9 +22,9 @@ namespace Unity.Pooling
             : this(null, instantiate)
         { }
 
-        public AsyncUnityPoolBase(UniqueQueue<T> queue, UniTaskFunc<T> instantiate)
+        public AsyncUnityPoolBase(UniqueQueue<int, T> queue, UniTaskFunc<T> instantiate)
         {
-            _queue = queue ?? new UniqueQueue<T>();
+            _queue = queue ?? new UniqueQueue<int, T>();
             _instantiate = instantiate ?? GetDefaultInstantiator();
         }
 
@@ -46,15 +46,15 @@ namespace Unity.Pooling
             while (countRemove > 0)
             {
                 var instance = _queue.Dequeue();
-                onReleased?.Invoke(instance);
+                onReleased?.Invoke(instance.Value);
                 countRemove--;
             }
         }
 
         public async UniTask<T> RentAsync()
         {
-            if (_queue.Count > 0)
-                return _queue.Dequeue();
+            if (_queue.TryDequeue(out var instance))
+                return instance.Value;
 
             return await _instantiate();
         }
@@ -72,7 +72,7 @@ namespace Unity.Pooling
                 return;
 
             ReturnPreprocess(instance);
-            _queue.Enqueue(instance);
+            _queue.Enqueue(instance.ToKVPair());
         }
 
         protected abstract void ReturnPreprocess(T instance);

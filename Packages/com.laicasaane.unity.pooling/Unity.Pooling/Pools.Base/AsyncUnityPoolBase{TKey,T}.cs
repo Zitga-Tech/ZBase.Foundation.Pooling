@@ -9,8 +9,8 @@ namespace Unity.Pooling
     public abstract partial class AsyncUnityPoolBase<TKey, T> : IAsyncUnityPool<TKey, T>, IAsyncInstantiatorSetable<T>, IDisposable
         where T : UnityEngine.Object
     {
-        private readonly Dictionary<TKey, UniqueQueue<T>> _queueMap;
-        private readonly Func<UniqueQueue<T>> _queueInstantiate;
+        private readonly Dictionary<TKey, UniqueQueue<int, T>> _queueMap;
+        private readonly Func<UniqueQueue<int, T>> _queueInstantiate;
         private UniTaskFunc<T> _instantiate;
 
         public AsyncUnityPoolBase()
@@ -21,17 +21,17 @@ namespace Unity.Pooling
             : this(null, null, instantiate)
         { }
 
-        public AsyncUnityPoolBase(Dictionary<TKey, UniqueQueue<T>> queueMap, Func<UniqueQueue<T>> queueInstantiate)
+        public AsyncUnityPoolBase(Dictionary<TKey, UniqueQueue<int, T>> queueMap, Func<UniqueQueue<int, T>> queueInstantiate)
             : this(queueMap, queueInstantiate, null)
         { }
 
-        public AsyncUnityPoolBase(Dictionary<TKey, UniqueQueue<T>> queueMap
-            , Func<UniqueQueue<T>> queueInstantiate
+        public AsyncUnityPoolBase(Dictionary<TKey, UniqueQueue<int, T>> queueMap
+            , Func<UniqueQueue<int, T>> queueInstantiate
             , UniTaskFunc<T> instantiate
         )
         {
-            _queueMap = queueMap ?? new Dictionary<TKey, UniqueQueue<T>>();
-            _queueInstantiate = queueInstantiate ?? NewInstancer<UniqueQueue<T>>.Instantiate;
+            _queueMap = queueMap ?? new Dictionary<TKey, UniqueQueue<int, T>>();
+            _queueInstantiate = queueInstantiate ?? NewInstancer<UniqueQueue<int, T>>.Instantiate;
             _instantiate = instantiate ?? GetDefaultInstantiator() ?? DefaultAsyncInstantiator<T>.Get();
         }
 
@@ -58,9 +58,7 @@ namespace Unity.Pooling
                 ref var entry = ref entries[i];
 
                 if (entry.Next >= -1)
-                {
                     entry.Value?.Dispose();
-                }
             }
 
             _queueMap.Dispose();
@@ -78,8 +76,9 @@ namespace Unity.Pooling
 
                 while (countRemove > 0)
                 {
-                    var instance = queue.Dequeue();
-                    onReleased?.Invoke(instance);
+                    if (queue.TryDequeue(out var instance))
+                        onReleased?.Invoke(instance.Value);
+
                     countRemove--;
                 }
             }
@@ -90,11 +89,9 @@ namespace Unity.Pooling
             if (key is null)
                 throw new ArgumentNullException(nameof(key));
 
-            if (_queueMap.TryGetValue(key, out var queue))
-            {
-                if (queue.Count > 0)
-                    return queue.Dequeue();
-            }
+            if (_queueMap.TryGetValue(key, out var queue)
+                && queue.TryDequeue(out var instance))
+                return instance.Value;
 
             return await _instantiate();
         }
@@ -121,7 +118,7 @@ namespace Unity.Pooling
             }
 
             ReturnPreprocess(instance);
-            queue.Enqueue(instance);
+            queue.Enqueue(instance.ToKVPair());
         }
 
         protected abstract void ReturnPreprocess(T instance);

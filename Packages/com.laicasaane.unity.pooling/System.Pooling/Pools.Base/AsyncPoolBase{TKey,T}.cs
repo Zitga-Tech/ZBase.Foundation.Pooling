@@ -57,9 +57,7 @@ namespace System.Pooling
                 ref var entry = ref entries[i];
 
                 if (entry.Next >= -1)
-                {
                     entry.Value?.Dispose();
-                }
             }
 
             _queueMap.Dispose();
@@ -77,8 +75,9 @@ namespace System.Pooling
 
                 while (countRemove > 0)
                 {
-                    var instance = queue.Dequeue();
-                    onReleased?.Invoke(instance);
+                    if (queue.TryDequeue(out var instance))
+                        onReleased?.Invoke(instance);
+
                     countRemove--;
                 }
             }
@@ -89,11 +88,9 @@ namespace System.Pooling
             if (key is null)
                 throw new ArgumentNullException(nameof(key));
 
-            if (_queueMap.TryGetValue(key, out var queue))
-            {
-                if (queue.Count > 0)
-                    return queue.Dequeue();
-            }
+            if (_queueMap.TryGetValue(key, out var queue)
+                && queue.TryDequeue(out var instance))
+                return instance;
 
             return await _instantiate();
         }
