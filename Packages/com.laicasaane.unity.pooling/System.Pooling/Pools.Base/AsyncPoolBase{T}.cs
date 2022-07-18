@@ -34,9 +34,6 @@ namespace System.Pooling
 
         public int Count() => _queue.Count;
 
-        public AsyncDisposableContext<T> Poolable()
-            => new AsyncDisposableContext<T>(this);
-
         public void Dispose()
         {
             _queue.Dispose();

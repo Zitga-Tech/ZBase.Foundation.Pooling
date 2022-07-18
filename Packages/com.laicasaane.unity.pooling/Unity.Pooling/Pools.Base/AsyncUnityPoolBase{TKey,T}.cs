@@ -60,9 +60,6 @@ namespace Unity.Pooling
             return 0;
         }
 
-        public AsyncDisposableContext<TKey, T> Poolable()
-            => new AsyncDisposableContext<TKey, T>(this);
-
         public void Dispose()
         {
             _queueMap.GetUnsafe(out var entries, out var count);
