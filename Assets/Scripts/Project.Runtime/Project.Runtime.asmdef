@@ -4,8 +4,16 @@
     "references": [
         "Unity.TextMeshPro",
         "UnityEngine.UI",
+        "Collections.Pooled",
+        "Collections.Pooled.Generic",
+        "Collections.Pooled.Generic.Internals",
+        "System.Pooling",
+        "UniTask",
+        "UniTask.Addressables",
+        "Unity.Addressables",
         "Unity.Pooling",
-        "Unity.Pooling.Components"
+        "Unity.Pooling.Components",
+        "Unity.Pooling.Components.Addressables"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

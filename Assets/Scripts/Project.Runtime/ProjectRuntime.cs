@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Pooling;
 using Unity.Pooling.Components;
+using UnityEngine.AddressableAssets;
 
 namespace Project.Runtime
 {
@@ -11,5 +12,9 @@ namespace Project.Runtime
 
         [SerializeField]
         private UnityPrefab<string, GameObject> _prefabTKey;
+
+        private void Start()
+        {
+        }
     }
 }
