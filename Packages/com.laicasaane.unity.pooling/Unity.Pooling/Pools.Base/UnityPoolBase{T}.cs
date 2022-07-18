@@ -63,7 +63,7 @@ namespace Unity.Pooling
         public T Rent(string name)
         {
             var instance = Rent();
-            instance.name = name;
+            instance.name = name.NameOfIfNullOrEmpty<T>();
             return instance;
         }
 

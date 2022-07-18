@@ -23,7 +23,7 @@ namespace Unity.Pooling
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static T Instantiator()
         {
-            var go = new GameObject(typeof(T).Name);
+            var go = new GameObject(NameOf<T>.Value);
             var instance = go.AddComponent<T>();
             return instance;
         }

@@ -107,7 +107,7 @@ namespace Unity.Pooling
         public T Rent(TKey key, string name)
         {
             var instance = Rent(key);
-            instance.name = name;
+            instance.name = name.NameOfIfNullOrEmpty<T>();
             return instance;
         }
 

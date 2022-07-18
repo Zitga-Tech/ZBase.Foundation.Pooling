@@ -111,7 +111,7 @@ namespace Unity.Pooling
         public async UniTask<T> RentAsync(TKey key, string name)
         {
             var instance = await RentAsync(key);
-            instance.name = name;
+            instance.name = name.NameOfIfNullOrEmpty<T>();
             return instance;
         }
 

@@ -67,7 +67,7 @@ namespace Unity.Pooling
         public async UniTask<T> RentAsync(string name)
         {
             var instance = await RentAsync();
-            instance.name = name;
+            instance.name = name.NameOfIfNullOrEmpty<T>();
             return instance;
         }
 

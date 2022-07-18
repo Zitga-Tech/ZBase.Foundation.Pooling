@@ -38,6 +38,8 @@ namespace Unity.Pooling
             if ((uint)count > (uint)output.Length)
                 ThrowHelper.ThrowCountArgumentOutOfRange_ArgumentOutOfRange_Count();
 
+            name = name.NameOfIfNullOrEmpty<T>();
+
             for (var i = 0; i < count; i++)
             {
                 output[i] = pool.Rent(key, $"{name}_{i}");
@@ -68,6 +70,8 @@ namespace Unity.Pooling
             if (count < 0)
                 ThrowHelper.ThrowCountArgumentOutOfRange_ArgumentOutOfRange_NeedNonNegNum();
 
+            name = name.NameOfIfNullOrEmpty<T>();
+
             for (var i = 0; i < count; i++)
             {
                 output.Add(pool.Rent(key, $"{name}_{i}"));
@@ -89,6 +93,8 @@ namespace Unity.Pooling
 
             if (output is null)
                 throw new ArgumentNullException(nameof(output));
+
+            name = name.NameOfIfNullOrEmpty<T>();
 
             foreach (var key in keys)
             {
@@ -127,6 +133,8 @@ namespace Unity.Pooling
 
             if (output is null)
                 throw new ArgumentNullException(nameof(output));
+
+            name = name.NameOfIfNullOrEmpty<T>();
 
             for (int i = 0, len = keys.Length; i < len; i++)
             {
