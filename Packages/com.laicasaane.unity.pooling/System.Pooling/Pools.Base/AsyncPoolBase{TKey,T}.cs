@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using Collections.Pooled;
 using Collections.Pooled.Generic;
-using Collections.Pooled.Generic.Internals;
+using Collections.Pooled.Generic.Internals.Unsafe;
 using Cysharp.Threading.Tasks;
 
 namespace System.Pooling
@@ -64,11 +64,16 @@ namespace System.Pooling
 
         public void Dispose()
         {
-            var entries = CollectionInternals.GetRef(_queueMap).Entries;
+            _queueMap.GetUnsafe(out var entries, out var count);
 
-            for (int i = 0, len = entries.Length; i < len; i++)
+            for (int i = 0; i < count; i++)
             {
-                entries[i].Value.Dispose();
+                ref var entry = ref entries[i];
+
+                if (entry.Next >= -1)
+                {
+                    entry.Value?.Dispose();
+                }
             }
 
             _queueMap.Dispose();
