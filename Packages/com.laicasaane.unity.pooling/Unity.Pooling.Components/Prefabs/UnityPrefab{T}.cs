@@ -15,7 +15,7 @@ namespace Unity.Pooling.Components
         private int _prepoolingAmount;
 
         [SerializeField]
-        private PrepoolTiming _prepoolTiming;
+        private PrepoolTiming _prepoolTiming = PrepoolTiming.Update;
 
         public T Prefab
         {
