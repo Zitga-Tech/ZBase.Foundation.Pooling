@@ -1,23 +1,30 @@
 ﻿using System;
 using System.Pooling;
-using Collections.Pooled.Generic;
 
 namespace Unity.Pooling
 {
     public abstract partial class UnityPoolBase<T> : IUnityPool<T>, IInstantiatorSetable<T>, IDisposable
         where T : UnityEngine.Object
     {
-        private readonly Queue<T> _queue;
+        private readonly UniqueQueue<T> _queue;
         private Func<T> _instantiate;
 
         public UnityPoolBase()
-            : this(null)
+            : this(null, null)
+        { }
+
+        public UnityPoolBase(UniqueQueue<T> queue)
+            : this(queue, null)
         { }
 
         public UnityPoolBase(Func<T> instantiate)
+            : this(null, instantiate)
+        { }
+
+        public UnityPoolBase(UniqueQueue<T> queue, Func<T> instantiate)
         {
-            _queue = new Queue<T>();
-            _instantiate = instantiate ?? GetDefaultInstantiator();
+            _queue = queue ?? new UniqueQueue<T>();
+            _instantiate = instantiate ?? GetDefaultInstantiator() ?? DefaultInstantiator<T>.Get();
         }
 
         public void SetInstantiator(Func<T> instantiator)

@@ -11,10 +11,17 @@ namespace System.Collections.Generic.Pooling
             : base(Instantiate)
         { }
 
-        public HashSetPool(Func<HashSet<T>> instantiate)
-            : base(instantiate)
+        public HashSetPool(UniqueQueue<HashSet<T>> queue)
+            : base(queue, Instantiate)
         { }
 
+        public HashSetPool(Func<HashSet<T>> instantiate)
+            : base(null, instantiate ?? Instantiate)
+        { }
+
+        public HashSetPool(UniqueQueue<HashSet<T>> queue, Func<HashSet<T>> instantiate)
+            : base(queue, instantiate ?? Instantiate)
+        { }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override Func<HashSet<T>> GetDefaultInstantiator()
             => Instantiate;

@@ -6,11 +6,19 @@
         public static readonly Pool<T> Shared = new Pool<T>();
 
         public Pool()
-            : base(null)
+            : base(null, null)
+        { }
+
+        public Pool(UniqueQueue<T> queue)
+            : base(queue, null)
         { }
 
         public Pool(Func<T> instantiate)
-            : base(instantiate)
+            : base(null, instantiate)
+        { }
+
+        public Pool(UniqueQueue<T> queue, Func<T> instantiate)
+            : base(queue, instantiate)
         { }
     }
 }

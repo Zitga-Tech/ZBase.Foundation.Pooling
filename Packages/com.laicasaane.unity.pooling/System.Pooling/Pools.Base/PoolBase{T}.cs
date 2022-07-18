@@ -1,27 +1,35 @@
 ﻿using System.Runtime.CompilerServices;
-using Collections.Pooled.Generic;
 
 namespace System.Pooling
 {
     public abstract partial class PoolBase<T> : IPool<T>, IInstantiatorSetable<T>, IDisposable
         where T : class
     {
-        private readonly Queue<T> _queue;
+        private readonly UniqueQueue<T> _queue;
         private Func<T> _instantiate;
 
         public PoolBase()
-            : this(null)
+            : this(null, null)
+        { }
+
+        public PoolBase(UniqueQueue<T> queue)
+            : this(queue, null)
         { }
 
         public PoolBase(Func<T> instantiate)
+            : this(null, instantiate)
+        { }
+
+        public PoolBase(UniqueQueue<T> queue, Func<T> instantiate)
         {
-            _queue = new Queue<T>();
+            _queue = queue ?? new UniqueQueue<T>();
             _instantiate = instantiate ?? GetDefaultInstantiator() ?? DefaultInstantiator<T>.Get();
         }
 
         public void SetInstantiator(Func<T> instantiator)
             => _instantiate = instantiator ?? GetDefaultInstantiator();
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Count() => _queue.Count;
 
         public void Dispose()

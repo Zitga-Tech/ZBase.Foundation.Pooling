@@ -9,16 +9,29 @@ namespace Unity.Pooling
     public abstract partial class AsyncUnityPoolBase<TKey, T> : IAsyncUnityPool<TKey, T>, IAsyncInstantiatorSetable<T>, IDisposable
         where T : UnityEngine.Object
     {
-        private readonly Dictionary<TKey, Queue<T>> _queueMap;
+        private readonly Dictionary<TKey, UniqueQueue<T>> _queueMap;
+        private readonly Func<UniqueQueue<T>> _queueInstantiate;
         private UniTaskFunc<T> _instantiate;
 
         public AsyncUnityPoolBase()
-            : this(null)
+            : this(null, null, null)
         { }
 
         public AsyncUnityPoolBase(UniTaskFunc<T> instantiate)
+            : this(null, null, instantiate)
+        { }
+
+        public AsyncUnityPoolBase(Dictionary<TKey, UniqueQueue<T>> queueMap, Func<UniqueQueue<T>> queueInstantiate)
+            : this(queueMap, queueInstantiate, null)
+        { }
+
+        public AsyncUnityPoolBase(Dictionary<TKey, UniqueQueue<T>> queueMap
+            , Func<UniqueQueue<T>> queueInstantiate
+            , UniTaskFunc<T> instantiate
+        )
         {
-            _queueMap = new Dictionary<TKey, Queue<T>>();
+            _queueMap = queueMap ?? new Dictionary<TKey, UniqueQueue<T>>();
+            _queueInstantiate = queueInstantiate ?? NewInstancer<UniqueQueue<T>>.Instantiate;
             _instantiate = instantiate ?? GetDefaultInstantiator() ?? DefaultAsyncInstantiator<T>.Get();
         }
 
@@ -103,7 +116,7 @@ namespace Unity.Pooling
 
             if (_queueMap.TryGetValue(key, out var queue) == false)
             {
-                queue = new Queue<T>();
+                queue = _queueInstantiate();
                 _queueMap[key] = queue;
             }
 

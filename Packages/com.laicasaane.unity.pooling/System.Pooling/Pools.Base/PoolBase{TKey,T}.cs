@@ -7,16 +7,29 @@ namespace System.Pooling
     public abstract partial class PoolBase<TKey, T> : IPool<TKey, T>, IInstantiatorSetable<T>, IDisposable
         where T : class
     {
-        private readonly Dictionary<TKey, Queue<T>> _queueMap;
+        private readonly Dictionary<TKey, UniqueQueue<T>> _queueMap;
+        private readonly Func<UniqueQueue<T>> _queueInstantiate;
         private Func<T> _instantiate;
 
         public PoolBase()
-            : this(null)
+            : this(null, null, null)
         { }
 
         public PoolBase(Func<T> instantiate)
+            : this(null, null, instantiate)
+        { }
+
+        public PoolBase(Dictionary<TKey, UniqueQueue<T>> queueMap, Func<UniqueQueue<T>> queueInstantiate)
+            : this(queueMap, queueInstantiate, null)
+        { }
+
+        public PoolBase(Dictionary<TKey, UniqueQueue<T>> queueMap
+            , Func<UniqueQueue<T>> queueInstantiate
+            , Func<T> instantiate
+        )
         {
-            _queueMap = new Dictionary<TKey, Queue<T>>();
+            _queueMap = queueMap ?? new Dictionary<TKey, UniqueQueue<T>>();
+            _queueInstantiate = queueInstantiate ?? NewInstancer<UniqueQueue<T>>.Instantiate;
             _instantiate = instantiate ?? GetDefaultInstantiator() ?? DefaultInstantiator<T>.Get();
         }
 
@@ -94,7 +107,7 @@ namespace System.Pooling
 
             if (_queueMap.TryGetValue(key, out var queue) == false)
             {
-                queue = new Queue<T>();
+                queue = _queueInstantiate();
                 _queueMap[key] = queue;
             }
 

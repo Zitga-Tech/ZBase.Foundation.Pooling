@@ -12,8 +12,16 @@ namespace Collections.Pooled.Generic.Pooling
             : base(Instantiate)
         { }
 
+        public ListPool(UniqueQueue<List<T>> queue)
+            : base(queue, Instantiate)
+        { }
+
         public ListPool(Func<List<T>> instantiate)
-            : base(instantiate)
+            : base(null, instantiate ?? Instantiate)
+        { }
+
+        public ListPool(UniqueQueue<List<T>> queue, Func<List<T>> instantiate)
+            : base(queue, instantiate ?? Instantiate)
         { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

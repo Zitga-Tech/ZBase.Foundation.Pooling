@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Pooling;
-using Collections.Pooled.Generic;
 using Cysharp.Threading.Tasks;
 
 namespace Unity.Pooling
@@ -8,16 +7,24 @@ namespace Unity.Pooling
     public abstract partial class AsyncUnityPoolBase<T> : IAsyncUnityPool<T>, IAsyncInstantiatorSetable<T>, IDisposable
         where T : UnityEngine.Object
     {
-        private readonly Queue<T> _queue;
+        private readonly UniqueQueue<T> _queue;
         private UniTaskFunc<T> _instantiate;
 
         public AsyncUnityPoolBase()
-            : this(null)
+            : this(null, null)
+        { }
+
+        public AsyncUnityPoolBase(UniqueQueue<T> queue)
+            : this(queue, null)
         { }
 
         public AsyncUnityPoolBase(UniTaskFunc<T> instantiate)
+            : this(null, instantiate)
+        { }
+
+        public AsyncUnityPoolBase(UniqueQueue<T> queue, UniTaskFunc<T> instantiate)
         {
-            _queue = new Queue<T>();
+            _queue = queue ?? new UniqueQueue<T>();
             _instantiate = instantiate ?? GetDefaultInstantiator();
         }
 

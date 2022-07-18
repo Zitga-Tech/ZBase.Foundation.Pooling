@@ -13,7 +13,15 @@ namespace Collections.Pooled.Generic.Pooling
         { }
 
         public DictionaryPool(Func<Dictionary<TKey, TValue>> instantiate)
-            : base(instantiate)
+            : base(instantiate ?? Instantiate)
+        { }
+
+        public DictionaryPool(UniqueQueue<Dictionary<TKey, TValue>> queue)
+            : base(queue, Instantiate)
+        { }
+
+        public DictionaryPool(UniqueQueue<Dictionary<TKey, TValue>> queue, Func<Dictionary<TKey, TValue>> instantiate)
+            : base(queue, instantiate ?? Instantiate)
         { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

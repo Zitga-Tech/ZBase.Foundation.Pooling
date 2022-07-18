@@ -1,5 +1,4 @@
 ﻿using System.Runtime.CompilerServices;
-using Collections.Pooled.Generic;
 using Cysharp.Threading.Tasks;
 
 namespace System.Pooling
@@ -7,22 +6,31 @@ namespace System.Pooling
     public abstract partial class AsyncPoolBase<T> : IAsyncPool<T>, IAsyncInstantiatorSetable<T>, IDisposable
         where T : class
     {
-        private readonly Queue<T> _queue;
+        private readonly UniqueQueue<T> _queue;
         private UniTaskFunc<T> _instantiate;
 
         public AsyncPoolBase()
-            : this(null)
+            : this(null, null)
+        { }
+
+        public AsyncPoolBase(UniqueQueue<T> queue)
+            : this(queue, null)
         { }
 
         public AsyncPoolBase(UniTaskFunc<T> instantiate)
+            : this(null, instantiate)
+        { }
+
+        public AsyncPoolBase(UniqueQueue<T> queue, UniTaskFunc<T> instantiate)
         {
-            _queue = new Queue<T>();
+            _queue = queue ?? new UniqueQueue<T>();
             _instantiate = instantiate ?? GetDefaultInstantiator() ?? DefaultAsyncInstantiator<T>.Get();
         }
 
         public void SetInstantiator(UniTaskFunc<T> instantiator)
             => _instantiate = instantiator ?? GetDefaultInstantiator();
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Count() => _queue.Count;
 
         public void Dispose()
@@ -46,7 +54,9 @@ namespace System.Pooling
         public async UniTask<T> RentAsync()
         {
             if (_queue.Count > 0)
+            {
                 return _queue.Dequeue();
+            }
 
             return await _instantiate();
         }

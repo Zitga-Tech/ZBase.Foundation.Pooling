@@ -15,6 +15,14 @@ namespace System.Collections.Generic.Pooling
             : base(instantiate)
         { }
 
+        public DictionaryPool(UniqueQueue<Dictionary<TKey, TValue>> queue)
+            : base(queue, Instantiate)
+        { }
+
+        public DictionaryPool(UniqueQueue<Dictionary<TKey, TValue>> queue, Func<Dictionary<TKey, TValue>> instantiate)
+            : base(queue, instantiate)
+        { }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override Func<Dictionary<TKey, TValue>> GetDefaultInstantiator()
             => Instantiate;
