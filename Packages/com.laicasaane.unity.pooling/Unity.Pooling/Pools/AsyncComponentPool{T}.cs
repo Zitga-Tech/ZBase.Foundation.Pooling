@@ -10,6 +10,22 @@ namespace Unity.Pooling
     {
         public static readonly AsyncComponentPool<T> Shared  = new AsyncComponentPool<T>();
 
+        public AsyncComponentPool()
+            : base(null, null)
+        { }
+
+        public AsyncComponentPool(UniqueQueue<int, T> queue)
+            : base(queue, null)
+        { }
+
+        public AsyncComponentPool(UniTaskFunc<T> instantiate)
+            : base(null, instantiate)
+        { }
+
+        public AsyncComponentPool(UniqueQueue<int, T> queue, UniTaskFunc<T> instantiate)
+            : base(queue, instantiate)
+        { }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override void ReturnPreprocess(T instance)
         {

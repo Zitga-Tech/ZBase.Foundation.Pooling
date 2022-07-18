@@ -9,6 +9,22 @@ namespace Unity.Pooling
     {
         public static readonly AsyncGameObjectPool Shared  = new AsyncGameObjectPool();
 
+        public AsyncGameObjectPool()
+            : base(null, null)
+        { }
+
+        public AsyncGameObjectPool(UniqueQueue<int, GameObject> queue)
+            : base(queue, null)
+        { }
+
+        public AsyncGameObjectPool(UniTaskFunc<GameObject> instantiate)
+            : base(null, instantiate)
+        { }
+
+        public AsyncGameObjectPool(UniqueQueue<int, GameObject> queue, UniTaskFunc<GameObject> instantiate)
+            : base(queue, instantiate)
+        { }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override void ReturnPreprocess(GameObject instance)
         {

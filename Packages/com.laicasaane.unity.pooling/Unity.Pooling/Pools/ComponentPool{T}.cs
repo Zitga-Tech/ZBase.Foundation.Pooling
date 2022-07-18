@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Pooling;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -8,6 +9,22 @@ namespace Unity.Pooling
         where T : UnityEngine.Component
     {
         public static readonly ComponentPool<T> Shared  = new ComponentPool<T>();
+
+        public ComponentPool()
+            : base(null, null)
+        { }
+
+        public ComponentPool(UniqueQueue<int, T> queue)
+            : base(queue, null)
+        { }
+
+        public ComponentPool(Func<T> instantiate)
+            : base(null, instantiate)
+        { }
+
+        public ComponentPool(UniqueQueue<int, T> queue, Func<T> instantiate)
+            : base(queue, instantiate)
+        { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override void ReturnPreprocess(T instance)
