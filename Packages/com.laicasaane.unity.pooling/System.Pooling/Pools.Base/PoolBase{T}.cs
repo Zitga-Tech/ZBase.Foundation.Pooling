@@ -1,5 +1,4 @@
-﻿using System.Buffers;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using Collections.Pooled.Generic;
 
 namespace System.Pooling
@@ -11,21 +10,13 @@ namespace System.Pooling
         private Func<T> _instantiate;
 
         public PoolBase()
-            : this(null, ArrayPool<T>.Shared)
+            : this(null)
         { }
 
         public PoolBase(Func<T> instantiate)
-            : this(instantiate, ArrayPool<T>.Shared)
-        { }
-
-        public PoolBase(ArrayPool<T> pool)
-            : this(null, pool)
-        { }
-
-        public PoolBase(Func<T> instantiate, ArrayPool<T> pool)
         {
+            _queue = new Queue<T>();
             _instantiate = instantiate ?? GetDefaultInstantiator() ?? DefaultInstantiator<T>.Get();
-            _queue = new Queue<T>(pool ?? ArrayPool<T>.Shared);
         }
 
         public void SetInstantiator(Func<T> instantiator)

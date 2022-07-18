@@ -1,6 +1,4 @@
-﻿using System.Buffers;
-using System.Runtime.CompilerServices;
-using Collections.Pooled;
+﻿using System.Runtime.CompilerServices;
 using Collections.Pooled.Generic;
 using Collections.Pooled.Generic.Internals.Unsafe;
 
@@ -9,39 +7,17 @@ namespace System.Pooling
     public abstract partial class PoolBase<TKey, T> : IPool<TKey, T>, IInstantiatorSetable<T>, IDisposable
         where T : class
     {
-        private readonly ArrayPool<T> _pool;
         private readonly Dictionary<TKey, Queue<T>> _queueMap;
         private Func<T> _instantiate;
 
         public PoolBase()
-            : this(null, ArrayPool<T>.Shared)
-        { }
-
-        public PoolBase(ArrayPool<T> pool)
-            : this(null, pool)
+            : this(null)
         { }
 
         public PoolBase(Func<T> instantiate)
-            : this(instantiate, ArrayPool<T>.Shared)
-        { }
-
-        public PoolBase(Func<T> instantiate, ArrayPool<T> pool)
-            : this(instantiate, pool, ArrayPool<int>.Shared, ArrayPool<Entry<TKey, Queue<T>>>.Shared)
-        { }
-
-        public PoolBase(ArrayPool<T> pool, ArrayPool<int> poolBucket, ArrayPool<Entry<TKey, Queue<T>>> poolEntry)
-            : this(null, pool, poolBucket, poolEntry)
-        { }
-
-        public PoolBase(Func<T> instantiate, ArrayPool<T> pool, ArrayPool<int> poolBucket, ArrayPool<Entry<TKey, Queue<T>>> poolEntry)
         {
+            _queueMap = new Dictionary<TKey, Queue<T>>();
             _instantiate = instantiate ?? GetDefaultInstantiator() ?? DefaultInstantiator<T>.Get();
-            _pool = pool ?? ArrayPool<T>.Shared;
-
-            _queueMap = new Dictionary<TKey, Queue<T>>(
-                poolBucket ?? ArrayPool<int>.Shared
-                , poolEntry ?? ArrayPool<Entry<TKey, Queue<T>>>.Shared
-            );
         }
 
         public void SetInstantiator(Func<T> instantiator)
@@ -118,7 +94,7 @@ namespace System.Pooling
 
             if (_queueMap.TryGetValue(key, out var queue) == false)
             {
-                queue = new Queue<T>(_pool);
+                queue = new Queue<T>();
                 _queueMap[key] = queue;
             }
 

@@ -1,5 +1,4 @@
-﻿using System.Buffers;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using Collections.Pooled.Generic;
 using Cysharp.Threading.Tasks;
 
@@ -12,21 +11,13 @@ namespace System.Pooling
         private UniTaskFunc<T> _instantiate;
 
         public AsyncPoolBase()
-            : this(null, ArrayPool<T>.Shared)
+            : this(null)
         { }
 
         public AsyncPoolBase(UniTaskFunc<T> instantiate)
-            : this(instantiate, ArrayPool<T>.Shared)
-        { }
-
-        public AsyncPoolBase(ArrayPool<T> pool)
-            : this(null, pool)
-        { }
-
-        public AsyncPoolBase(UniTaskFunc<T> instantiate, ArrayPool<T> pool)
         {
+            _queue = new Queue<T>();
             _instantiate = instantiate ?? GetDefaultInstantiator() ?? DefaultAsyncInstantiator<T>.Get();
-            _queue = new Queue<T>(pool ?? ArrayPool<T>.Shared);
         }
 
         public void SetInstantiator(UniTaskFunc<T> instantiator)

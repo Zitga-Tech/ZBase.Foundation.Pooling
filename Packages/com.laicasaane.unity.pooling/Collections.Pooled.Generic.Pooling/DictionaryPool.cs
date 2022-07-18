@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Buffers;
 using System.Pooling;
 using System.Runtime.CompilerServices;
 
@@ -10,19 +9,11 @@ namespace Collections.Pooled.Generic.Pooling
         public static readonly DictionaryPool<TKey, TValue> Shared = new DictionaryPool<TKey, TValue>();
 
         public DictionaryPool()
-            : base(Instantiate, ArrayPool<Dictionary<TKey, TValue>>.Shared)
+            : base(Instantiate)
         { }
 
         public DictionaryPool(Func<Dictionary<TKey, TValue>> instantiate)
-            : base(instantiate, ArrayPool<Dictionary<TKey, TValue>>.Shared)
-        { }
-
-        public DictionaryPool(ArrayPool<Dictionary<TKey, TValue>> pool)
-            : base(Instantiate, pool)
-        { }
-
-        public DictionaryPool(Func<Dictionary<TKey, TValue>> instantiate, ArrayPool<Dictionary<TKey, TValue>> pool)
-            : base(instantiate, pool)
+            : base(instantiate)
         { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -1,5 +1,4 @@
-﻿using System.Buffers;
-using System.Pooling;
+﻿using System.Pooling;
 using System.Runtime.CompilerServices;
 
 namespace System.Collections.Generic.Pooling
@@ -9,19 +8,11 @@ namespace System.Collections.Generic.Pooling
         public static readonly StackPool<T> Shared = new StackPool<T>();
 
         public StackPool()
-            : base(Instantiate, ArrayPool<Stack<T>>.Shared)
+            : base(Instantiate)
         { }
 
         public StackPool(Func<Stack<T>> instantiate)
-            : base(instantiate, ArrayPool<Stack<T>>.Shared)
-        { }
-
-        public StackPool(ArrayPool<Stack<T>> pool)
-            : base(Instantiate, pool)
-        { }
-
-        public StackPool(Func<Stack<T>> instantiate, ArrayPool<Stack<T>> pool)
-            : base(instantiate, pool)
+            : base(instantiate)
         { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

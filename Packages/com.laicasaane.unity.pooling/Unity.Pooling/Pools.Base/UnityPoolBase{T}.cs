@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Buffers;
 using System.Pooling;
 using Collections.Pooled.Generic;
 
@@ -12,21 +11,13 @@ namespace Unity.Pooling
         private Func<T> _instantiate;
 
         public UnityPoolBase()
-            : this(null, ArrayPool<T>.Shared)
+            : this(null)
         { }
 
         public UnityPoolBase(Func<T> instantiate)
-            : this(instantiate, ArrayPool<T>.Shared)
-        { }
-
-        public UnityPoolBase(ArrayPool<T> pool)
-            : this(null, pool)
-        { }
-
-        public UnityPoolBase(Func<T> instantiate, ArrayPool<T> pool)
         {
+            _queue = new Queue<T>();
             _instantiate = instantiate ?? GetDefaultInstantiator();
-            _queue = new Queue<T>(pool ?? ArrayPool<T>.Shared);
         }
 
         public void SetInstantiator(Func<T> instantiator)

@@ -1,6 +1,4 @@
-﻿using System.Buffers;
-using System.Runtime.CompilerServices;
-using Collections.Pooled;
+﻿using System.Runtime.CompilerServices;
 using Collections.Pooled.Generic;
 using Collections.Pooled.Generic.Internals.Unsafe;
 using Cysharp.Threading.Tasks;
@@ -10,39 +8,17 @@ namespace System.Pooling
     public abstract partial class AsyncPoolBase<TKey, T> : IAsyncPool<TKey, T>, IAsyncInstantiatorSetable<T>, IDisposable
         where T : class
     {
-        private readonly ArrayPool<T> _pool;
         private readonly Dictionary<TKey, Queue<T>> _queueMap;
         private UniTaskFunc<T> _instantiate;
 
         public AsyncPoolBase()
-            : this(null, ArrayPool<T>.Shared)
+            : this(null)
         { }
         
-        public AsyncPoolBase(ArrayPool<T> pool)
-            : this(null, pool)
-        { }
-
         public AsyncPoolBase(UniTaskFunc<T> instantiate)
-            : this(instantiate, ArrayPool<T>.Shared)
-        { }
-
-        public AsyncPoolBase(UniTaskFunc<T> instantiate, ArrayPool<T> pool)
-            : this(instantiate, pool, ArrayPool<int>.Shared, ArrayPool<Entry<TKey, Queue<T>>>.Shared)
-        { }
-
-        public AsyncPoolBase(ArrayPool<T> pool, ArrayPool<int> poolBucket, ArrayPool<Entry<TKey, Queue<T>>> poolEntry)
-            : this(null, pool, poolBucket, poolEntry)
-        { }
-
-        public AsyncPoolBase(UniTaskFunc<T> instantiate, ArrayPool<T> pool, ArrayPool<int> poolBucket, ArrayPool<Entry<TKey, Queue<T>>> poolEntry)
         {
+            _queueMap = new Dictionary<TKey, Queue<T>>();
             _instantiate = instantiate ?? GetDefaultInstantiator() ?? DefaultAsyncInstantiator<T>.Get();
-            _pool = pool ?? ArrayPool<T>.Shared;
-
-            _queueMap = new Dictionary<TKey, Queue<T>>(
-                poolBucket ?? ArrayPool<int>.Shared
-                , poolEntry ?? ArrayPool<Entry<TKey, Queue<T>>>.Shared
-            );
         }
 
         public void SetInstantiator(UniTaskFunc<T> instantiator)
@@ -119,7 +95,7 @@ namespace System.Pooling
 
             if (_queueMap.TryGetValue(key, out var queue) == false)
             {
-                queue = new Queue<T>(_pool);
+                queue = new Queue<T>();
                 _queueMap[key] = queue;
             }
 

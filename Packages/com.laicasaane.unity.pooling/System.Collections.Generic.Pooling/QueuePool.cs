@@ -1,5 +1,4 @@
-﻿using System.Buffers;
-using System.Pooling;
+﻿using System.Pooling;
 using System.Runtime.CompilerServices;
 
 namespace System.Collections.Generic.Pooling
@@ -9,19 +8,11 @@ namespace System.Collections.Generic.Pooling
         public static readonly QueuePool<T> Shared = new QueuePool<T>();
 
         public QueuePool()
-            : base(Instantiate, ArrayPool<Queue<T>>.Shared)
+            : base(Instantiate)
         { }
 
         public QueuePool(Func<Queue<T>> instantiate)
-            : base(instantiate, ArrayPool<Queue<T>>.Shared)
-        { }
-
-        public QueuePool(ArrayPool<Queue<T>> pool)
-            : base(Instantiate, pool)
-        { }
-
-        public QueuePool(Func<Queue<T>> instantiate, ArrayPool<Queue<T>> pool)
-            : base(instantiate, pool)
+            : base(instantiate)
         { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
