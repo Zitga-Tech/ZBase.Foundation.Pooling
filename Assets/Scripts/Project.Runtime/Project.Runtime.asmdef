@@ -4,7 +4,8 @@
     "references": [
         "Unity.TextMeshPro",
         "UnityEngine.UI",
-        "Unity.Pooling"
+        "Unity.Pooling",
+        "Unity.Pooling.Components"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
