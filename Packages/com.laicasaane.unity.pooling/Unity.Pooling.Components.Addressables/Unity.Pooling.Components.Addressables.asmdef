@@ -1,0 +1,30 @@
+{
+    "name": "Unity.Pooling.Components.Addressables",
+    "rootNamespace": "Unity.Pooling.Components.Addressables",
+    "references": [
+        "Collections.Pooled",
+        "Collections.Pooled.Generic",
+        "Collections.Pooled.Generic.Internals",
+        "System.Pooling",
+        "Unity.Pooling",
+        "Unity.Pooling.Components",
+        "UniTask",
+        "UniTask.Addressables",
+        "Unity.Addressables"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.addressables",
+            "expression": "",
+            "define": "UNITY_POOLING_COMPONENTS_ADDRESSABLES"
+        }
+    ],
+    "noEngineReferences": false
+}
