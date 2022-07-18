@@ -29,12 +29,10 @@ namespace Unity.Pooling.Components
             get => _pool;
         }
 
-        protected virtual void Start()
+        protected virtual void Awake()
         {
             _pool = new TPool();
             _pool.SetInstantiator(Instantiate);
-
-            Initialize();
         }
 
         protected virtual void OnDestroy()
@@ -91,8 +89,6 @@ namespace Unity.Pooling.Components
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T Rent(string name)
             => _pool.Rent(name);
-
-        protected virtual void Initialize() { }
 
         protected abstract void ReleaseInstance(T instance);
     }

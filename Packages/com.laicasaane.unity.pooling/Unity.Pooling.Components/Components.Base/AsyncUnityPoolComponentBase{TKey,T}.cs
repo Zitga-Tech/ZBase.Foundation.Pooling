@@ -29,12 +29,10 @@ namespace Unity.Pooling.Components
             get => _pool;
         }
 
-        protected virtual void Start()
+        protected virtual void Awake()
         {
             _pool = new TPool();
             _pool.SetInstantiator(InstantiateAsync);
-
-            Initialize();
         }
 
         protected virtual void OnDestroy()
@@ -84,8 +82,6 @@ namespace Unity.Pooling.Components
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Count(TKey key)
             => _pool.Count(key);
-
-        protected virtual void Initialize() { }
 
         protected abstract UniTask<T> InstantiateAsync();
 
