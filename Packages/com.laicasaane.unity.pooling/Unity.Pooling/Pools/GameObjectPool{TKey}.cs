@@ -8,8 +8,6 @@ namespace Unity.Pooling
 {
     public class GameObjectPool<TKey> : UnityPoolBase<TKey, GameObject>
     {
-        public static readonly GameObjectPool<TKey> Shared  = new GameObjectPool<TKey>();
-
         public GameObjectPool()
             : base(null, null, null)
         { }

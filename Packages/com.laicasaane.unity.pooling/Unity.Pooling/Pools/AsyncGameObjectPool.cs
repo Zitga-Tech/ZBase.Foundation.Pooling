@@ -7,8 +7,6 @@ namespace Unity.Pooling
 {
     public sealed class AsyncGameObjectPool : AsyncUnityPoolBase<GameObject>
     {
-        public static readonly AsyncGameObjectPool Shared  = new AsyncGameObjectPool();
-
         public AsyncGameObjectPool()
             : base(null, null)
         { }

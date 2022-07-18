@@ -9,8 +9,6 @@ namespace Unity.Pooling
 {
     public class AsyncGameObjectPool<TKey> : AsyncUnityPoolBase<TKey, GameObject>
     {
-        public static readonly AsyncGameObjectPool<TKey> Shared  = new AsyncGameObjectPool<TKey>();
-
         public AsyncGameObjectPool()
             : base(null, null, null)
         { }

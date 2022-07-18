@@ -9,8 +9,6 @@ namespace Unity.Pooling
     public class ComponentPool<TKey, T> : UnityPoolBase<TKey, T>
         where T : UnityEngine.Component
     {
-        public static readonly ComponentPool<TKey, T> Shared  = new ComponentPool<TKey, T>();
-
         public ComponentPool()
             : base(null, null, null)
         { }

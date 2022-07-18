@@ -10,8 +10,6 @@ namespace Unity.Pooling
     public class AsyncComponentPool<TKey, T> : AsyncUnityPoolBase<TKey, T>
         where T : UnityEngine.Component
     {
-        public static readonly AsyncComponentPool<TKey, T> Shared  = new AsyncComponentPool<TKey, T>();
-
         public AsyncComponentPool()
             : base(null, null, null)
         { }

@@ -7,8 +7,6 @@ namespace Unity.Pooling
 {
     public sealed class GameObjectPool : UnityPoolBase<GameObject>
     {
-        public static readonly GameObjectPool Shared  = new GameObjectPool();
-
         public GameObjectPool()
             : base(null, null)
         { }
