@@ -10,7 +10,8 @@
         "Unity.Pooling.Components",
         "UniTask",
         "UniTask.Addressables",
-        "Unity.Addressables"
+        "Unity.Addressables",
+        "Unity.ResourceManager"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
