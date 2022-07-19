@@ -9,7 +9,7 @@ namespace Unity.Pooling.Components
         where T : class
     {
         [SerializeField]
-        private T _prefab;
+        private T _source;
 
         [SerializeField]
         private int _prepoolAmount;
@@ -23,10 +23,10 @@ namespace Unity.Pooling.Components
         public T Source
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => _prefab;
+            get => _source;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => _prefab = value;
+            set => _source = value;
         }
 
         public int PrepoolAmount

@@ -6,7 +6,7 @@ namespace Unity.Pooling.Components
 {
     [Serializable]
     public abstract class Prefab<TKey, T> : Prefab<T>, IPrefab<TKey, T>
-        where T : UnityEngine.Object
+        where T : class
     {
         [SerializeReference]
         private TKey _key;

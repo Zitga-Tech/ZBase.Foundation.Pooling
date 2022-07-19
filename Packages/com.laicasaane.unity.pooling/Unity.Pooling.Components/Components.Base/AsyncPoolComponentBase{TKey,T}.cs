@@ -9,13 +9,12 @@ namespace Unity.Pooling.Components
     public abstract class AsyncPoolComponentBase<TKey, T, TPrefab, TPool>
         : MonoBehaviour, IAsyncPoolComponent<TKey, T, TPrefab, TPool>
         where T : UnityEngine.Object
-        where TPrefab : IPrefab<TKey, T>
+        where TPrefab : IPrefab
         where TPool : IAsyncUnityPool<TKey, T>, IAsyncInstantiatorSetable<T>, IDisposable, new()
     {
         [SerializeField]
         private TPrefab _prefab;
 
-        private readonly UnityPrepooler<TKey, T, TPrefab, TPool> _prepooling = new();
         private TPool _pool;
 
         public TPrefab Prefab
@@ -42,10 +41,6 @@ namespace Unity.Pooling.Components
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async UniTask Prepool()
-            => await _prepooling.Prepool(_prefab, _pool, this.transform);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ReleaseInstances(TKey key, int keep, Action<T> onReleased = null)
             => _pool.ReleaseInstances(key, keep, onReleased ?? ReleaseInstance);
 
@@ -64,6 +59,8 @@ namespace Unity.Pooling.Components
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Count(TKey key)
             => _pool.Count(key);
+
+        public abstract UniTask Prepool();
 
         protected abstract UniTask<T> InstantiateAsync();
 

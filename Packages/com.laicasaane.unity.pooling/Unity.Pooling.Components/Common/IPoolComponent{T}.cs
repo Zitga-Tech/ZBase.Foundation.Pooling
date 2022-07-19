@@ -2,8 +2,8 @@
 {
     public interface IPoolComponent<T, TPrefab, TPool>
         : IPoolComponent, IUnityPool<T>
-        where T : UnityEngine.Object
-        where TPrefab : IPrefab<T>
+        where T : class
+        where TPrefab : IPrefab
         where TPool : IUnityPool<T>
     {
         TPrefab Prefab { get; }
