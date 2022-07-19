@@ -18,7 +18,10 @@ namespace Unity.Pooling.Components
         private int _prepoolingAmount;
 
         [SerializeField]
-        private PrepoolTiming _prepoolTiming = PrepoolTiming.Update;
+        private PrepoolTiming _prepoolTiming = PrepoolTiming.NextFrame;
+
+        [SerializeField]
+        private Transform _parent;
 
         public TKey Key
         {
@@ -54,6 +57,15 @@ namespace Unity.Pooling.Components
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => _prepoolTiming = value;
+        }
+
+        public Transform Parent
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _parent;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set => _parent = value;
         }
     }
 }

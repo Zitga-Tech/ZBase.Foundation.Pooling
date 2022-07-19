@@ -1,9 +1,6 @@
-﻿using Cysharp.Threading.Tasks;
-
-namespace Unity.Pooling.Components
+﻿namespace Unity.Pooling.Components
 {
-    public interface IUnityPoolComponent
+    public interface IUnityPoolComponent : IPrepoolable
     {
-        UniTask Prepool();
     }
 }

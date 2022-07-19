@@ -15,6 +15,7 @@ namespace Unity.Pooling.Components
         [SerializeField]
         private TPrefab _prefab;
 
+        private readonly UnityPrepooler<T, TPrefab, TPool> _prepooling = new();
         private TPool _pool;
 
         public TPrefab Prefab
@@ -40,27 +41,9 @@ namespace Unity.Pooling.Components
             _pool.Dispose();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async UniTask Prepool()
-        {
-            if (_pool == null)
-                throw new NullReferenceException(nameof(_pool));
-
-            var prefab = Prefab;
-
-            if (prefab.Validate() == false || prefab.PrepoolingAmount <= 0)
-                return;
-
-            var timing = prefab.PrepoolTiming.ToPlayerLoopTiming();
-            var prefabObject = prefab.Prefab;
-
-            for (int i = 0, count = prefab.PrepoolingAmount; i < count; i++)
-            {
-                var instance = Instantiate(prefabObject);
-                _pool.Return(instance);
-
-                await UniTask.Yield(timing);
-            }
-        }
+            => await _prepooling.Prepool(_prefab, _pool, this.transform);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ReleaseInstances(int keep, Action<T> onReleased = null)

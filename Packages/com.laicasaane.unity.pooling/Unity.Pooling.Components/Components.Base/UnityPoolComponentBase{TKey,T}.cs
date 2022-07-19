@@ -15,6 +15,8 @@ namespace Unity.Pooling.Components
         [SerializeField]
         private TPrefab _prefab;
 
+        private readonly UnityPrepooler<TKey, T, TPrefab, TPool> _prepooling = new();
+        private readonly UnityInstantiator<T, TPrefab> _instantiator = new();
         private TPool _pool;
 
         public TPrefab Prefab
@@ -40,36 +42,13 @@ namespace Unity.Pooling.Components
             _pool.Dispose();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private T Instantiate()
-        {
-            if (_prefab.Validate() == false)
-                throw new InvalidOperationException(nameof(_prefab));
+            => _instantiator.Instantiate(_prefab, this.transform);
 
-            return Instantiate(_prefab.Prefab);
-        }
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async UniTask Prepool()
-        {
-            if (_pool == null)
-                throw new NullReferenceException(nameof(_pool));
-
-            var prefab = Prefab;
-
-            if (prefab.Validate() == false || prefab.PrepoolingAmount <= 0)
-                return;
-
-            var timing = prefab.PrepoolTiming.ToPlayerLoopTiming();
-            var prefabObject = prefab.Prefab;
-            var key = prefab.Key;
-
-            for (int i = 0, count = prefab.PrepoolingAmount; i < count; i++)
-            {
-                var instance = Instantiate(prefabObject);
-                _pool.Return(key, instance);
-
-                await UniTask.Yield(timing);
-            }
-        }
+            => await _prepooling.Prepool(_prefab, _pool, this.transform);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ReleaseInstances(TKey key, int keep, Action<T> onReleased = null)
