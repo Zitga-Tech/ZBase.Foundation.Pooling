@@ -3,7 +3,7 @@
 namespace Unity.Pooling.Components
 {
     public abstract class GameObjectPoolComponent<TKey>
-        : UnityPoolComponentBase<TKey, GameObject, GameObjectPrefab<TKey>, GameObjectPool<TKey>>
+        : PoolComponentBase<TKey, GameObject, GameObjectPrefab<TKey>, GameObjectPool<TKey>>
     {
         protected sealed override void ReleaseInstance(GameObject instance)
         {

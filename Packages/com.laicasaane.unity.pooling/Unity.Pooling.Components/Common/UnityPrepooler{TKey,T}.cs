@@ -7,7 +7,7 @@ namespace Unity.Pooling.Components
 {
     public class UnityPrepooler<TKey, T, TPrefab, TPool>
         where T : UnityEngine.Object
-        where TPrefab : IUnityPrefab<TKey, T>
+        where TPrefab : IPrefab<TKey, T>
         where TPool : IReturnable<TKey, T>
     {
         public async UniTask Prepool(TPrefab prefab, TPool pool, Transform defaultParent)
@@ -15,18 +15,18 @@ namespace Unity.Pooling.Components
             if (pool == null)
                 throw new NullReferenceException(nameof(pool));
 
-            if (prefab.Validate() == false || prefab.PrepoolingAmount <= 0)
+            if (prefab.Validate() == false || prefab.PrepoolAmount <= 0)
                 return;
 
-            var prefabObject = prefab.Prefab;
+            var source = prefab.Source;
             var key = prefab.Key;
             var parent = prefab.Parent ? prefab.Parent : defaultParent;
 
-            if (prefab.PrepoolTiming == PrepoolTiming.NextFrame)
+            if (prefab.PrepoolTiming == Timing.NextFrame)
             {
-                for (int i = 0, count = prefab.PrepoolingAmount; i < count; i++)
+                for (int i = 0, count = prefab.PrepoolAmount; i < count; i++)
                 {
-                    var instance = UnityEngine.Object.Instantiate(prefabObject, parent, true);
+                    var instance = UnityEngine.Object.Instantiate(source, parent, true);
                     pool.Return(key, instance);
 
                     await UniTask.NextFrame();
@@ -36,9 +36,9 @@ namespace Unity.Pooling.Components
             {
                 var timing = prefab.PrepoolTiming.ToPlayerLoopTiming();
 
-                for (int i = 0, count = prefab.PrepoolingAmount; i < count; i++)
+                for (int i = 0, count = prefab.PrepoolAmount; i < count; i++)
                 {
-                    var instance = UnityEngine.Object.Instantiate(prefabObject, parent, true);
+                    var instance = UnityEngine.Object.Instantiate(source, parent, true);
                     pool.Return(key, instance);
 
                     await UniTask.Yield(timing);

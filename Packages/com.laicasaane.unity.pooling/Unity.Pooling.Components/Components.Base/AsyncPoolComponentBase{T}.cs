@@ -6,16 +6,16 @@ using UnityEngine;
 
 namespace Unity.Pooling.Components
 {
-    public abstract class AsyncUnityPoolComponentBase<TKey, T, TPrefab, TPool>
-        : MonoBehaviour, IAsyncUnityPoolComponent<TKey, T, TPrefab, TPool>
+    public abstract class AsyncPoolComponentBase<T, TPrefab, TPool>
+        : MonoBehaviour, IAsyncPoolComponent<T, TPrefab, TPool>
         where T : UnityEngine.Object
-        where TPrefab : IUnityPrefab<TKey, T>
-        where TPool : IAsyncUnityPool<TKey, T>, IAsyncInstantiatorSetable<T>, IDisposable, new()
+        where TPrefab : IPrefab<T>
+        where TPool : IAsyncUnityPool<T>, IAsyncInstantiatorSetable<T>, IDisposable, new()
     {
         [SerializeField]
         private TPrefab _prefab;
 
-        private readonly UnityPrepooler<TKey, T, TPrefab, TPool> _prepooling = new();
+        private readonly UnityPrepooler<T, TPrefab, TPool> _prepooling = new();
         private TPool _pool;
 
         public TPrefab Prefab
@@ -46,24 +46,22 @@ namespace Unity.Pooling.Components
             => await _prepooling.Prepool(_prefab, _pool, this.transform);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void ReleaseInstances(TKey key, int keep, Action<T> onReleased = null)
-            => _pool.ReleaseInstances(key, keep, onReleased ?? ReleaseInstance);
+        public void ReleaseInstances(int keep, Action<T> onReleased = null)
+            => _pool.ReleaseInstances(keep, onReleased ?? ReleaseInstance);
+
+        public async UniTask<T> RentAsync()
+            => await _pool.RentAsync();
+
+        public async UniTask<T> RentAsync(string name)
+            => await _pool.RentAsync(name);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async UniTask<T> RentAsync(TKey key)
-            => await _pool.RentAsync(key);
+        public void Return(T instance)
+            => _pool.Return(instance);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async UniTask<T> RentAsync(TKey key, string name)
-            => await _pool.RentAsync(key, name);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Return(TKey key, T instance)
-            => _pool.Return(key, instance);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int Count(TKey key)
-            => _pool.Count(key);
+        public int Count()
+            => _pool.Count();
 
         protected abstract UniTask<T> InstantiateAsync();
 

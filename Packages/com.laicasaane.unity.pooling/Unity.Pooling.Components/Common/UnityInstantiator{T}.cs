@@ -5,7 +5,7 @@ namespace Unity.Pooling.Components
 {
     public class UnityInstantiator<T, TPrefab>
         where T : UnityEngine.Object
-        where TPrefab : IUnityPrefab<T>
+        where TPrefab : IPrefab<T>
     {
         public T Instantiate(TPrefab prefab, Transform defaultParent)
         {
@@ -16,7 +16,7 @@ namespace Unity.Pooling.Components
                 throw new InvalidOperationException(nameof(prefab));
 
             var parent = prefab.Parent ? prefab.Parent : defaultParent;
-            var instance = UnityEngine.Object.Instantiate(prefab.Prefab, parent, true);
+            var instance = UnityEngine.Object.Instantiate(prefab.Source, parent, true);
             return instance;
         }
     }

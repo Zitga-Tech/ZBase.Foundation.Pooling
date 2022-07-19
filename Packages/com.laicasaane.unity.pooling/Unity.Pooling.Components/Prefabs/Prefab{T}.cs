@@ -5,34 +5,22 @@ using UnityEngine;
 namespace Unity.Pooling.Components
 {
     [Serializable]
-    public class UnityPrefab<TKey, T> : IUnityPrefab<TKey, T>
-        where T : UnityEngine.Object
+    public abstract class Prefab<T> : IPrefab<T>
+        where T : class
     {
-        [SerializeReference]
-        private TKey _key;
-
         [SerializeField]
         private T _prefab;
 
         [SerializeField]
-        private int _prepoolingAmount;
+        private int _prepoolAmount;
 
         [SerializeField]
-        private PrepoolTiming _prepoolTiming = PrepoolTiming.NextFrame;
+        private Timing _prepoolTiming = Timing.NextFrame;
 
         [SerializeField]
         private Transform _parent;
 
-        public TKey Key
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => _key;
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => _key = value;
-        }
-
-        public T Prefab
+        public T Source
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => _prefab;
@@ -41,16 +29,16 @@ namespace Unity.Pooling.Components
             set => _prefab = value;
         }
 
-        public int PrepoolingAmount
+        public int PrepoolAmount
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => _prepoolingAmount;
+            get => _prepoolAmount;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => _prepoolingAmount = value;
+            set => _prepoolAmount = value;
         }
 
-        public PrepoolTiming PrepoolTiming
+        public Timing PrepoolTiming
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => _prepoolTiming;

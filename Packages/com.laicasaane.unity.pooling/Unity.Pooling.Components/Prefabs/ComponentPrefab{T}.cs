@@ -3,7 +3,7 @@
 namespace Unity.Pooling.Components
 {
     [Serializable]
-    public sealed class ComponentPrefab<T> : UnityPrefab<T>
+    public class ComponentPrefab<T> : Prefab<T>
         where T : UnityEngine.Component
     {
     }

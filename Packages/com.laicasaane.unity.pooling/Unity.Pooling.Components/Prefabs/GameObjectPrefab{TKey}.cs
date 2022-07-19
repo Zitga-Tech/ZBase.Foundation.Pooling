@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Unity.Pooling.Components
 {
     [Serializable]
-    public sealed class GameObjectPrefab<TKey> : UnityPrefab<TKey, GameObject>
+    public class GameObjectPrefab<TKey> : Prefab<TKey, GameObject>
     {
     }
 }

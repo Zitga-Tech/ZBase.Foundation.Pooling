@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Unity.Pooling.Components
 {
     [Serializable]
-    public sealed class GameObjectPrefab : UnityPrefab<GameObject>
+    public sealed class GameObjectPrefab : Prefab<GameObject>
     {
     }
 }

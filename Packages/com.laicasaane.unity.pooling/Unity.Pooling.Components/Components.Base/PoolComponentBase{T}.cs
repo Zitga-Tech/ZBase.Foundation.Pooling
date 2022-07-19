@@ -6,16 +6,16 @@ using UnityEngine;
 
 namespace Unity.Pooling.Components
 {
-    public abstract class UnityPoolComponentBase<TKey, T, TPrefab, TPool>
-        : MonoBehaviour, IUnityPoolComponent<TKey, T, TPrefab, TPool>
+    public abstract class PoolComponentBase<T, TPrefab, TPool>
+        : MonoBehaviour, IPoolComponent<T, TPrefab, TPool>
         where T : UnityEngine.Object
-        where TPrefab : IUnityPrefab<TKey, T>
-        where TPool : IUnityPool<TKey, T>, IInstantiatorSetable<T>, IDisposable, new()
+        where TPrefab : IPrefab<T>
+        where TPool : IUnityPool<T>, IInstantiatorSetable<T>, IDisposable, new()
     {
         [SerializeField]
         private TPrefab _prefab;
 
-        private readonly UnityPrepooler<TKey, T, TPrefab, TPool> _prepooling = new();
+        private readonly UnityPrepooler<T, TPrefab, TPool> _prepooling = new();
         private readonly UnityInstantiator<T, TPrefab> _instantiator = new();
         private TPool _pool;
 
@@ -51,24 +51,24 @@ namespace Unity.Pooling.Components
             => await _prepooling.Prepool(_prefab, _pool, this.transform);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void ReleaseInstances(TKey key, int keep, Action<T> onReleased = null)
-            => _pool.ReleaseInstances(key, keep, onReleased ?? ReleaseInstance);
+        public void ReleaseInstances(int keep, Action<T> onReleased = null)
+            => _pool.ReleaseInstances(keep, onReleased ?? ReleaseInstance);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Return(TKey key, T instance)
-            => _pool.Return(key, instance);
+        public void Return(T instance)
+            => _pool.Return(instance);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int Count(TKey key)
-            => _pool.Count(key);
+        public int Count()
+            => _pool.Count();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public T Rent(TKey key, string name)
-            => _pool.Rent(key, name);
+        public T Rent()
+            => _pool.Rent();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public T Rent(TKey key)
-            => _pool.Rent(key);
+        public T Rent(string name)
+            => _pool.Rent(name);
 
         protected abstract void ReleaseInstance(T instance);
     }

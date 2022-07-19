@@ -1,9 +1,9 @@
 ﻿namespace Unity.Pooling.Components
 {
-    public interface IAsyncUnityPoolComponent<TKey, T, TPrefab, TPool>
-        : IUnityPoolComponent, IAsyncUnityPool<TKey, T>
+    public interface IAsyncPoolComponent<TKey, T, TPrefab, TPool>
+        : IPoolComponent, IAsyncUnityPool<TKey, T>
         where T : UnityEngine.Object
-        where TPrefab : IUnityPrefab<TKey, T>
+        where TPrefab : IPrefab<TKey, T>
         where TPool : IAsyncUnityPool<TKey, T>
     {
         TPrefab Prefab { get; }
