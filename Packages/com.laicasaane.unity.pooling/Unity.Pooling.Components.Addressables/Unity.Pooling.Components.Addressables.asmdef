@@ -19,7 +19,9 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "UNITY_POOLING_COMPONENTS_ADDRESSABLES"
+    ],
     "versionDefines": [
         {
             "name": "com.unity.addressables",
