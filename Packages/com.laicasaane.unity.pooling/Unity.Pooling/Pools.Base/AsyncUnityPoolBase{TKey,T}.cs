@@ -6,8 +6,11 @@ using Cysharp.Threading.Tasks;
 
 namespace Unity.Pooling
 {
-    public abstract partial class AsyncUnityPoolBase<TKey, T> : IAsyncUnityPool<TKey, T>, IAsyncInstantiatorSetable<T>, IDisposable
+    public abstract partial class AsyncUnityPoolBase<TKey, T, S, TSource, TPrefab>
+        : IAsyncUnityPool<TKey, T, S, TSource, TPrefab>, IAsyncInstantiatorSetable<T>, IDisposable
         where T : UnityEngine.Object
+        where TSource : ILoadableSource<S, T>
+        where TPrefab : IPrefab<TKey, T, S, TSource>
     {
         private readonly Dictionary<TKey, UniqueQueue<int, T>> _queueMap;
         private readonly Func<UniqueQueue<int, T>> _queueInstantiate;

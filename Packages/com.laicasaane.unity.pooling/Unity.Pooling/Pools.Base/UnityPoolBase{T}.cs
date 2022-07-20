@@ -3,8 +3,11 @@ using System.Pooling;
 
 namespace Unity.Pooling
 {
-    public abstract partial class UnityPoolBase<T> : IUnityPool<T>, IInstantiatorSetable<T>, IDisposable
+    public abstract partial class UnityPoolBase<T, S, TSource, TPrefab>
+        : IUnityPool<T, S, TSource, TPrefab>, IInstantiatorSetable<T>, IDisposable
         where T : UnityEngine.Object
+        where TSource : ILoadableSource<S, T>
+        where TPrefab : IPrefab<T, S, TSource>
     {
         private readonly UniqueQueue<int, T> _queue;
         private Func<T> _instantiate;

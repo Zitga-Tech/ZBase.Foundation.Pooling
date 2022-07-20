@@ -5,8 +5,11 @@ using Collections.Pooled.Generic.Internals.Unsafe;
 
 namespace Unity.Pooling
 {
-    public abstract partial class UnityPoolBase<TKey, T> : IUnityPool<TKey, T>, IInstantiatorSetable<T>, IDisposable
+    public abstract partial class UnityPoolBase<TKey, T, S, TSource, TPrefab>
+        : IUnityPool<TKey, T, S, TSource, TPrefab>, IInstantiatorSetable<T>, IDisposable
         where T : UnityEngine.Object
+        where TSource : ILoadableSource<S, T>
+        where TPrefab : IPrefab<TKey, T, S, TSource>
     {
         private readonly Dictionary<TKey, UniqueQueue<int, T>> _queueMap;
         private readonly Func<UniqueQueue<int, T>> _queueInstantiate;
