@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Unity.Pooling.Components.Addressables
+namespace Unity.Pooling.Components.AddressableAssets
 {
     public class AssetRefGameObjectPrepooler<TKey, TPrefab, TPool>
         : AssetRefPrepooler<TKey, GameObject, AssetReferenceGameObject, TPrefab, TPool>

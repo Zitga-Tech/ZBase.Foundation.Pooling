@@ -2,7 +2,7 @@ using System;
 using System.Pooling;
 using UnityEngine.AddressableAssets;
 
-namespace Unity.Pooling.Components
+namespace Unity.Pooling.Components.AddressableAssets
 {
     public abstract class AssetRefPoolComponentBase<T, TAssetRef, TPrefab, TPool>
         : AsyncPoolComponentBase<T, TPrefab, TPool>

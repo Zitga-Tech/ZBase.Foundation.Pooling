@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Unity.Pooling.Components.Addressables
+namespace Unity.Pooling.Components.AddressableAssets
 {
     public sealed class AssetRefGameObjectPoolComponent
         : AssetRefPoolComponentBase<GameObject, AssetReferenceGameObject, AssetRefGameObjectPrefab, AsyncGameObjectPool>

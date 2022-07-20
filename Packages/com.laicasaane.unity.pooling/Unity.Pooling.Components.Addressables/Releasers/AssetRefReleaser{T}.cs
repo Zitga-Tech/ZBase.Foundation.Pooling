@@ -1,6 +1,6 @@
 ﻿using UnityEngine.AddressableAssets;
 
-namespace Unity.Pooling.Components.Addressables
+namespace Unity.Pooling.Components.AddressableAssets
 {
     public abstract class AssetRefReleaser<T, TAssetRef, TPrefab>
         where T : UnityEngine.Object

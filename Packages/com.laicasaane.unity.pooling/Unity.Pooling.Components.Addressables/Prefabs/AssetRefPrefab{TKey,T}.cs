@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine.AddressableAssets;
 
-namespace Unity.Pooling.Components.Addressables
+namespace Unity.Pooling.Components.AddressableAssets
 {
     [Serializable]
     public abstract class AssetRefPrefab<TKey, T, TAssetRef> : Prefab<TKey, TAssetRef>

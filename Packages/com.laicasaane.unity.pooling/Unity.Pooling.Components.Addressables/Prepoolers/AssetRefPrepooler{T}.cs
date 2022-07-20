@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Unity.Pooling.Components.Addressables
+namespace Unity.Pooling.Components.AddressableAssets
 {
     public abstract class AssetRefPrepooler<T, TAssetRef, TPrefab, TPool>
         where T : UnityEngine.Object

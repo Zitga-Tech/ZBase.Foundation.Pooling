@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace Unity.Pooling.Components.Addressables
+namespace Unity.Pooling.Components.AddressableAssets
 {
     public class AssetRefGameObjectReleaser<TPrefab>
         : AssetRefReleaser<GameObject, AssetReferenceGameObject, TPrefab>

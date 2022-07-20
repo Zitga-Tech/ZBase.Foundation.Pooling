@@ -2,7 +2,7 @@
 using UnityEngine.AddressableAssets;
 using Cysharp.Threading.Tasks;
 
-namespace Unity.Pooling.Components.Addressables
+namespace Unity.Pooling.Components.AddressableAssets
 {
     public abstract class AssetRefInstantiator<T, TAssetRef, TPrefab>
         where T : UnityEngine.Object

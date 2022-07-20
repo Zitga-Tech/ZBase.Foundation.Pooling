@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Cysharp.Threading.Tasks;
 
-namespace Unity.Pooling.Components.Addressables
+namespace Unity.Pooling.Components.AddressableAssets
 {
     public class AssetRefGameObjectInstantiator<TPrefab>
         : AssetRefInstantiator<GameObject, AssetReferenceGameObject, TPrefab>
