@@ -1,6 +1,6 @@
 {
     "name": "Unity.Pooling.Components.Addressables",
-    "rootNamespace": "Unity.Pooling.Components.Addressables",
+    "rootNamespace": "Unity.Pooling.Components.AddressableAssets",
     "references": [
         "Collections.Pooled",
         "Collections.Pooled.Generic",

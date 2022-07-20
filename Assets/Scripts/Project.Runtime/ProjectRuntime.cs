@@ -1,18 +1,11 @@
 using UnityEngine;
 using Unity.Pooling;
 using Unity.Pooling.Components;
-using UnityEngine.AddressableAssets;
 
 namespace Project.Runtime
 {
     public class ProjectRuntime : MonoBehaviour
     {
-        [SerializeField]
-        private UnityPrefab<GameObject> _prefabT;
-
-        [SerializeField]
-        private UnityPrefab<string, GameObject> _prefabTKey;
-
         private void Start()
         {
         }
