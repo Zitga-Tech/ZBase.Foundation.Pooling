@@ -4,7 +4,7 @@ using Collections.Pooled.Generic.Internals.Unsafe;
 
 namespace System.Pooling
 {
-    public abstract partial class PoolBase<TKey, T> : IPool<TKey, T>, IInstantiatorSetable<T>, IDisposable
+    public abstract partial class PoolBase<TKey, T> : IPool<TKey, T>, ISetInstantiator<T>, IDisposable
         where T : class
     {
         private readonly Dictionary<TKey, UniqueQueue<T>> _queueMap;

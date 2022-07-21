@@ -1,6 +1,6 @@
 ﻿namespace System.Pooling
 {
-    public interface IInstantiatorSetable<T>
+    public interface ISetInstantiator<T>
     {
         void SetInstantiator(Func<T> instantiator);
     }

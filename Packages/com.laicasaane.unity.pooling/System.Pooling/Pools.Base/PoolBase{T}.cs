@@ -2,7 +2,7 @@
 
 namespace System.Pooling
 {
-    public abstract partial class PoolBase<T> : IPool<T>, IInstantiatorSetable<T>, IDisposable
+    public abstract partial class PoolBase<T> : IPool<T>, ISetInstantiator<T>, IDisposable
         where T : class
     {
         private readonly UniqueQueue<T> _queue;

@@ -1,6 +1,6 @@
 ﻿namespace System.Pooling
 {
-    public interface IPool<TKey, T> 
+    public interface IPool<TKey, T>
         : IPool, IRentable<TKey, T>, IReturnable<TKey, T>, ICountable<TKey>
         where T : class
     {
