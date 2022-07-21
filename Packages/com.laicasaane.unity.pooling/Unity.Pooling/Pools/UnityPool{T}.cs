@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     public abstract partial class UnityPool<T, S, TSource, TPrefab>
-        : IUnityPool<T>, IDisposable
+        : IUnityPool<T>, IHasPrefab<TPrefab>, IDisposable
         where T : UnityEngine.Object
         where TSource : IAsyncInstantiatableSource<S, T>
         where TPrefab : IPrefab<T, S, TSource>
