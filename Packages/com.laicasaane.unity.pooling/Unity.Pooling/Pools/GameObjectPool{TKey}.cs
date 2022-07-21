@@ -6,27 +6,23 @@ using UnityEngine;
 
 namespace Unity.Pooling
 {
-    public class GameObjectPool<TKey> : UnityPoolBase<TKey, GameObject>
+    public class GameObjectPool<TKey>
+        : UnityPool<TKey, GameObject, GameObject, GameObjectSource, GameObjectPrefab<TKey>>
     {
         public GameObjectPool()
-            : base(null, null, null)
+            : base(null, null, default, null)
         { }
 
-        public GameObjectPool(Func<GameObject> instantiate)
-            : base(null, null, instantiate)
-        { }
-
-        public GameObjectPool(Dictionary<TKey, UniqueQueue<int, GameObject>> queueMap
-            , Func<UniqueQueue<int, GameObject>> queueInstantiate
-        )
-            : base(queueMap, queueInstantiate, null)
+        public GameObjectPool(GameObjectPrefab<TKey> prefab, Transform defaultParent = null)
+            : base(null, null, prefab, defaultParent)
         { }
 
         public GameObjectPool(Dictionary<TKey, UniqueQueue<int, GameObject>> queueMap
             , Func<UniqueQueue<int, GameObject>> queueInstantiate
-            , Func<GameObject> instantiate
+            , GameObjectPrefab<TKey> prefab
+            , Transform defaultParent = null
         )
-            : base(queueMap, queueInstantiate, instantiate)
+            : base(queueMap, queueInstantiate, prefab, defaultParent)
         { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -35,13 +31,5 @@ namespace Unity.Pooling
             if (instance.activeSelf)
                 instance.SetActive(false);
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected sealed override Func<GameObject> GetDefaultInstantiator()
-            => Instantiator;
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static GameObject Instantiator()
-            => new GameObject();
     }
 }

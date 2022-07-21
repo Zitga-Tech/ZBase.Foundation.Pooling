@@ -6,47 +6,33 @@ using UnityEngine;
 
 namespace Unity.Pooling
 {
-    public class ComponentPool<TKey, T> : UnityPoolBase<TKey, T>
+    public abstract class ComponentPoolBase<TKey, T, TSource, TPrefab>
+        : UnityPool<TKey, T, T, TSource, TPrefab>
         where T : UnityEngine.Component
+        where TSource : IAsyncInstantiatableSource<T, T>
+        where TPrefab : IPrefab<TKey, T, T, TSource>
     {
-        public ComponentPool()
-            : base(null, null, null)
+        public ComponentPoolBase()
+            : base(null, null, default, null)
         { }
 
-        public ComponentPool(Func<T> instantiate)
-            : base(null, null, instantiate)
+        public ComponentPoolBase(TPrefab prefab, Transform defaultParent = null)
+            : base(null, null, prefab, defaultParent)
         { }
 
-        public ComponentPool(Dictionary<TKey, UniqueQueue<int, T>> queueMap
+        public ComponentPoolBase(Dictionary<TKey, UniqueQueue<int, T>> queueMap
             , Func<UniqueQueue<int, T>> queueInstantiate
+            , TPrefab prefab
+            , Transform defaultParent = null
         )
-            : base(queueMap, queueInstantiate, null)
-        { }
-
-        public ComponentPool(Dictionary<TKey, UniqueQueue<int, T>> queueMap
-            , Func<UniqueQueue<int, T>> queueInstantiate
-            , Func<T> instantiate
-        )
-            : base(queueMap, queueInstantiate, instantiate)
+            : base(queueMap, queueInstantiate, prefab, defaultParent)
         { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected override void ReturnPreprocess(T instance)
+        protected sealed override void ReturnPreprocess(T instance)
         {
             if (instance.gameObject.activeSelf)
                 instance.gameObject.SetActive(false);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected override Func<T> GetDefaultInstantiator()
-            => Instantiator;
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static T Instantiator()
-        {
-            var go = new GameObject(NameOf<T>.Value);
-            var instance = go.AddComponent<T>();
-            return instance;
         }
     }
 }

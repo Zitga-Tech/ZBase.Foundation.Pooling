@@ -6,8 +6,6 @@ namespace Unity.Pooling
     {
         int PrepoolAmount { get; set; }
 
-        Timing PrepoolTiming { get; set; }
-
         Transform Parent { get; set; }
     }
 }

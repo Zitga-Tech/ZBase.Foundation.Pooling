@@ -4,7 +4,8 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     [Serializable]
-    public class GameObjectPrefab<TKey> : UnityObjectPrefab<TKey, GameObject, GameObjectSource>
+    public class GameObjectPrefab<TKey>
+        : UnityPrefab<TKey, GameObject, GameObject, GameObjectSource>
     {
     }
 }

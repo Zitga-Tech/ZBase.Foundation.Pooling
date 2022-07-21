@@ -5,7 +5,7 @@ namespace Unity.Pooling
     public static class SourceExtensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Validate<TSource, TObject>(this ILoadableSource<TSource, TObject> source)
+        public static bool IsNotNull<TSource, TObject>(this IAsyncInstantiatableSource<TSource, TObject> source)
             where TObject : class
             => source != null && source.Source != null;
     }
