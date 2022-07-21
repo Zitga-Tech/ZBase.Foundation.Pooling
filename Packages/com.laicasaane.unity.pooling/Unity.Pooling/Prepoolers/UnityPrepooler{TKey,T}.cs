@@ -14,10 +14,13 @@ namespace Unity.Pooling
     {
         public async UniTask PrepoolAsync(TPrefab prefab, TPool pool, Transform defaultParent)
         {
-            if (pool == null)
-                throw new NullReferenceException(nameof(pool));
+            if (prefab.IsNotNull() == false)
+                throw new ArgumentNullException(nameof(prefab));
 
-            if (prefab.IsNotNull() == false || prefab.PrepoolAmount <= 0)
+            if (pool == null)
+                throw new ArgumentNullException(nameof(pool));
+
+            if (prefab.PrepoolAmount <= 0)
                 return;
 
             var key = prefab.Key;
