@@ -217,7 +217,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2132460344}
   - component: {fileID: 2132460345}
-  - component: {fileID: 2132460346}
   m_Layer: 0
   m_Name: Project_Runtime
   m_TagString: Untagged
@@ -252,28 +251,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cdf0fd65a63b84ba64856a2c1202d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefabT:
-    _prefab: {fileID: 0}
-    _prepoolingAmount: 0
-    _prepoolTiming: 0
-  _prefabTKey:
-    _key: 
-    _prefab: {fileID: 0}
-    _prepoolingAmount: 0
-    _prepoolTiming: 0
---- !u!114 &2132460346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2132460342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7e37b897b283ef4090ab8e88e0171db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab:
-    _prefab: {fileID: 0}
-    _prepoolingAmount: 0
-    _prepoolTiming: 8
