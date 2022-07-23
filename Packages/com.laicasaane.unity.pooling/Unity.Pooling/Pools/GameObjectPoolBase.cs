@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace Unity.Pooling
 {
-    public abstract class GameObjectPoolBase<S, TSource, TPrefab>
-        : UnityPool<GameObject, S, TSource, TPrefab>
-        where TSource : IAsyncInstantiatableSource<S, GameObject>
-        where TPrefab : IPrefab<GameObject, S, TSource>
+    public abstract class GameObjectPoolBase<TSource, TInstantiator, TPrefab>
+        : UnityPool<GameObject, TSource, TInstantiator, TPrefab>
+        where TInstantiator : IAsyncInstantiator<TSource, GameObject>
+        where TPrefab : IPrefab<GameObject, TSource, TInstantiator>
     {
         public GameObjectPoolBase()
             : base(null, default, null)

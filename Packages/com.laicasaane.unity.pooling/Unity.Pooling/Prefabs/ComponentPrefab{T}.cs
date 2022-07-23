@@ -3,10 +3,10 @@
 namespace Unity.Pooling
 {
     [Serializable]
-    public class ComponentPrefab<T, TSource>
-        : UnityPrefab<T, T, TSource>
+    public class ComponentPrefab<T, TInstantiator>
+        : UnityPrefab<T, T, TInstantiator>
         where T : UnityEngine.Component
-        where TSource : UnitySource<T, T>
+        where TInstantiator : UnityInstantiator<T, T>
     {
     }
 }

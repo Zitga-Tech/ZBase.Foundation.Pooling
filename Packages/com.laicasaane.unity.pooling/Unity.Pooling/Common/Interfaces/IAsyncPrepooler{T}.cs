@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace Unity.Pooling
 {
-    public interface IAsyncPrepooler<T, S, TSource, TPrefab, TPool>
+    public interface IAsyncPrepooler<T, TSource, TInstantiator, TPrefab, TPool>
         where T : class
-        where TSource : IAsyncInstantiatableSource<S, T>
-        where TPrefab : IPrefab<T, S, TSource>
+        where TInstantiator : IAsyncInstantiator<TSource, T>
+        where TPrefab : IPrefab<T, TSource, TInstantiator>
         where TPool : IReturnable<T>
     {
         UniTask PrepoolAsync(TPrefab prefab, TPool pool, Transform defaultParent);

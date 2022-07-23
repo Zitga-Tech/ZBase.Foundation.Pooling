@@ -5,12 +5,12 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     [Serializable]
-    public class GameObjectSource : UnitySource<GameObject, GameObject>
+    public class GameObjectInstantiator : UnityInstantiator<GameObject, GameObject>
     {
-        public GameObjectSource() : base()
+        public GameObjectInstantiator() : base()
         { }
 
-        public GameObjectSource(GameObject source) : base(source)
+        public GameObjectInstantiator(GameObject source) : base(source)
         { }
 
         public override async UniTask<GameObject> InstantiateAsync(Transform parent)

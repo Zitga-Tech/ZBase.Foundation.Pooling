@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     public class GameObjectPool
-        : GameObjectPoolBase<GameObject, GameObjectSource, GameObjectPrefab>
+        : GameObjectPoolBase<GameObject, GameObjectInstantiator, GameObjectPrefab>
     {
         public GameObjectPool()
             : base(null, default, null)

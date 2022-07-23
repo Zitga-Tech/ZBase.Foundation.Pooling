@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace Unity.Pooling
 {
-    public abstract class UnityPrepooler<TKey, T, S, TSource, TPrefab, TPool>
-        : IAsyncPrepooler<TKey, T, S, TSource, TPrefab, TPool>
+    public abstract class UnityPrepooler<TKey, T, TSource, TInstantiator, TPrefab, TPool>
+        : IAsyncPrepooler<TKey, T, TSource, TInstantiator, TPrefab, TPool>
         where T : UnityEngine.Object
-        where TSource : IAsyncInstantiatableSource<S, T>
-        where TPrefab : IPrefab<TKey, T, S, TSource>
+        where TInstantiator : IAsyncInstantiator<TSource, T>
+        where TPrefab : IPrefab<TKey, T, TSource, TInstantiator>
         where TPool : IReturnable<TKey, T>
     {
         public async UniTask PrepoolAsync(TPrefab prefab, TPool pool, Transform defaultParent)

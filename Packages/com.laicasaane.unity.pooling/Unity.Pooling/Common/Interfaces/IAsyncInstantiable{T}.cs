@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Unity.Pooling
 {
-    public interface IAsyncInstantiatable<T>
+    public interface IAsyncInstantiable<T>
     {
         UniTask<T> InstantiateAsync(Transform parent);
     }

@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace Unity.Pooling
 {
-    public abstract class ComponentPoolBase<TKey, T, TSource, TPrefab>
-        : UnityPool<TKey, T, T, TSource, TPrefab>
+    public abstract class ComponentPoolBase<TKey, T, TSource, TInstantiator, TPrefab>
+        : UnityPool<TKey, T, TSource, TInstantiator, TPrefab>
         where T : UnityEngine.Component
-        where TSource : IAsyncInstantiatableSource<T, T>
-        where TPrefab : IPrefab<TKey, T, T, TSource>
+        where TInstantiator : IAsyncInstantiator<TSource, T>
+        where TPrefab : IPrefab<TKey, T, TSource, TInstantiator>
     {
         public ComponentPoolBase()
             : base(null, null, default, null)

@@ -1,9 +1,9 @@
 ﻿namespace Unity.Pooling
 {
-    public interface IPrefab<TKey, T, S, TSource>
-        : IPrefab<T, S, TSource>
+    public interface IPrefab<TKey, T, TSource, TInstantiator>
+        : IPrefab<T, TSource, TInstantiator>
         where T : class
-        where TSource : IAsyncInstantiatableSource<S, T>
+        where TInstantiator : IAsyncInstantiator<TSource, T>
     {
         TKey Key { get; set; }
     }

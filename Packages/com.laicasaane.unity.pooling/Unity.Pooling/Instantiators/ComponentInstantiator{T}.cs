@@ -5,13 +5,13 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     [Serializable]
-    public class ComponentSource<T> : UnitySource<T, T>
+    public class ComponentInstantiator<T> : UnityInstantiator<T, T>
         where T : UnityEngine.Component
     {
-        public ComponentSource() : base()
+        public ComponentInstantiator() : base()
         { }
 
-        public ComponentSource(T source) : base(source)
+        public ComponentInstantiator(T source) : base(source)
         { }
 
         public override async UniTask<T> InstantiateAsync(Transform parent)

@@ -6,20 +6,20 @@ using Cysharp.Threading.Tasks;
 namespace Unity.Pooling
 {
     [Serializable]
-    public abstract class UnitySource<S, T> : IAsyncInstantiatableSource<S, T>
+    public abstract class UnityInstantiator<TSource, T> : IAsyncInstantiator<TSource, T>
         where T : UnityEngine.Object
     {
         [SerializeField]
-        private S _source;
+        private TSource _source;
 
-        public UnitySource() { }
+        public UnityInstantiator() { }
 
-        public UnitySource(S source)
+        public UnityInstantiator(TSource source)
         {
             _source = source ?? throw new ArgumentNullException(nameof(source));
         }
 
-        public S Source
+        public TSource Source
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => _source;

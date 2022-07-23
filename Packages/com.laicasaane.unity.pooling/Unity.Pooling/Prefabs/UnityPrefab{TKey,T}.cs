@@ -5,10 +5,10 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     [Serializable]
-    public abstract class UnityPrefab<TKey, T, S, TSource>
-        : UnityPrefab<T, S, TSource>, IPrefab<TKey, T, S, TSource>
+    public abstract class UnityPrefab<TKey, T, TSource, TInstantiator>
+        : UnityPrefab<T, TSource, TInstantiator>, IPrefab<TKey, T, TSource, TInstantiator>
         where T : class
-        where TSource : IAsyncInstantiatableSource<S, T>
+        where TInstantiator : IAsyncInstantiator<TSource, T>
     {
         [SerializeReference]
         private TKey _key;

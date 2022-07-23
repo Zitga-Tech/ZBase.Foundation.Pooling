@@ -8,11 +8,11 @@ using UnityEngine;
 
 namespace Unity.Pooling
 {
-    public abstract partial class UnityPool<TKey, T, S, TSource, TPrefab>
+    public abstract partial class UnityPool<TKey, T, TSource, TInstantiator, TPrefab>
         : IUnityPool<TKey, T>, IHasPrefab<TPrefab>, IDisposable
         where T : UnityEngine.Object
-        where TSource : IAsyncInstantiatableSource<S, T>
-        where TPrefab : IPrefab<TKey, T, S, TSource>
+        where TInstantiator : IAsyncInstantiator<TSource, T>
+        where TPrefab : IPrefab<TKey, T, TSource, TInstantiator>
     {
         private readonly Dictionary<TKey, UniqueQueue<int, T>> _queueMap;
         private readonly Func<UniqueQueue<int, T>> _queueInstantiate;

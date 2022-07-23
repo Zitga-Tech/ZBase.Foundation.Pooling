@@ -5,7 +5,7 @@ namespace Unity.Pooling
 {
     [Serializable]
     public class GameObjectPrefab
-        : UnityPrefab<GameObject, GameObject, GameObjectSource>
+        : UnityPrefab<GameObject, GameObject, GameObjectInstantiator>
     {
     }
 }

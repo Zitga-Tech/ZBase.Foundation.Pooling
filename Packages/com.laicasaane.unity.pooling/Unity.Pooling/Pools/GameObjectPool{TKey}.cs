@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     public class GameObjectPool<TKey>
-        : GameObjectPoolBase<TKey, GameObject, GameObjectSource, GameObjectPrefab<TKey>>
+        : GameObjectPoolBase<TKey, GameObject, GameObjectInstantiator, GameObjectPrefab<TKey>>
     {
         public GameObjectPool()
             : base(null, null, default, null)

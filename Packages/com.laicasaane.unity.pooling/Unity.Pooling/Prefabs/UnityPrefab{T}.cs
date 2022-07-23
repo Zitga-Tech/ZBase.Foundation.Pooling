@@ -6,13 +6,13 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     [Serializable]
-    public abstract class UnityPrefab<T, S, TSource>
-        : IPrefab<T, S, TSource>
+    public abstract class UnityPrefab<T, TSource, TInstantiator>
+        : IPrefab<T, TSource, TInstantiator>
         where T : class
-        where TSource : IAsyncInstantiatableSource<S, T>
+        where TInstantiator : IAsyncInstantiator<TSource, T>
     {
         [SerializeField]
-        private TSource _source;
+        private TInstantiator _instantiator;
 
         [SerializeField]
         private int _prepoolAmount;
@@ -20,13 +20,13 @@ namespace Unity.Pooling
         [SerializeField]
         private Transform _parent;
 
-        public TSource Source
+        public TInstantiator Instantiator
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => _source;
+            get => _instantiator;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => _source = value ?? throw new ArgumentNullException(nameof(value));
+            set => _instantiator = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         public int PrepoolAmount
@@ -49,6 +49,6 @@ namespace Unity.Pooling
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async UniTask<T> InstantiateAsync(Transform parent)
-            => await _source.InstantiateAsync(parent);
+            => await _instantiator.InstantiateAsync(parent);
     }
 }
