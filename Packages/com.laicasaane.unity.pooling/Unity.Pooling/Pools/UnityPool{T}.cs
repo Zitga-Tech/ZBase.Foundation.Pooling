@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Unity.Pooling
 {
+    [Serializable]
     public abstract partial class UnityPool<T, TSource, TInstantiator, TPrefab>
         : IUnityPool<T>, IHasPrefab<TPrefab>, IDisposable
         where T : UnityEngine.Object
@@ -14,7 +15,10 @@ namespace Unity.Pooling
     {
         private readonly UniqueQueue<int, T> _queue;
 
+        [SerializeReference]
         private TPrefab _prefab;
+
+        [SerializeField]
         private Transform _defaultParent;
 
         public UnityPool()

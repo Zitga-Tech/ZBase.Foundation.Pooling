@@ -1,9 +1,11 @@
-﻿using System.Pooling;
+﻿using System;
+using System.Pooling;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Unity.Pooling
 {
+    [Serializable]
     public abstract class ComponentPoolBase<T, TSource, TInstantiator, TPrefab>
         : UnityPool<T, TSource, TInstantiator, TPrefab>
         where T : UnityEngine.Component

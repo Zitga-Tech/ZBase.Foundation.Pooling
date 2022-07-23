@@ -1,9 +1,11 @@
-﻿using System.Pooling;
+﻿using System;
+using System.Pooling;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Unity.Pooling
 {
+    [Serializable]
     public abstract class GameObjectPoolBase<TSource, TInstantiator, TPrefab>
         : UnityPool<GameObject, TSource, TInstantiator, TPrefab>
         where TInstantiator : IAsyncInstantiator<TSource, GameObject>

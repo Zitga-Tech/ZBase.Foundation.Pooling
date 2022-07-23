@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Unity.Pooling
 {
+    [Serializable]
     public abstract class UnityPrepooler<T, TSource, TInstantiator, TPrefab, TPool>
         : IAsyncPrepooler<T, TSource, TInstantiator, TPrefab, TPool>
         where T : UnityEngine.Object

@@ -1,8 +1,10 @@
-﻿using System.Pooling;
+﻿using System;
+using System.Pooling;
 using UnityEngine;
 
 namespace Unity.Pooling
 {
+    [Serializable]
     public class ComponentPool<T>
         : ComponentPoolBase<T, T, ComponentInstantiator<T>, ComponentPrefab<T, ComponentInstantiator<T>>>
         where T : UnityEngine.Component

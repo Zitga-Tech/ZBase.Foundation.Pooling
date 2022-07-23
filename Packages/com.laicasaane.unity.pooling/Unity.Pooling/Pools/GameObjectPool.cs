@@ -1,8 +1,10 @@
-﻿using System.Pooling;
+﻿using System;
+using System.Pooling;
 using UnityEngine;
 
 namespace Unity.Pooling
 {
+    [Serializable]
     public class GameObjectPool
         : GameObjectPoolBase<GameObject, GameObjectInstantiator, GameObjectPrefab>
     {

@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Unity.Pooling
 {
+    [Serializable]
     public class ComponentPool<TKey, T>
         : ComponentPoolBase<TKey, T, T, ComponentInstantiator<T>, ComponentPrefab<TKey, T, ComponentInstantiator<T>>>
         where T : UnityEngine.Component

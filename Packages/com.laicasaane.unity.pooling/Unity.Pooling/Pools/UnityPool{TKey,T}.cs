@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Unity.Pooling
 {
+    [Serializable]
     public abstract partial class UnityPool<TKey, T, TSource, TInstantiator, TPrefab>
         : IUnityPool<TKey, T>, IHasPrefab<TPrefab>, IDisposable
         where T : UnityEngine.Object
