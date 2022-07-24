@@ -24,7 +24,7 @@ namespace Unity.Pooling
             if (prefab.PrepoolAmount <= 0)
                 return;
 
-            if (prefab.Instantiator.Parent == false)
+            if (prefab.Instantiator.Parent == false && defaultParent)
                 prefab.Instantiator.Parent = defaultParent;
 
             for (int i = 0, count = prefab.PrepoolAmount; i < count; i++)

@@ -26,23 +26,32 @@ namespace Unity.Pooling
 
         private readonly TPrepooler _prepooler = new TPrepooler();
 
-        protected virtual void Awake()
+        protected void Awake()
         {
             if (Pool == null || Pool.Prefab == null || Pool.Prefab.Instantiator == null)
                 return;
 
             if (Pool.Prefab.Instantiator.Parent == false)
                 Pool.Prefab.Instantiator.Parent = this.transform;
+
+            OnAwake();
         }
 
-        protected virtual async UniTask Start()
+        protected async UniTask Start()
         {
             if (_prepoolOnStart)
                 await PrepoolAsync();
+
+            await OnStart();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async UniTask PrepoolAsync()
             => await _prepooler.PrepoolAsync(Pool.Prefab, Pool, this.transform);
+
+        protected virtual void OnAwake() { }
+
+        protected async UniTask OnStart()
+            => await UniTask.Delay(0);
     }
 }

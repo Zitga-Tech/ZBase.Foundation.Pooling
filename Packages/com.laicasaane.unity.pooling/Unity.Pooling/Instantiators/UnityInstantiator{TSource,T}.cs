@@ -22,6 +22,17 @@ namespace Unity.Pooling
             _source = source ?? throw new ArgumentNullException(nameof(source));
         }
 
+        public UnityInstantiator(Transform parent)
+        {
+            _parent = parent ?? throw new ArgumentNullException(nameof(parent));
+        }
+
+        public UnityInstantiator(TSource source, Transform parent)
+        {
+            _source = source ?? throw new ArgumentNullException(nameof(source));
+            _parent = parent ?? throw new ArgumentNullException(nameof(parent));
+        }
+
         public TSource Source
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]

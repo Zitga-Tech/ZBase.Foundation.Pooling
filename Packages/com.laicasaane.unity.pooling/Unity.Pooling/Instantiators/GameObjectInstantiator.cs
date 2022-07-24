@@ -14,10 +14,22 @@ namespace Unity.Pooling
         public GameObjectInstantiator(GameObject source) : base(source)
         { }
 
+        public GameObjectInstantiator(Transform parent) : base(parent)
+        { }
+
+        public GameObjectInstantiator(GameObject source, Transform parent) : base(source, parent)
+        { }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override async UniTask<GameObject> InstantiateAsync(GameObject source, Transform parent)
         {
-            var instance = UnityEngine.Object.Instantiate(Source, parent);
+            GameObject instance;
+
+            if (parent)
+                instance = UnityEngine.Object.Instantiate(Source, parent);
+            else
+                instance = UnityEngine.Object.Instantiate(Source);
+
             return await UniTask.FromResult(instance);
         }
     }
