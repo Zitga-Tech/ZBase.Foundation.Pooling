@@ -11,7 +11,7 @@ namespace Unity.Pooling
         where T : class
         where TInstantiator : IAsyncInstantiator<TSource, T>
     {
-        [SerializeReference]
+        [SerializeField]
         private TInstantiator _instantiator;
 
         [SerializeField]

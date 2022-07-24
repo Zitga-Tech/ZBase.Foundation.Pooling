@@ -15,7 +15,7 @@ namespace Unity.Pooling
     {
         private readonly UniqueQueue<int, T> _queue;
 
-        [SerializeReference]
+        [SerializeField]
         private TPrefab _prefab;
 
         [SerializeField]

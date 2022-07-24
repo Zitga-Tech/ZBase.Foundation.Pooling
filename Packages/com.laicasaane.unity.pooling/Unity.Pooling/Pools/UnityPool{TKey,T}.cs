@@ -18,7 +18,10 @@ namespace Unity.Pooling
         private readonly Dictionary<TKey, UniqueQueue<int, T>> _queueMap;
         private readonly Func<UniqueQueue<int, T>> _queueInstantiate;
 
+        [SerializeField]
         private TPrefab _prefab;
+
+        [SerializeField]
         private Transform _defaultParent;
 
         public UnityPool()

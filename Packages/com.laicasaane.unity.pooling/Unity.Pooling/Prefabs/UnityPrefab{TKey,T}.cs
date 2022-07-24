@@ -10,7 +10,7 @@ namespace Unity.Pooling
         where T : class
         where TInstantiator : IAsyncInstantiator<TSource, T>
     {
-        [SerializeReference]
+        [SerializeField]
         private TKey _key;
 
         public TKey Key
