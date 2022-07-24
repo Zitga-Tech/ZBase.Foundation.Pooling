@@ -3,5 +3,4 @@
 [assembly: InternalsVisibleTo("Collections.Pooled.Generic.Pooling")]
 [assembly: InternalsVisibleTo("System.Collections.Generic.Pooling")]
 [assembly: InternalsVisibleTo("Unity.Pooling")]
-[assembly: InternalsVisibleTo("Unity.Pooling.Components")]
-[assembly: InternalsVisibleTo("Unity.Pooling.Components.Addressables")]
+[assembly: InternalsVisibleTo("Unity.Pooling.Scriptables")]

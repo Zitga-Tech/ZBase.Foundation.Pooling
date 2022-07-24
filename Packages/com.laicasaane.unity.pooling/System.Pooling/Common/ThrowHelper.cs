@@ -53,6 +53,7 @@ namespace System.Pooling
                 case EA.pool: return nameof(EA.pool);
                 case EA.output: return nameof(EA.output);
                 case EA.prefab: return nameof(EA.prefab);
+                case EA.source: return nameof(EA.source);
             }
 
             Debug.Fail("The enum value is not defined, please check the ExceptionArgument Enum.");
@@ -85,6 +86,7 @@ namespace System.Pooling
         pool,
         output,
         prefab,
+        source,
     }
 
     public enum ExceptionResource

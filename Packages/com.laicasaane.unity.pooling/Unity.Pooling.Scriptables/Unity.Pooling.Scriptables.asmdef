@@ -1,0 +1,20 @@
+{
+    "name": "Unity.Pooling.Scriptables",
+    "rootNamespace": "Unity.Pooling.Scriptables",
+    "references": [
+        "Collections.Pooled",
+        "Collections.Pooled.Generic",
+        "System.Pooling",
+        "Unity.Pooling",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
