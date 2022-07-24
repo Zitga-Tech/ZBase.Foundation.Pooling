@@ -9,11 +9,5 @@ namespace Unity.Pooling
             where T : class
             where TUnitySource : IAsyncInstantiator<TSource, T>
             => prefab != null && prefab.Instantiator.IsNotNull();
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsNotNull<TKey, T, TSource, TUnitySource>(this IPrefab<TKey, T, TSource, TUnitySource> prefab)
-            where T : class
-            where TUnitySource : IAsyncInstantiator<TSource, T>
-            => prefab != null && prefab.Key != null && prefab.Instantiator.IsNotNull();
     }
 }

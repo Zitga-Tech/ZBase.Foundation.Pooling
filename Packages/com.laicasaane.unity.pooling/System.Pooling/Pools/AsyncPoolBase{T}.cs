@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace System.Pooling
 {
-    public abstract partial class AsyncPoolBase<T> : IAsyncPool<T>, IAsyncInstantiatorSetable<T>, IDisposable
+    public abstract partial class AsyncPoolBase<T> : IAsyncPool<T>, IAsyncSetInstantiator<T>, IDisposable
         where T : class
     {
         private readonly UniqueQueue<T> _queue;

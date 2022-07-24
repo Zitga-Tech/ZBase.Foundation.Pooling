@@ -17,7 +17,7 @@ namespace System.Pooling
             => new Disposable<T>(_pool, _pool.Rent());
     }
 
-    partial class PoolDisposableExtensions
+    public static partial class PoolDisposableExtensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DisposableContext<T> Disposable<T>(this IPool<T> pool)

@@ -1,6 +1,6 @@
 ﻿namespace System.Pooling
 {
-    public interface IAsyncInstantiatorSetable<T>
+    public interface IAsyncSetInstantiator<T>
     {
         void SetInstantiator(UniTaskFunc<T> instantiator);
     }

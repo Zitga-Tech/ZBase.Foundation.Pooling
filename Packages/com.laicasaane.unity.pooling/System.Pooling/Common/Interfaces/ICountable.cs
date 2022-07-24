@@ -4,9 +4,4 @@
     {
         int Count();
     }
-
-    public interface ICountable<T>
-    {
-        int Count(T item);
-    }
 }
