@@ -6,7 +6,7 @@ namespace Unity.Pooling
 {
     public interface IAsyncPrepooler<T, TSource, TInstantiator, TPrefab, TPool>
         where T : class
-        where TInstantiator : IAsyncInstantiable<TSource, T>
+        where TInstantiator : IAsyncInstantiator<TSource, T>
         where TPrefab : IPrefab<T, TSource, TInstantiator>
         where TPool : IReturnable<T>
     {

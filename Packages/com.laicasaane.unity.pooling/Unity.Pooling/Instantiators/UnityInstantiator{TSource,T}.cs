@@ -6,11 +6,14 @@ using Cysharp.Threading.Tasks;
 namespace Unity.Pooling
 {
     [Serializable]
-    public abstract class UnityInstantiator<TSource, T> : IAsyncInstantiable<TSource, T>
+    public abstract class UnityInstantiator<TSource, T> : IAsyncInstantiator<TSource, T>
         where T : UnityEngine.Object
     {
         [SerializeField]
         private TSource _source;
+
+        [SerializeField]
+        private Transform _parent;
 
         public UnityInstantiator() { }
 
@@ -28,6 +31,24 @@ namespace Unity.Pooling
             set => _source = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public abstract UniTask<T> InstantiateAsync(Transform parent);
+        public Transform Parent
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _parent;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set => _parent = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public async UniTask<T> InstantiateAsync()
+        {
+            if (Source is null)
+                throw new NullReferenceException(nameof(Source));
+
+            return await InstantiateAsync(Source, Parent);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected abstract UniTask<T> InstantiateAsync(TSource source, Transform parent);
     }
 }

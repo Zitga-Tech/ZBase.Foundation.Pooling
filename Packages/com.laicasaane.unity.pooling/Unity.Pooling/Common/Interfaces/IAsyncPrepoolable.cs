@@ -2,8 +2,8 @@
 
 namespace Unity.Pooling
 {
-    public interface IPrepoolable
+    public interface IAsyncPrepoolable
     {
-        UniTask Prepool();
+        UniTask PrepoolAsync();
     }
 }

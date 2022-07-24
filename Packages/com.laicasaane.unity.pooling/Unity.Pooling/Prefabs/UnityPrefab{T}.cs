@@ -9,16 +9,13 @@ namespace Unity.Pooling
     public abstract class UnityPrefab<T, TSource, TInstantiator>
         : IPrefab<T, TSource, TInstantiator>
         where T : class
-        where TInstantiator : IAsyncInstantiable<TSource, T>
+        where TInstantiator : IAsyncInstantiator<TSource, T>
     {
         [SerializeField]
         private TInstantiator _instantiator;
 
         [SerializeField]
         private int _prepoolAmount;
-
-        [SerializeField]
-        private Transform _parent;
 
         public TInstantiator Instantiator
         {
@@ -38,17 +35,8 @@ namespace Unity.Pooling
             set => _prepoolAmount = value;
         }
 
-        public Transform Parent
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => _parent;
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => _parent = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async UniTask<T> InstantiateAsync(Transform parent)
-            => await _instantiator.InstantiateAsync(parent);
+        public async UniTask<T> InstantiateAsync()
+            => await _instantiator.InstantiateAsync();
     }
 }

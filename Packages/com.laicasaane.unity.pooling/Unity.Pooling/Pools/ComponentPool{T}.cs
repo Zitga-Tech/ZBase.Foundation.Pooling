@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Pooling;
-using UnityEngine;
 
 namespace Unity.Pooling
 {
@@ -10,15 +9,15 @@ namespace Unity.Pooling
         where T : UnityEngine.Component
     {
         public ComponentPool()
-            : base(null, default, null)
+            : base(null, default)
         { }
 
-        public ComponentPool(ComponentPrefab<T, ComponentInstantiator<T>> prefab, Transform defaultParent = null)
-            : base(null, prefab, defaultParent)
+        public ComponentPool(ComponentPrefab<T, ComponentInstantiator<T>> prefab)
+            : base(null, prefab)
         { }
 
-        public ComponentPool(UniqueQueue<int, T> queue, ComponentPrefab<T, ComponentInstantiator<T>> prefab, Transform defaultParent = null)
-            : base(queue, prefab, defaultParent)
+        public ComponentPool(UniqueQueue<int, T> queue, ComponentPrefab<T, ComponentInstantiator<T>> prefab)
+            : base(queue, prefab)
         { }
     }
 }

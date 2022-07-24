@@ -10,7 +10,7 @@ namespace Unity.Pooling
     public abstract partial class UnityPool<T, TSource, TInstantiator, TPrefab>
         : IUnityPool<T>, IHasPrefab<TPrefab>, IDisposable
         where T : UnityEngine.Object
-        where TInstantiator : IAsyncInstantiable<TSource, T>
+        where TInstantiator : IAsyncInstantiator<TSource, T>
         where TPrefab : IPrefab<T, TSource, TInstantiator>
     {
         private readonly UniqueQueue<int, T> _queue;
@@ -18,22 +18,18 @@ namespace Unity.Pooling
         [SerializeField]
         private TPrefab _prefab;
 
-        [SerializeField]
-        private Transform _defaultParent;
-
         public UnityPool()
-            : this(null, default, null)
+            : this(null, default)
         { }
 
-        public UnityPool(TPrefab prefab, Transform defaultParent = null)
-            : this(null, prefab, defaultParent)
+        public UnityPool(TPrefab prefab)
+            : this(null, prefab)
         { }
 
-        public UnityPool(UniqueQueue<int, T> queue, TPrefab prefab, Transform defaultParent = null)
+        public UnityPool(UniqueQueue<int, T> queue, TPrefab prefab)
         {
             _queue = queue ?? new UniqueQueue<int, T>();
             _prefab = prefab;
-            _defaultParent = defaultParent;
         }
 
         public TPrefab Prefab
@@ -43,15 +39,6 @@ namespace Unity.Pooling
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => _prefab = value;
-        }
-
-        public Transform DefaultParent
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => _defaultParent;
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => _defaultParent = value;
         }
 
         public int Count() => _queue.Count;
@@ -79,7 +66,7 @@ namespace Unity.Pooling
             if (_queue.TryDequeue(out var instance))
                 return instance.Value;
 
-            return await _prefab.InstantiateAsync(_defaultParent);
+            return await _prefab.InstantiateAsync();
         }
 
         public void Return(T instance)

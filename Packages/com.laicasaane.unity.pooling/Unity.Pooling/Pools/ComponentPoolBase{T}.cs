@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Pooling;
 using System.Runtime.CompilerServices;
-using UnityEngine;
 
 namespace Unity.Pooling
 {
@@ -9,19 +8,19 @@ namespace Unity.Pooling
     public abstract class ComponentPoolBase<T, TSource, TInstantiator, TPrefab>
         : UnityPool<T, TSource, TInstantiator, TPrefab>
         where T : UnityEngine.Component
-        where TInstantiator : IAsyncInstantiable<TSource, T>
+        where TInstantiator : IAsyncInstantiator<TSource, T>
         where TPrefab : IPrefab<T, TSource, TInstantiator>
     {
         public ComponentPoolBase()
-            : base(null, default, null)
+            : base(null, default)
         { }
 
-        public ComponentPoolBase(TPrefab prefab, Transform defaultParent = null)
-            : base(null, prefab, defaultParent)
+        public ComponentPoolBase(TPrefab prefab)
+            : base(null, prefab)
         { }
 
-        public ComponentPoolBase(UniqueQueue<int, T> queue, TPrefab prefab, Transform defaultParent = null)
-            : base(queue, prefab, defaultParent)
+        public ComponentPoolBase(UniqueQueue<int, T> queue, TPrefab prefab)
+            : base(queue, prefab)
         { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

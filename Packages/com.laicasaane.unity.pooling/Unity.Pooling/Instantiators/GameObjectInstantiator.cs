@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -13,15 +14,11 @@ namespace Unity.Pooling
         public GameObjectInstantiator(GameObject source) : base(source)
         { }
 
-        public override async UniTask<GameObject> InstantiateAsync(Transform parent)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected override async UniTask<GameObject> InstantiateAsync(GameObject source, Transform parent)
         {
-            if (Source)
-            {
-                var instance = UnityEngine.Object.Instantiate(Source, parent);
-                return await UniTask.FromResult(instance);
-            }
-
-            throw new NullReferenceException(nameof(Source));
+            var instance = UnityEngine.Object.Instantiate(Source, parent);
+            return await UniTask.FromResult(instance);
         }
     }
 }

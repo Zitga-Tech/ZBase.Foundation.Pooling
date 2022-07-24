@@ -8,19 +8,19 @@ namespace Unity.Pooling
     [Serializable]
     public abstract class GameObjectPoolBase<TSource, TInstantiator, TPrefab>
         : UnityPool<GameObject, TSource, TInstantiator, TPrefab>
-        where TInstantiator : IAsyncInstantiable<TSource, GameObject>
+        where TInstantiator : IAsyncInstantiator<TSource, GameObject>
         where TPrefab : IPrefab<GameObject, TSource, TInstantiator>
     {
         public GameObjectPoolBase()
-            : base(null, default, null)
+            : base(null, default)
         { }
 
-        public GameObjectPoolBase(TPrefab prefab, Transform defaultParent = null)
-            : base(null, prefab, defaultParent)
+        public GameObjectPoolBase(TPrefab prefab)
+            : base(null, prefab)
         { }
 
-        public GameObjectPoolBase(UniqueQueue<int, GameObject> queue, TPrefab prefab, Transform defaultParent = null)
-            : base(queue, prefab, defaultParent)
+        public GameObjectPoolBase(UniqueQueue<int, GameObject> queue, TPrefab prefab)
+            : base(queue, prefab)
         { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
