@@ -9,7 +9,7 @@ namespace Unity.Pooling
     public abstract class UnityPrefab<T, TSource, TInstantiator>
         : IPrefab<T, TSource, TInstantiator>
         where T : class
-        where TInstantiator : IAsyncInstantiator<TSource, T>
+        where TInstantiator : IAsyncInstantiable<TSource, T>
     {
         [SerializeField]
         private TInstantiator _instantiator;

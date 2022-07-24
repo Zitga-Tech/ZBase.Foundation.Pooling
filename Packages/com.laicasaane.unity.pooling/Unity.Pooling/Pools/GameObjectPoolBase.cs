@@ -8,7 +8,7 @@ namespace Unity.Pooling
     [Serializable]
     public abstract class GameObjectPoolBase<TSource, TInstantiator, TPrefab>
         : UnityPool<GameObject, TSource, TInstantiator, TPrefab>
-        where TInstantiator : IAsyncInstantiator<TSource, GameObject>
+        where TInstantiator : IAsyncInstantiable<TSource, GameObject>
         where TPrefab : IPrefab<GameObject, TSource, TInstantiator>
     {
         public GameObjectPoolBase()

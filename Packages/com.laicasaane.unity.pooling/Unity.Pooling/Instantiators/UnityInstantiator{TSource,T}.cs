@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 namespace Unity.Pooling
 {
     [Serializable]
-    public abstract class UnityInstantiator<TSource, T> : IAsyncInstantiator<TSource, T>
+    public abstract class UnityInstantiator<TSource, T> : IAsyncInstantiable<TSource, T>
         where T : UnityEngine.Object
     {
         [SerializeField]

@@ -9,7 +9,7 @@ namespace Unity.Pooling
     public abstract class ComponentPoolBase<T, TSource, TInstantiator, TPrefab>
         : UnityPool<T, TSource, TInstantiator, TPrefab>
         where T : UnityEngine.Component
-        where TInstantiator : IAsyncInstantiator<TSource, T>
+        where TInstantiator : IAsyncInstantiable<TSource, T>
         where TPrefab : IPrefab<T, TSource, TInstantiator>
     {
         public ComponentPoolBase()

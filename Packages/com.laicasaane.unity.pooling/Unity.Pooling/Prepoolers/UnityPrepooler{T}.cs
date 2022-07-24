@@ -9,7 +9,7 @@ namespace Unity.Pooling
     public abstract class UnityPrepooler<T, TSource, TInstantiator, TPrefab, TPool>
         : IAsyncPrepooler<T, TSource, TInstantiator, TPrefab, TPool>
         where T : UnityEngine.Object
-        where TInstantiator : IAsyncInstantiator<TSource, T>
+        where TInstantiator : IAsyncInstantiable<TSource, T>
         where TPrefab : IPrefab<T, TSource, TInstantiator>
         where TPool : IReturnable<T>
     {

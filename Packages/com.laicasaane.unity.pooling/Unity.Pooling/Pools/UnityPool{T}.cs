@@ -10,7 +10,7 @@ namespace Unity.Pooling
     public abstract partial class UnityPool<T, TSource, TInstantiator, TPrefab>
         : IUnityPool<T>, IHasPrefab<TPrefab>, IDisposable
         where T : UnityEngine.Object
-        where TInstantiator : IAsyncInstantiator<TSource, T>
+        where TInstantiator : IAsyncInstantiable<TSource, T>
         where TPrefab : IPrefab<T, TSource, TInstantiator>
     {
         private readonly UniqueQueue<int, T> _queue;
