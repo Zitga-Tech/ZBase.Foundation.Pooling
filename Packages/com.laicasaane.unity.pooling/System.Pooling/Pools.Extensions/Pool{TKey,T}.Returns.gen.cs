@@ -10,10 +10,10 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             pool.Return(key, p1);
             pool.Return(key, p2);
@@ -30,10 +30,10 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             pool.Return(key, p1);
             pool.Return(key, p2);
@@ -52,10 +52,10 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             pool.Return(key, p1);
             pool.Return(key, p2);
@@ -76,10 +76,10 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             pool.Return(key, p1);
             pool.Return(key, p2);
@@ -102,10 +102,10 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             pool.Return(key, p1);
             pool.Return(key, p2);
@@ -130,10 +130,10 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             pool.Return(key, p1);
             pool.Return(key, p2);
@@ -160,10 +160,10 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             pool.Return(key, p1);
             pool.Return(key, p2);
@@ -192,10 +192,10 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             pool.Return(key, p1);
             pool.Return(key, p2);
@@ -226,10 +226,10 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             pool.Return(key, p1);
             pool.Return(key, p2);

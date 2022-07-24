@@ -10,10 +10,10 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             foreach (var instance in instances)
             {
@@ -40,10 +40,10 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             for (int i = 0, len = instances.Length; i < len; i++)
             {
@@ -64,10 +64,10 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             for (int i = 0, len = entries.Length; i < len; i++)
             {
@@ -93,10 +93,10 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             for (int i = 0, len = entries.Length; i < len; i++)
             {
@@ -122,7 +122,7 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             for (int i = 0, len = entries.Length; i < len; i++)
             {

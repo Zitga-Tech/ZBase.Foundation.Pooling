@@ -16,10 +16,10 @@ namespace Unity.Pooling
         public async UniTask PrepoolAsync(TPrefab prefab, TPool pool, Transform defaultParent)
         {
             if (prefab.IsNotNull() == false)
-                throw new ArgumentNullException(nameof(prefab));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.prefab);
 
             if (pool == null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (prefab.PrepoolAmount <= 0)
                 return;

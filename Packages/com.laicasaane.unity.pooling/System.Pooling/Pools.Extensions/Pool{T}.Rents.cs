@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Collections.Pooled;
 
 namespace System.Pooling
 {
@@ -29,7 +28,7 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if ((uint)count > (uint)output.Length)
                 ThrowHelper.ThrowCountArgumentOutOfRange_ArgumentOutOfRange_Count();
@@ -53,10 +52,10 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (output is null)
-                throw new ArgumentNullException(nameof(output));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.output);
 
             for (var i = 0; i < count; i++)
             {

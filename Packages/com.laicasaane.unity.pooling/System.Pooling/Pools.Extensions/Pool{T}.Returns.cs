@@ -10,7 +10,7 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             foreach (var instance in instances)
             {
@@ -37,7 +37,7 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             for (int i = 0, len = instances.Length; i < len; i++)
             {
@@ -58,7 +58,7 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             for (int i = 0, len = entries.Length; i < len; i++)
             {
@@ -84,7 +84,7 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             for (int i = 0, len = entries.Length; i < len; i++)
             {

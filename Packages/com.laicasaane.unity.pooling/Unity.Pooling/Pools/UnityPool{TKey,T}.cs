@@ -65,7 +65,7 @@ namespace Unity.Pooling
         public int Count(TKey key)
         {
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             if (_queueMap.TryGetValue(key, out var queue))
                 return queue.Count;
@@ -92,7 +92,7 @@ namespace Unity.Pooling
         public void ReleaseInstances(TKey key, int keep, Action<T> onReleased = null)
         {
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             if (_queueMap.TryGetValue(key, out var queue))
             {
@@ -111,7 +111,7 @@ namespace Unity.Pooling
         public async UniTask<T> RentAsync(TKey key)
         {
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             if (_queueMap.TryGetValue(key, out var queue)
                 && queue.TryDequeue(out var instance))
@@ -123,7 +123,7 @@ namespace Unity.Pooling
         public void Return(TKey key, T instance)
         {
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             if (instance == false)
                 return;

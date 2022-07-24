@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Collections.Pooled;
 using Cysharp.Threading.Tasks;
 
 namespace System.Pooling
@@ -18,10 +17,10 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             if ((uint)count > (uint)output.Length)
                 ThrowHelper.ThrowCountArgumentOutOfRange_ArgumentOutOfRange_Count();
@@ -45,13 +44,13 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (key is null)
-                throw new ArgumentNullException(nameof(key));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
 
             if (output is null)
-                throw new ArgumentNullException(nameof(output));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.output);
 
             if (count < 0)
                 ThrowHelper.ThrowCountArgumentOutOfRange_ArgumentOutOfRange_NeedNonNegNum();
@@ -70,13 +69,13 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (keys is null)
-                throw new ArgumentNullException(nameof(keys));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.keys);
 
             if (output is null)
-                throw new ArgumentNullException(nameof(output));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.output);
 
             foreach (var key in keys)
             {
@@ -99,13 +98,13 @@ namespace System.Pooling
             where T : class
         {
             if (pool is null)
-                throw new ArgumentNullException(nameof(pool));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
 
             if (keys is null)
-                throw new ArgumentNullException(nameof(keys));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.keys);
 
             if (output is null)
-                throw new ArgumentNullException(nameof(output));
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.output);
 
             for (int i = 0, len = keys.Length; i < len; i++)
             {

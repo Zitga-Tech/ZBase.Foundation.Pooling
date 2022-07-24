@@ -1,5 +1,4 @@
 ﻿using System.Runtime.CompilerServices;
-using Collections.Pooled;
 using Collections.Pooled.Generic;
 
 namespace System.Pooling
