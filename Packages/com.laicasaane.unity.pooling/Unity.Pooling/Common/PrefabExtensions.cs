@@ -5,9 +5,8 @@ namespace Unity.Pooling
     public static class PrefabExtensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsNotNull<T, TSource, TUnitySource>(this IPrefab<T, TSource, TUnitySource> prefab)
+        public static bool IsNotNull<T, TSource>(this IPrefab<T, TSource> prefab)
             where T : class
-            where TUnitySource : IAsyncInstantiator<TSource, T>
-            => prefab != null && prefab.Instantiator.IsNotNull();
+            => prefab != null && prefab.Source != null;
     }
 }

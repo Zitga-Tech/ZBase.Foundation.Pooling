@@ -7,11 +7,10 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     [Serializable]
-    public abstract partial class UnityPool<T, TSource, TInstantiator, TPrefab>
+    public abstract partial class UnityPool<T, TSource, TPrefab>
         : IUnityPool<T>, IHasPrefab<TPrefab>, IDisposable
         where T : UnityEngine.Object
-        where TInstantiator : IAsyncInstantiator<TSource, T>
-        where TPrefab : IPrefab<T, TSource, TInstantiator>
+        where TPrefab : IPrefab<T, TSource>
     {
         private readonly UniqueQueue<int, T> _queue;
 

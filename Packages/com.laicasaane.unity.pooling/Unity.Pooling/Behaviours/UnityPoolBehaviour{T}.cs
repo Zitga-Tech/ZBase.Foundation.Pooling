@@ -4,13 +4,12 @@ using UnityEngine;
 
 namespace Unity.Pooling
 {
-    public abstract class UnityPoolBehaviour<T, TSource, TInstantiator, TPrefab, TPool, TPrepooler>
+    public abstract class UnityPoolBehaviour<T, TSource, TPrefab, TPool, TPrepooler>
         : AsyncPoolBehaviourBase<T, TPool>, IAsyncPrepoolable
         where T : UnityEngine.Object
-        where TInstantiator : IAsyncInstantiator<TSource, T>
-        where TPrefab : IPrefab<T, TSource, TInstantiator>
+        where TPrefab : IPrefab<T, TSource>
         where TPool : IUnityPool<T>, IHasPrefab<TPrefab>
-        where TPrepooler : IAsyncPrepooler<T, TSource, TInstantiator, TPrefab, TPool>, new()
+        where TPrepooler : IAsyncPrepooler<T, TSource, TPrefab, TPool>, new()
     {
         [SerializeField]
         private bool _prepoolOnStart = false;
@@ -28,11 +27,11 @@ namespace Unity.Pooling
 
         protected void Awake()
         {
-            if (Pool == null || Pool.Prefab == null || Pool.Prefab.Instantiator == null)
+            if (Pool == null || Pool.Prefab == null)
                 return;
 
-            if (Pool.Prefab.Instantiator.Parent == false)
-                Pool.Prefab.Instantiator.Parent = this.transform;
+            if (Pool.Prefab.Parent == false)
+                Pool.Prefab.Parent = this.transform;
 
             OnAwake();
         }

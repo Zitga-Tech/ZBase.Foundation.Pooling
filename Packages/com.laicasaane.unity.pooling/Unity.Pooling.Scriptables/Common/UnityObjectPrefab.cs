@@ -8,7 +8,6 @@ namespace Unity.Pooling.Scriptables
     [Serializable]
     public sealed class UnityObjectPrefab
         : IPrefab<UnityEngine.Object, ScriptableSource>
-        , IAsyncInstantiator<ScriptableSource, UnityEngine.Object>
     {
         [SerializeField]
         private ScriptableSource _source;

@@ -4,11 +4,6 @@
     "references": [
         "Collections.Pooled",
         "Collections.Pooled.Generic",
-        "Collections.Pooled.Generic.Internals",
-        "Collections.Pooled.Generic.StructBased",
-        "Collections.Pooled.Generic.StructBased.Internals",
-        "Collections.Pooled.Generic.Temporary",
-        "Collections.Pooled.Generic.Temporary.Internals",
         "UniTask"
     ],
     "includePlatforms": [],

@@ -6,7 +6,7 @@ namespace Unity.Pooling
 {
     [Serializable]
     public class GameObjectPrepooler<TPool>
-        : GameObjectPrepoolerBase<GameObject, GameObjectInstantiator, GameObjectPrefab, TPool>
+        : GameObjectPrepoolerBase<GameObject, GameObjectPrefab, TPool>
         where TPool : IReturnable<GameObject>
     {
     }

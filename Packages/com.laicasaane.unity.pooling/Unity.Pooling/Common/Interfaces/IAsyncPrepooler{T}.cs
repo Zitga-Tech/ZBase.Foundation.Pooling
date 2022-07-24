@@ -11,13 +11,4 @@ namespace Unity.Pooling
     {
         UniTask PrepoolAsync(TPrefab prefab, TPool pool, Transform defaultParent);
     }
-
-    public interface IAsyncPrepooler<T, TSource, TInstantiator, TPrefab, TPool>
-        where T : class
-        where TInstantiator : IAsyncInstantiator<TSource, T>
-        where TPrefab : IPrefab<T, TSource, TInstantiator>
-        where TPool : IReturnable<T>
-    {
-        UniTask PrepoolAsync(TPrefab prefab, TPool pool, Transform defaultParent);
-    }
 }

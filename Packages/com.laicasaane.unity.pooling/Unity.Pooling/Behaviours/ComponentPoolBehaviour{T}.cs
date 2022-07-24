@@ -2,8 +2,7 @@
 {
     public class ComponentPoolBehaviour<T>
         : UnityPoolBehaviour<T, T
-            , ComponentInstantiator<T>
-            , ComponentPrefab<T, ComponentInstantiator<T>>
+            , ComponentPrefab<T>
             , ComponentPool<T>
             , ComponentPrepooler<T, ComponentPool<T>>
         >

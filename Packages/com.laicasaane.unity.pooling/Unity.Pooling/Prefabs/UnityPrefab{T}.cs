@@ -6,24 +6,35 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     [Serializable]
-    public abstract class UnityPrefab<T, TSource, TInstantiator>
-        : IPrefab<T, TSource, TInstantiator>
+    public abstract class UnityPrefab<T, TSource>
+        : IPrefab<T, TSource>
         where T : class
-        where TInstantiator : IAsyncInstantiator<TSource, T>
     {
         [SerializeField]
-        private TInstantiator _instantiator;
+        private TSource _source;
+
+        [SerializeField]
+        private Transform _parent;
 
         [SerializeField]
         private int _prepoolAmount;
 
-        public TInstantiator Instantiator
+        public TSource Source
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => _instantiator;
+            get => _source;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => _instantiator = value ?? throw new ArgumentNullException(nameof(value));
+            set => _source = value;
+        }
+
+        public Transform Parent
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _parent;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set => _parent = value;
         }
 
         public int PrepoolAmount
@@ -35,8 +46,15 @@ namespace Unity.Pooling
             set => _prepoolAmount = value;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async UniTask<T> InstantiateAsync()
-            => await _instantiator.InstantiateAsync();
+        {
+            if (_source is null)
+                throw new NullReferenceException(nameof(Source));
+
+            return await InstantiateAsync(Source, Parent);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected abstract UniTask<T> InstantiateAsync(TSource source, Transform parent);
     }
 }

@@ -4,11 +4,10 @@ using System.Pooling;
 namespace Unity.Pooling
 {
     [Serializable]
-    public abstract class ComponentPrepoolerBase<T, TSource, TInstantiator, TPrefab, TPool>
-        : UnityPrepooler<T, TSource, TInstantiator, TPrefab, TPool>
+    public abstract class ComponentPrepoolerBase<T, TSource, TPrefab, TPool>
+        : UnityPrepooler<T, TSource, TPrefab, TPool>
         where T : UnityEngine.Component
-        where TInstantiator : IAsyncInstantiator<TSource, T>
-        where TPrefab : IPrefab<T, TSource, TInstantiator>
+        where TPrefab : IPrefab<T, TSource>
         where TPool : IReturnable<T>
     {
     }

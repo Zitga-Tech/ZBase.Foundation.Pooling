@@ -5,11 +5,10 @@ using System.Runtime.CompilerServices;
 namespace Unity.Pooling
 {
     [Serializable]
-    public abstract class ComponentPoolBase<T, TSource, TInstantiator, TPrefab>
-        : UnityPool<T, TSource, TInstantiator, TPrefab>
+    public abstract class ComponentPoolBase<T, TSource, TPrefab>
+        : UnityPool<T, TSource, TPrefab>
         where T : UnityEngine.Component
-        where TInstantiator : IAsyncInstantiator<TSource, T>
-        where TPrefab : IPrefab<T, TSource, TInstantiator>
+        where TPrefab : IPrefab<T, TSource>
     {
         public ComponentPoolBase()
             : base(null, default)

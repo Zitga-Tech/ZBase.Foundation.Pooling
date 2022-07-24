@@ -6,11 +6,10 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     [Serializable]
-    public abstract class UnityPrepooler<T, TSource, TInstantiator, TPrefab, TPool>
-        : IAsyncPrepooler<T, TSource, TInstantiator, TPrefab, TPool>
+    public abstract class UnityPrepooler<T, TSource, TPrefab, TPool>
+        : IAsyncPrepooler<T, TSource, TPrefab, TPool>
         where T : UnityEngine.Object
-        where TInstantiator : IAsyncInstantiator<TSource, T>
-        where TPrefab : IPrefab<T, TSource, TInstantiator>
+        where TPrefab : IPrefab<T, TSource>
         where TPool : IReturnable<T>
     {
         public async UniTask PrepoolAsync(TPrefab prefab, TPool pool, Transform defaultParent)
@@ -24,8 +23,8 @@ namespace Unity.Pooling
             if (prefab.PrepoolAmount <= 0)
                 return;
 
-            if (prefab.Instantiator.Parent == false && defaultParent)
-                prefab.Instantiator.Parent = defaultParent;
+            if (prefab.Parent == false && defaultParent)
+                prefab.Parent = defaultParent;
 
             for (int i = 0, count = prefab.PrepoolAmount; i < count; i++)
             {

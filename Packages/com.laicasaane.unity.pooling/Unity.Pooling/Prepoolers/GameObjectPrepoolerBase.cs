@@ -5,10 +5,9 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     [Serializable]
-    public abstract class GameObjectPrepoolerBase<TSource, TInstantiator, TPrefab, TPool>
-        : UnityPrepooler<GameObject, TSource, TInstantiator, TPrefab, TPool>
-        where TInstantiator : IAsyncInstantiator<TSource, GameObject>
-        where TPrefab : IPrefab<GameObject, TSource, TInstantiator>
+    public abstract class GameObjectPrepoolerBase<TSource, TPrefab, TPool>
+        : UnityPrepooler<GameObject, TSource, TPrefab, TPool>
+        where TPrefab : IPrefab<GameObject, TSource>
         where TPool : IReturnable<GameObject>
     {
     }
