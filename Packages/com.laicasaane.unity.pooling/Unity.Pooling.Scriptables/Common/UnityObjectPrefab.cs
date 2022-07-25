@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Unity.Pooling.Scriptables
 {
     [Serializable]
-    public sealed class UnityObjectPrefab
+    public class UnityObjectPrefab
         : IPrefab<UnityEngine.Object, ScriptableSource>
     {
         [SerializeField]

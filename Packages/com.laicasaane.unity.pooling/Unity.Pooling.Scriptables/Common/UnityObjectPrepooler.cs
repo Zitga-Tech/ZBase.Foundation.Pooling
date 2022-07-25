@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Unity.Pooling.Scriptables
 {
-    public sealed class UnityObjectPrepooler
+    public class UnityObjectPrepooler
         : IAsyncPrepooler<UnityEngine.Object
             , ScriptableSource
             , UnityObjectPrefab

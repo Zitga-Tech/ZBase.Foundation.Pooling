@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Unity.Pooling.Scriptables
 {
     [Serializable]
-    public sealed class UnityObjectPool : UnityPool<UnityEngine.Object, ScriptableSource, UnityObjectPrefab>
+    public class UnityObjectPool : UnityPool<UnityEngine.Object, ScriptableSource, UnityObjectPrefab>
     {
         protected override void ReturnPreprocess(UnityEngine.Object instance)
         {
