@@ -12,7 +12,7 @@ namespace Unity.Pooling
             GameObject instance;
 
             if (parent)
-                instance = UnityEngine.Object.Instantiate(Source, parent);
+                instance = UnityEngine.Object.Instantiate(Source, parent, true);
             else
                 instance = UnityEngine.Object.Instantiate(Source);
 
