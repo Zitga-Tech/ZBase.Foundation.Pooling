@@ -1,9 +1,11 @@
+using System;
 using System.Pooling;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace Unity.Pooling.AddressableAssets
 {
+    [Serializable]
     public class AssetRefGameObjectPool
         : AssetRefPool<GameObject, AssetReferenceGameObject, AssetRefGameObjectPrefab>
     {

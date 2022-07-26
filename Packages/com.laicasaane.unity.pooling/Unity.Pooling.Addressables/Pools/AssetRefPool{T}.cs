@@ -1,8 +1,10 @@
-﻿using System.Pooling;
+﻿using System;
+using System.Pooling;
 using UnityEngine.AddressableAssets;
 
 namespace Unity.Pooling.AddressableAssets
 {
+    [Serializable]
     public abstract class AssetRefPool<T, TAssetRef, TPrefab>
         : UnityPool<T, TAssetRef, TPrefab>
         where T : UnityEngine.Object

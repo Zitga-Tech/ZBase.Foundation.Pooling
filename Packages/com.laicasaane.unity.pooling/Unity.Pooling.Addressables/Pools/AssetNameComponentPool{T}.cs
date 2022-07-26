@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Unity.Pooling.AddressableAssets
 {
+    [Serializable]
     public class AssetNameComponentPool<T, TInstantiator, TPrefab>
         : AssetNamePool<T, TInstantiator, TPrefab>
         where T : Component

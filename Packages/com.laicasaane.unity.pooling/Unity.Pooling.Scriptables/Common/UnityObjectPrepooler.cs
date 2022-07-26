@@ -1,9 +1,11 @@
-﻿using System.Pooling;
+﻿using System;
+using System.Pooling;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Unity.Pooling.Scriptables
 {
+    [Serializable]
     public class UnityObjectPrepooler
         : IAsyncPrepooler<UnityEngine.Object
             , ScriptableSource

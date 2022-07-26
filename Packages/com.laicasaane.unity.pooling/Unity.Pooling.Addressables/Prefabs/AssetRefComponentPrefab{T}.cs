@@ -1,9 +1,11 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace Unity.Pooling.AddressableAssets
 {
+    [Serializable]
     public class AssetRefComponentPrefab<T> : AssetRefPrefab<T, AssetReferenceT<T>>
         where T : Component
     {

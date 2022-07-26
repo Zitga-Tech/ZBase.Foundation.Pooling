@@ -1,9 +1,11 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace Unity.Pooling.AddressableAssets
 {
+    [Serializable]
     public class AssetRefGameObjectPrefab : AssetRefPrefab<GameObject, AssetReferenceGameObject>
     {
         protected override async UniTask<GameObject> InstantiateAsync(

@@ -1,9 +1,11 @@
-﻿using System.Pooling;
+﻿using System;
+using System.Pooling;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace Unity.Pooling.AddressableAssets
 {
+    [Serializable]
     public class AssetRefComponentPool<T>
         : AssetRefPool<T, AssetReferenceT<T>, AssetRefComponentPrefab<T>>
         where T : Component
