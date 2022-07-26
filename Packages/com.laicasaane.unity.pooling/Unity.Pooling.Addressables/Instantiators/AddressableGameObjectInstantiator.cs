@@ -5,7 +5,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Unity.Pooling.AddressableAssets
 {
-    public class AssetNameGameObjectInstantiator : AssetNameInstantiator<GameObject>
+    public class AddressableGameObjectInstantiator : AssetNameInstantiator<GameObject>
     {
         public override async UniTask<GameObject> InstantiateAsync(string assetName, Transform parent)
         {
