@@ -61,6 +61,8 @@ namespace Unity.Pooling.Scriptables
 
         public async UniTask<T> RentAsync()
         {
+            _pool.Prefab = _prefab;
+
             var instance = await _pool.RentAsync();
 
             if (instance is T instanceT)
