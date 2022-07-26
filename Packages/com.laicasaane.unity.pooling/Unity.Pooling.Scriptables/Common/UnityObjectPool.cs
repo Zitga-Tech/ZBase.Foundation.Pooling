@@ -12,7 +12,8 @@ namespace Unity.Pooling.Scriptables
             {
                 gameObject.SetActive(false);
             }
-            else if (instance is Component component && component.gameObject.activeSelf)
+            else if (instance is Component component && component.gameObject
+                     && component.gameObject.activeSelf)
             {
                 component.gameObject.SetActive(false);
             }

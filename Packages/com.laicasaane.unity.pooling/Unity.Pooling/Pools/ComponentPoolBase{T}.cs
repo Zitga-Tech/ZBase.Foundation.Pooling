@@ -25,7 +25,7 @@ namespace Unity.Pooling
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override void ReturnPreprocess(T instance)
         {
-            if (instance.gameObject.activeSelf)
+            if (instance && instance.gameObject && instance.gameObject.activeSelf)
                 instance.gameObject.SetActive(false);
         }
     }

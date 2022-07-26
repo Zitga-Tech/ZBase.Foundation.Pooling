@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace Unity.Pooling.AddressableAssets
 {
-    public abstract class AssetNamePrefab<T, TInstantiator> : UnityPrefab<T, string>
+    public abstract class AssetNamePrefab<T, TInstantiator>
+        : UnityPrefab<T, string>
         where T : UnityEngine.Object
         where TInstantiator : IAssetNameInstantiator<T>, new()
     {
