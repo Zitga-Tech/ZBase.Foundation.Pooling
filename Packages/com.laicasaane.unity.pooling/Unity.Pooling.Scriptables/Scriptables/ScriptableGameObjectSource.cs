@@ -4,7 +4,11 @@ using UnityEngine;
 
 namespace Unity.Pooling.Scriptables
 {
-    [CreateAssetMenu(fileName = "Scriptable GameObject Source", menuName = "Pooling/Scriptables/Sources/GameObject", order = 1)]
+    [CreateAssetMenu(
+        fileName = "Scriptable GameObject Source"
+        , menuName = "Pooling/Scriptables/Sources/GameObject"
+        , order = 1
+    )]
     public class ScriptableGameObjectSource : ScriptableSource
     {
         [SerializeField]

@@ -4,18 +4,18 @@ using UnityEngine;
 
 namespace Unity.Pooling.Scriptables
 {
-    [CreateAssetMenu(fileName = "Scriptable Component Source", menuName = "Pooling/Scriptables/Sources/Component", order = 1)]
-    public class ScriptableComponentSource : ScriptableSource
+    public class ScriptableComponentSource<T> : ScriptableSource
+        where T : Component
     {
         [SerializeField]
-        private Component _source;
+        private T _source;
 
         public override async UniTask<UnityEngine.Object> InstantiateAsync(Transform parent)
         {
             if (_source == false)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.source);
 
-            Component instance;
+            T instance;
 
             if (parent)
                 instance = Instantiate(_source, parent);
