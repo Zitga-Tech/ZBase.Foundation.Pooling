@@ -1,11 +1,11 @@
 {
   "name": "com.laicasaane.unity.pooling",
   "displayName": "Unity.Pooling",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "unity": "2021.3",
   "dependencies": {
     "com.cysharp.unitask": "2.3.1",
-    "com.laicasaane.collections.pooled": "2.2.0"
+    "com.laicasaane.collections.pooled": "2.2.1"
   },
   "scopedRegistries": [
     {
