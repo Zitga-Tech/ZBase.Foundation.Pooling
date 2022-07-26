@@ -3,6 +3,7 @@
   "displayName": "Unity.Pooling",
   "version": "1.2.0",
   "unity": "2021.3",
+  "documentationUrl": "https://github.com/laicasaane/Unity.Pooling/blob/main/README.md",
   "dependencies": {
     "com.cysharp.unitask": "2.3.1",
     "com.laicasaane.collections.pooled": "2.2.1"
