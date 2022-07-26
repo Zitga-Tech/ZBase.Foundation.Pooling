@@ -6,12 +6,11 @@ using UnityEngine.AddressableAssets;
 namespace Unity.Pooling.AddressableAssets
 {
     [Serializable]
-    public class AssetRefComponentPrefab<T> : AssetRefPrefab<T, AssetReferenceT<T>>
+    public class AssetRefComponentPrefab<T> : UnityPrefab<T, AssetReferenceGameObject>
         where T : Component
     {
-        protected override async UniTask<T> InstantiateAsync(AssetReferenceT<T> source, Transform parent)
+        protected override async UniTask<T> InstantiateAsync(AssetReferenceGameObject source, Transform parent)
         {
-            T instance;
             GameObject gameObject;
 
             if (parent)
@@ -19,8 +18,7 @@ namespace Unity.Pooling.AddressableAssets
             else
                 gameObject = await source.InstantiateAsync();
 
-            instance = gameObject.GetComponent<T>();
-            return instance;
+            return gameObject.GetComponent<T>();
         }
     }
 }
