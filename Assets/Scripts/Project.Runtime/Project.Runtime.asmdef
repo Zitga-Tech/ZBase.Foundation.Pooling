@@ -12,8 +12,7 @@
         "UniTask.Addressables",
         "Unity.Addressables",
         "Unity.Pooling",
-        "Unity.Pooling.Components",
-        "Unity.Pooling.Components.Addressables"
+        "Unity.Pooling.Addressables"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
