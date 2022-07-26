@@ -7,7 +7,7 @@ namespace Unity.Pooling.AddressableAssets
 {
     [Serializable]
     public class AssetRefGameObjectPool
-        : UnityPool<GameObject, AssetReferenceGameObject, AssetRefGameObjectPrefab>
+        : AssetRefPool<GameObject, AssetReferenceGameObject, AssetRefGameObjectPrefab>
     {
         public AssetRefGameObjectPool()
             : base(null, default)

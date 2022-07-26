@@ -4,7 +4,7 @@ using UnityEngine.AddressableAssets;
 namespace Unity.Pooling.AddressableAssets
 {
     public class AssetRefGameObjectPoolBehaviour
-        : UnityPoolBehaviour<
+        : AssetRefPoolBehaviour<
             GameObject
             , AssetReferenceGameObject
             , AssetRefGameObjectPrefab

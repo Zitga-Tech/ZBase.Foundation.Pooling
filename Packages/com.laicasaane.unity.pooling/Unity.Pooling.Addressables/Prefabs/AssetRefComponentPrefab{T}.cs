@@ -6,7 +6,8 @@ using UnityEngine.AddressableAssets;
 namespace Unity.Pooling.AddressableAssets
 {
     [Serializable]
-    public class AssetRefComponentPrefab<T> : UnityPrefab<T, AssetReferenceGameObject>
+    public class AssetRefComponentPrefab<T>
+        : AssetRefPrefab<T, AssetReferenceGameObject>
         where T : Component
     {
         protected override async UniTask<T> InstantiateAsync(AssetReferenceGameObject source, Transform parent)
