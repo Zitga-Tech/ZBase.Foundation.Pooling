@@ -23,11 +23,11 @@ namespace System.Pooling
         public PoolBase(UniqueQueue<T> queue, Func<T> instantiate)
         {
             _queue = queue ?? new UniqueQueue<T>();
-            _instantiate = instantiate ?? GetDefaultInstantiator() ?? DefaultInstantiator<T>.Get();
+            _instantiate = instantiate ?? DefaultInstantiator<T>.Get();
         }
 
         public void SetInstantiator(Func<T> instantiator)
-            => _instantiate = instantiator ?? GetDefaultInstantiator();
+            => _instantiate = instantiator ?? DefaultInstantiator<T>.Get();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Count() => _queue.Count;
@@ -70,7 +70,5 @@ namespace System.Pooling
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected virtual void ReturnPreprocess(T instance) { }
-
-        protected virtual Func<T> GetDefaultInstantiator() => DefaultInstantiator<T>.Get();
     }
 }

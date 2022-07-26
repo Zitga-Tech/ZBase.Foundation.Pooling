@@ -22,9 +22,6 @@ namespace System.Collections.Generic.Pooling
         public HashSetPool(UniqueQueue<HashSet<T>> queue, Func<HashSet<T>> instantiate)
             : base(queue, instantiate ?? Instantiate)
         { }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected override Func<HashSet<T>> GetDefaultInstantiator()
-            => Instantiate;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override void ReturnPreprocess(HashSet<T> instance)

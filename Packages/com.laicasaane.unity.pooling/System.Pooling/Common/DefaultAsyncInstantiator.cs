@@ -6,7 +6,6 @@ namespace System.Pooling
     public static class DefaultAsyncInstantiator<T> where T : class
     {
         private static readonly Type s_type = typeof(T);
-        private static UniTaskFunc<T> s_default = Instantiate;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static async UniTask<T> Instantiate()
@@ -15,10 +14,8 @@ namespace System.Pooling
             return await UniTask.FromResult(result);
         }
 
-        public static void Set(UniTaskFunc<T> instantiator)
-            => s_default = instantiator ?? throw new ArgumentNullException(nameof(instantiator));
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static UniTaskFunc<T> Get()
-            => s_default ?? Instantiate;
+            => Instantiate;
     }
 }

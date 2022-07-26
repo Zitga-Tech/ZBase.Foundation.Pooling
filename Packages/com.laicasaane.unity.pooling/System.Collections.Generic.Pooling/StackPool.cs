@@ -24,10 +24,6 @@ namespace System.Collections.Generic.Pooling
         { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected override Func<Stack<T>> GetDefaultInstantiator()
-            => Instantiate;
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override void ReturnPreprocess(Stack<T> instance)
             => instance.Clear();
 

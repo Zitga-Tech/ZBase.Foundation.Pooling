@@ -24,11 +24,11 @@ namespace System.Pooling
         public AsyncPoolBase(UniqueQueue<T> queue, UniTaskFunc<T> instantiate)
         {
             _queue = queue ?? new UniqueQueue<T>();
-            _instantiate = instantiate ?? GetDefaultInstantiator() ?? DefaultAsyncInstantiator<T>.Get();
+            _instantiate = instantiate ?? DefaultAsyncInstantiator<T>.Get();
         }
 
         public void SetInstantiator(UniTaskFunc<T> instantiator)
-            => _instantiate = instantiator ?? GetDefaultInstantiator();
+            => _instantiate = instantiator ?? DefaultAsyncInstantiator<T>.Get();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Count() => _queue.Count;
@@ -71,7 +71,5 @@ namespace System.Pooling
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected virtual void ReturnPreprocess(T instance) { }
-
-        protected virtual UniTaskFunc<T> GetDefaultInstantiator() => DefaultAsyncInstantiator<T>.Get();
     }
 }
