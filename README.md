@@ -9,6 +9,10 @@
 
 The related modules will be enabled automatically when the [com.unity.addressables](https://docs.unity3d.com/Packages/com.unity.addressables@1.19/manual/index.html) package is installed.
 
+## Thread-safety disclaimer
+
+:warning: This package does NOT factor thread-safety into its design.
+
 # Installation
 
 ## Install via Open UPM
@@ -34,13 +38,26 @@ from the `Add package from git URL` option.
 
 # System.Pooling
 
-This module builds a foundation for this entire package. There are also some basic functionality for pooling C# objects.
+This module provides a foundation for this entire package and some basic functionality for pooling C# objects.
 
-The foundation provides 2 kinds of pool: `IPool<T>` and `IAsyncPool<T>`.
-- To pool C# objects, `IPool<T>` will be mostly used. Unless there is a need to fetch objects from some asynchronous contexts.
-- On the other hand, `IAsyncPool<T>` will be used to pool Unity objects.
+## Foundation
 
+The 2 main interfaces:
+- `IPool<T>` is the
+- `IAsyncPool<T>`
 
+## Basic pools
+
+- Basic types `Pool<T>` and `AsyncPool<T>` implement the most generic functionality for pooling C# objects.
+
+## Shared pools
+
+`SharedPool.Of<T>` will return a shared instance of any type that implements `IPool` interface and have a default constructor.
+
+```cs
+var listPool = SharedPool.Of< ListPool<int> >();
+var pool     = SharedPool.Of< Pool<MyClass> >();
+```
 
 # System.Collections.Generic.Pooling
 

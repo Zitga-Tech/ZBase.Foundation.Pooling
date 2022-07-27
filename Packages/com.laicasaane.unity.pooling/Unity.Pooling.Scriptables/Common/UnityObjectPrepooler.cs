@@ -29,7 +29,7 @@ namespace Unity.Pooling.Scriptables
 
             for (int i = 0, count = prefab.PrepoolAmount; i < count; i++)
             {
-                var instance = await prefab.InstantiateAsync();
+                var instance = await prefab.Instantiate();
                 pool.Return(instance);
             }
         }

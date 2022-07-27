@@ -60,12 +60,12 @@ namespace Unity.Pooling
             }
         }
 
-        public async UniTask<T> RentAsync()
+        public async UniTask<T> Rent()
         {
             if (_queue.TryDequeue(out var instance))
                 return instance.Value;
 
-            return await _prefab.InstantiateAsync();
+            return await _prefab.Instantiate();
         }
 
         public void Return(T instance)

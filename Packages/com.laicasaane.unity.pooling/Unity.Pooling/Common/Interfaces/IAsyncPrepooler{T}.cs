@@ -5,7 +5,6 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     public interface IAsyncPrepooler<T, TSource, TPrefab, TPool>
-        where T : class
         where TPrefab : IPrefab<T, TSource>
         where TPool : IReturnable<T>
     {

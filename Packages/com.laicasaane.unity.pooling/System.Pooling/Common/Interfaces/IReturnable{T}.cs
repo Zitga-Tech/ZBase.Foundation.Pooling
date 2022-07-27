@@ -1,6 +1,6 @@
 ﻿namespace System.Pooling
 {
-    public interface IReturnable<T> where T : class
+    public interface IReturnable<T>
     {
         void Return(T instance);
     }

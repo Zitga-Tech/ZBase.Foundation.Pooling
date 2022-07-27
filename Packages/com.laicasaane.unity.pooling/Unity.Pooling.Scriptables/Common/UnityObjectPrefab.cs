@@ -35,7 +35,7 @@ namespace Unity.Pooling.Scriptables
             set => _prepoolAmount = value;
         }
 
-        public async UniTask<UnityEngine.Object> InstantiateAsync()
+        public async UniTask<UnityEngine.Object> Instantiate()
         {
             if (_source is null)
                 throw new NullReferenceException(nameof(Source));

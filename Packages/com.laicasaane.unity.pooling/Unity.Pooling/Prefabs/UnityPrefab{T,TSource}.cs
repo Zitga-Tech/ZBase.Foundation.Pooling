@@ -46,7 +46,7 @@ namespace Unity.Pooling
             set => _prepoolAmount = value;
         }
 
-        public async UniTask<T> InstantiateAsync()
+        public async UniTask<T> Instantiate()
         {
             if (_source is null)
                 throw new NullReferenceException(nameof(Source));

@@ -2,7 +2,7 @@
 
 namespace System.Pooling
 {
-    public readonly struct DisposableContext<T>
+    public readonly struct DisposableContext<T> : IRentable<Disposable<T>>
         where T : class
     {
         internal readonly IPool<T> _pool;

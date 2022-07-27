@@ -2,7 +2,6 @@
 {
     public interface IAsyncPool<T>
         : IPool, IAsyncRentable<T>, IReturnable<T>, ICountable
-        where T : class
     {
         /// <summary>
         /// Keeps the specified quantity and releases the pooled instances.

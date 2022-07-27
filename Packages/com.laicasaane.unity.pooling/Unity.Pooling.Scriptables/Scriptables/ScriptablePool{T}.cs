@@ -59,11 +59,11 @@ namespace Unity.Pooling.Scriptables
             _pool.ReleaseInstances(keep, OnRelease);
         }
 
-        public async UniTask<T> RentAsync()
+        public async UniTask<T> Rent()
         {
             _pool.Prefab = _prefab;
 
-            var instance = await _pool.RentAsync();
+            var instance = await _pool.Rent();
 
             if (instance is T instanceT)
                 return instanceT;

@@ -29,8 +29,8 @@ namespace Unity.Pooling
             => _pool.ReleaseInstances(keep, onReleased);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async UniTask<T> RentAsync()
-            => await _pool.RentAsync();
+        public async UniTask<T> Rent()
+            => await _pool.Rent();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Return(T instance)

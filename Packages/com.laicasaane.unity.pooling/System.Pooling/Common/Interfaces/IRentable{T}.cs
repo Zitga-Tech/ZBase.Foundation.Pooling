@@ -1,6 +1,6 @@
 ﻿namespace System.Pooling
 {
-    public interface IRentable<T> where T : class
+    public interface IRentable<T>
     {
         T Rent();
     }

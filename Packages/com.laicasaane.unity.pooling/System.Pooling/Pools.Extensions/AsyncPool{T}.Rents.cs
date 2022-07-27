@@ -27,7 +27,7 @@ namespace System.Pooling
 
             for (var i = 0; i < count; i++)
             {
-                output[i] = await pool.RentAsync();
+                output[i] = await pool.Rent();
             }
 
             return pool;
@@ -53,7 +53,7 @@ namespace System.Pooling
             {
                 try
                 {
-                    output.Add(await pool.RentAsync());
+                    output.Add(await pool.Rent());
                 }
                 catch
                 { }

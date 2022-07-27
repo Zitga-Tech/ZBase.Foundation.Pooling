@@ -2,7 +2,7 @@
 
 namespace System.Pooling
 {
-    public interface IAsyncRentable<T> : IRentable<UniTask<T>>
+    public interface IAsyncInstantiable<T> : IInstantiable<UniTask<T>>
     {
     }
 }

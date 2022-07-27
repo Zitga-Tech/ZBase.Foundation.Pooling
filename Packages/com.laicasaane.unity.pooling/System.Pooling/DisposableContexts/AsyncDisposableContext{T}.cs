@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace System.Pooling
 {
-    public readonly struct AsyncDisposableContext<T>
+    public readonly struct AsyncDisposableContext<T> : IAsyncRentable<Disposable<T>>
         where T : class
     {
         internal readonly IAsyncPool<T> _pool;
@@ -14,9 +14,9 @@ namespace System.Pooling
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async UniTask<Disposable<T>> RentAsync()
+        public async UniTask<Disposable<T>> Rent()
         {
-            var result = await _pool.RentAsync();
+            var result = await _pool.Rent();
             return new Disposable<T>(_pool, result);
         }
     }

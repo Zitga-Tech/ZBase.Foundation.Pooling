@@ -1,33 +1,27 @@
-﻿using System;
-using System.Pooling;
+﻿using System.Pooling;
 using System.Runtime.CompilerServices;
 
 namespace Collections.Pooled.Generic.Pooling
 {
-    public class HashSetPool<T> : Pool<HashSet<T>>
+    public class HashSetPool<T> : Pool<HashSet<T>, HashSetInstantiator<T>>
     {
         public HashSetPool()
-            : base(Instantiate)
+            : base(null)
         { }
-        
+
         public HashSetPool(UniqueQueue<HashSet<T>> queue)
-            : base(queue, Instantiate)
-        { }
-
-        public HashSetPool(Func<HashSet<T>> instantiate)
-            : base(null, instantiate ?? Instantiate)
-        { }
-
-        public HashSetPool(UniqueQueue<HashSet<T>> queue, Func<HashSet<T>> instantiate)
-            : base(queue, instantiate ?? Instantiate)
+            : base(queue)
         { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override void ReturnPreprocess(HashSet<T> instance)
             => instance.Clear();
+    }
 
+    public struct HashSetInstantiator<T> : IInstantiable<HashSet<T>>
+    {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static HashSet<T> Instantiate()
+        public HashSet<T> Instantiate()
             => new HashSet<T>();
     }
 }

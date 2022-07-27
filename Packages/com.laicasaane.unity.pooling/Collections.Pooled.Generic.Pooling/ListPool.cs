@@ -1,33 +1,27 @@
-﻿using System;
-using System.Pooling;
+﻿using System.Pooling;
 using System.Runtime.CompilerServices;
 
 namespace Collections.Pooled.Generic.Pooling
 {
-    public class ListPool<T> : Pool<List<T>>
+    public class ListPool<T> : Pool<List<T>, ListInstantiator<T>>
     {
         public ListPool()
-            : base(Instantiate)
+            : base(null)
         { }
 
         public ListPool(UniqueQueue<List<T>> queue)
-            : base(queue, Instantiate)
-        { }
-
-        public ListPool(Func<List<T>> instantiate)
-            : base(null, instantiate ?? Instantiate)
-        { }
-
-        public ListPool(UniqueQueue<List<T>> queue, Func<List<T>> instantiate)
-            : base(queue, instantiate ?? Instantiate)
+            : base(queue)
         { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override void ReturnPreprocess(List<T> instance)
             => instance.Clear();
+    }
 
+    public struct ListInstantiator<T> : IInstantiable<List<T>>
+    {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static List<T> Instantiate()
+        public List<T> Instantiate()
             => new List<T>();
     }
 }

@@ -3,30 +3,25 @@ using System.Runtime.CompilerServices;
 
 namespace System.Collections.Generic.Pooling
 {
-    public class StackPool<T> : Pool<Stack<T>>
+    public class StackPool<T> : Pool<Stack<T>, StackInstantiator<T>>
     {
         public StackPool()
-            : base(Instantiate)
+            : base(null)
         { }
 
         public StackPool(UniqueQueue<Stack<T>> queue)
-            : base(queue, Instantiate)
-        { }
-
-        public StackPool(Func<Stack<T>> instantiate)
-            : base(null, instantiate ?? Instantiate)
-        { }
-
-        public StackPool(UniqueQueue<Stack<T>> queue, Func<Stack<T>> instantiate)
-            : base(queue, instantiate ?? Instantiate)
+            : base(queue)
         { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override void ReturnPreprocess(Stack<T> instance)
             => instance.Clear();
+    }
 
+    public struct StackInstantiator<T> : IInstantiable<Stack<T>>
+    {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Stack<T> Instantiate()
+        public Stack<T> Instantiate()
             => new Stack<T>();
     }
 }
