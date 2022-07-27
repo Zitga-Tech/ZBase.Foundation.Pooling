@@ -1,6 +1,6 @@
 ﻿namespace System.Pooling
 {
-    public class AsyncPool<T> : AsyncPoolBase<T>
+    public sealed class AsyncPool<T> : AsyncPoolBase<T>
         where T : class
     {
         public static readonly AsyncPool<T> Shared = new AsyncPool<T>();

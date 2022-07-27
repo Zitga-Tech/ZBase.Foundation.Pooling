@@ -1,6 +1,6 @@
 ﻿namespace System.Pooling
 {
-    public class Pool<T> : PoolBase<T>
+    public sealed class Pool<T> : PoolBase<T>
         where T : class
     {
         public static readonly Pool<T> Shared = new Pool<T>();
