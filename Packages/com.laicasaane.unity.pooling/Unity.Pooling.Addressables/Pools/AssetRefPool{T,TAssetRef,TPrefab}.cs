@@ -5,7 +5,7 @@ using UnityEngine.AddressableAssets;
 namespace Unity.Pooling.AddressableAssets
 {
     [Serializable]
-    public abstract class AssetRefPool<T, TAssetRef, TPrefab>
+    public class AssetRefPool<T, TAssetRef, TPrefab>
         : UnityPool<T, TAssetRef, TPrefab>
         where T : UnityEngine.Object
         where TAssetRef : AssetReference

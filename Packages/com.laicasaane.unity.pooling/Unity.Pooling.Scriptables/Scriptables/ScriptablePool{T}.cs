@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Unity.Pooling.Scriptables
 {
-    public abstract class ScriptablePool<T>
+    public class ScriptablePool<T>
         : ScriptableObject, IUnityPool<T>, IAsyncPrepoolable, IHasParent
         where T : UnityEngine.Object
     {

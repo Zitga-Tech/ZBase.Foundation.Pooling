@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 
 namespace Unity.Pooling
 {
-    public abstract class AsyncPoolBehaviourBase<T, TPool>
+    public abstract class AsyncPoolBehaviour<T, TPool>
         : MonoBehaviour, IAsyncPool<T>
         where T : class
         where TPool : IAsyncPool<T>

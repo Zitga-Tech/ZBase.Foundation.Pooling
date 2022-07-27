@@ -4,10 +4,8 @@ using System.Runtime.CompilerServices;
 
 namespace Collections.Pooled.Generic.Pooling
 {
-    public sealed class HashSetPool<T> : PoolBase<HashSet<T>>
+    public class HashSetPool<T> : Pool<HashSet<T>>
     {
-        public static readonly HashSetPool<T> Shared = new HashSetPool<T>();
-
         public HashSetPool()
             : base(Instantiate)
         { }

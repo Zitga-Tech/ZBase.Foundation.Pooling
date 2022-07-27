@@ -4,7 +4,7 @@ using System.Pooling;
 namespace Unity.Pooling.AddressableAssets
 {
     [Serializable]
-    public abstract class AssetNamePool<T, TInstantiator, TPrefab>
+    public class AssetNamePool<T, TInstantiator, TPrefab>
         : UnityPool<T, string, TPrefab>
         where T : UnityEngine.Object
         where TInstantiator : IAssetNameInstantiator<T>, new()

@@ -5,20 +5,20 @@ using System.Runtime.CompilerServices;
 namespace Unity.Pooling
 {
     [Serializable]
-    public abstract class ComponentPoolBase<T, TSource, TPrefab>
+    public class ComponentPool<T, TSource, TPrefab>
         : UnityPool<T, TSource, TPrefab>
         where T : UnityEngine.Component
         where TPrefab : IPrefab<T, TSource>
     {
-        public ComponentPoolBase()
+        public ComponentPool()
             : base(null, default)
         { }
 
-        public ComponentPoolBase(TPrefab prefab)
+        public ComponentPool(TPrefab prefab)
             : base(null, prefab)
         { }
 
-        public ComponentPoolBase(UniqueQueue<int, T> queue, TPrefab prefab)
+        public ComponentPool(UniqueQueue<int, T> queue, TPrefab prefab)
             : base(queue, prefab)
         { }
 

@@ -3,10 +3,8 @@ using System.Runtime.CompilerServices;
 
 namespace System.Collections.Generic.Pooling
 {
-    public sealed class DictionaryPool<TKey, TValue> : PoolBase<Dictionary<TKey, TValue>>
+    public class DictionaryPool<TKey, TValue> : Pool<Dictionary<TKey, TValue>>
     {
-        public static readonly DictionaryPool<TKey, TValue> Shared = new DictionaryPool<TKey, TValue>();
-
         public DictionaryPool()
             : base(Instantiate)
         { }

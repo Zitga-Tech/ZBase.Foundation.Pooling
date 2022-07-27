@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     [Serializable]
-    public abstract partial class UnityPool<T, TSource, TPrefab>
+    public class UnityPool<T, TSource, TPrefab>
         : IUnityPool<T>, IHasPrefab<TPrefab>, IDisposable
         where T : UnityEngine.Object
         where TPrefab : IPrefab<T, TSource>
@@ -77,6 +77,7 @@ namespace Unity.Pooling
             _queue.Enqueue(instance.ToKVPair());
         }
 
-        protected abstract void ReturnPreprocess(T instance);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected virtual void ReturnPreprocess(T instance) { }
     }
 }

@@ -6,19 +6,19 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     [Serializable]
-    public abstract class GameObjectPoolBase<TSource, TPrefab>
+    public class GameObjectPool<TSource, TPrefab>
         : UnityPool<GameObject, TSource, TPrefab>
         where TPrefab : IPrefab<GameObject, TSource>
     {
-        public GameObjectPoolBase()
+        public GameObjectPool()
             : base(null, default)
         { }
 
-        public GameObjectPoolBase(TPrefab prefab)
+        public GameObjectPool(TPrefab prefab)
             : base(null, prefab)
         { }
 
-        public GameObjectPoolBase(UniqueQueue<int, GameObject> queue, TPrefab prefab)
+        public GameObjectPool(UniqueQueue<int, GameObject> queue, TPrefab prefab)
             : base(queue, prefab)
         { }
 

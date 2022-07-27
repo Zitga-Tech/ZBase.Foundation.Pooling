@@ -3,10 +3,8 @@ using System.Runtime.CompilerServices;
 
 namespace System.Collections.Generic.Pooling
 {
-    public sealed class StackPool<T> : PoolBase<Stack<T>>
+    public class StackPool<T> : Pool<Stack<T>>
     {
-        public static readonly StackPool<T> Shared = new StackPool<T>();
-
         public StackPool()
             : base(Instantiate)
         { }

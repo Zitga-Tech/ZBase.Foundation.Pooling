@@ -4,10 +4,8 @@ using System.Runtime.CompilerServices;
 
 namespace Collections.Pooled.Generic.Pooling
 {
-    public sealed class ListPool<T> : PoolBase<List<T>>
+    public class ListPool<T> : Pool<List<T>>
     {
-        public static readonly ListPool<T> Shared = new ListPool<T>();
-
         public ListPool()
             : base(Instantiate)
         { }

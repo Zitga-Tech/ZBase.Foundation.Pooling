@@ -6,7 +6,7 @@ namespace Unity.Pooling
 {
     [Serializable]
     public class GameObjectPool
-        : GameObjectPoolBase<GameObject, GameObjectPrefab>
+        : GameObjectPool<GameObject, GameObjectPrefab>
     {
         public GameObjectPool()
             : base(null, default)
