@@ -5,8 +5,12 @@ using UnityEngine.AddressableAssets;
 
 namespace Unity.Pooling.Scriptables.AddressableAssets
 {
-    public class ScriptableAddressableComponentSource<T> : ScriptableAssetNameSource
-        where T : Component
+    [CreateAssetMenu(
+        fileName = "Scriptable Asset Name GameObject Source"
+        , menuName = "Pooling/Scriptables/Sources/Asset Name GameObject"
+        , order = 1
+    )]
+    public class ScriptableAssetNameGameObjectSource : ScriptableAssetNameSource
     {
         public override async UniTask<Object> Instantiate(Transform parent)
         {
@@ -15,14 +19,14 @@ namespace Unity.Pooling.Scriptables.AddressableAssets
             if (string.IsNullOrEmpty(assetName))
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.assetName);
 
-            GameObject gameObject;
+            GameObject instance;
 
             if (parent)
-                gameObject = await Addressables.InstantiateAsync(assetName, parent, true);
+                instance = await Addressables.InstantiateAsync(assetName, parent, true);
             else
-                gameObject = await Addressables.InstantiateAsync(assetName);
+                instance = await Addressables.InstantiateAsync(assetName);
 
-            return gameObject.GetComponent<T>();
+            return instance;
         }
     }
 }
