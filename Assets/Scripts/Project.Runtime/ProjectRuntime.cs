@@ -1,3 +1,4 @@
+using Unity.Pooling;
 using UnityEngine;
 
 namespace Project.Runtime
@@ -6,6 +7,7 @@ namespace Project.Runtime
     {
         private void Start()
         {
+            this.gameObject.AddComponent<ComponentPoolBehaviour<BoxCollider>>();
         }
     }
 }

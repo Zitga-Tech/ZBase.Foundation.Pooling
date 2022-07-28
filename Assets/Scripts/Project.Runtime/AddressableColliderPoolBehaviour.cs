@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Project.Runtime
 {
     public class AddressableColliderPoolBehaviour
-        : AddressableComponentPoolBehaviour<BoxCollider>
+        : AssetNameComponentPoolBehaviour<BoxCollider>
     {
     }
 }

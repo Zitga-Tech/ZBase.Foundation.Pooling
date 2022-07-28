@@ -5,10 +5,9 @@ using UnityEngine;
 namespace Unity.Pooling.AddressableAssets
 {
     [Serializable]
-    public class AssetNameGameObjectPool<TPrefab, TInstantiator>
+    public class AssetNameGameObjectPool<TPrefab>
         : GameObjectPool<TPrefab>
-        where TPrefab : AssetNameGameObjectPrefab<TInstantiator>
-        where TInstantiator : IAssetNameInstantiator<GameObject>, new()
+        where TPrefab : AssetNameGameObjectPrefab
     {
         public AssetNameGameObjectPool()
             : base()

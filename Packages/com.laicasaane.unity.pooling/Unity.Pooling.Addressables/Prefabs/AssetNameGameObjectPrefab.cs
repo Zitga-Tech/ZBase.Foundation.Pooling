@@ -1,22 +1,23 @@
 ﻿using System;
-using UnityEngine;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Unity.Pooling.AddressableAssets
 {
     [Serializable]
-    public class AddressableGameObjectInstantiator : AssetNameInstantiator<GameObject>
+    public class AssetNameGameObjectPrefab
+        : AssetNamePrefab<GameObject>
     {
-        public override async UniTask<GameObject> Instantiate(string assetName, Transform parent)
+        protected override async UniTask<GameObject> Instantiate(string source, Transform parent)
         {
             AsyncOperationHandle<GameObject> handle;
 
             if (parent)
-                handle = Addressables.InstantiateAsync(assetName, parent);
+                handle = Addressables.InstantiateAsync(source, parent);
             else
-                handle = Addressables.InstantiateAsync(assetName);
+                handle = Addressables.InstantiateAsync(source);
 
             return await handle;
         }
