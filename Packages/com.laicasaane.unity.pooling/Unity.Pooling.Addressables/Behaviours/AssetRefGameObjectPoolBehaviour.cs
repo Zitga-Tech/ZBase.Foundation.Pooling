@@ -7,11 +7,6 @@ namespace Unity.Pooling.AddressableAssets
             GameObject
             , AssetRefGameObjectPrefab
             , AssetRefGameObjectPool
-            , UnityPrepooler<
-                GameObject
-                , AssetRefGameObjectPrefab
-                , AssetRefGameObjectPool
-            >
         >
     {
     }

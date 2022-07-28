@@ -7,11 +7,6 @@ namespace Unity.Pooling.AddressableAssets
             T
             , AssetRefComponentPrefab<T>
             , AssetRefComponentPool<T>
-            , UnityPrepooler<
-                T
-                , AssetRefComponentPrefab<T>
-                , AssetRefComponentPool<T>
-            >
         >
         where T : Component
     {

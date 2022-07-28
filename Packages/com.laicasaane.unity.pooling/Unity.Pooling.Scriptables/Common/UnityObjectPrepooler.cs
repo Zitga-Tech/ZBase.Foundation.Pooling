@@ -1,12 +1,10 @@
-﻿using System;
-using System.Pooling;
+﻿using System.Pooling;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Unity.Pooling.Scriptables
 {
-    [Serializable]
-    public class UnityObjectPrepooler
+    public struct UnityObjectPrepooler
         : IPrepooler<UnityEngine.Object
             , UnityObjectPrefab
             , IReturnable<UnityEngine.Object>

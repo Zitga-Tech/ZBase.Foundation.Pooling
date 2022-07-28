@@ -4,7 +4,6 @@
         : UnityPoolBehaviour<T
             , ComponentPrefab<T>
             , ComponentPool<T>
-            , UnityPrepooler<T, ComponentPrefab<T>, ComponentPool<T>>
         >
         where T : UnityEngine.Component
     {

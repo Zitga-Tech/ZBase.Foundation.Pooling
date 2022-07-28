@@ -6,7 +6,6 @@ namespace Unity.Pooling
         : UnityPoolBehaviour<GameObject
             , GameObjectPrefab
             , GameObjectPool
-            , UnityPrepooler<GameObject, GameObjectPrefab, GameObjectPool>
         >
     {
     }

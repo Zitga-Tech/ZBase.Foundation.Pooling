@@ -16,7 +16,7 @@ namespace Unity.Pooling.Scriptables
         private bool _prepoolOnStart = false;
 
         private readonly UnityObjectPool _pool = new UnityObjectPool();
-        private readonly UnityObjectPrepooler _prepooler = new UnityObjectPrepooler();
+        private readonly UnityObjectPrepooler _prepooler = default;
 
         public bool PrepoolOnStart
         {
