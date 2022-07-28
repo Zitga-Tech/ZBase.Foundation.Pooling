@@ -5,10 +5,10 @@ using System.Runtime.CompilerServices;
 namespace Unity.Pooling
 {
     [Serializable]
-    public class ComponentPool<T, TSource, TPrefab>
-        : UnityPool<T, TSource, TPrefab>
+    public class ComponentPool<T, TPrefab>
+        : UnityPool<T, TPrefab>
         where T : UnityEngine.Component
-        where TPrefab : IPrefab<T, TSource>
+        where TPrefab : IPrefab<T>
     {
         public ComponentPool()
             : base(null, default)

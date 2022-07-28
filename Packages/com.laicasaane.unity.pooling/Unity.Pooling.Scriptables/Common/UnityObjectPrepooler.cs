@@ -8,14 +8,13 @@ namespace Unity.Pooling.Scriptables
     [Serializable]
     public class UnityObjectPrepooler
         : IPrepooler<UnityEngine.Object
-            , ScriptableSource
             , UnityObjectPrefab
             , IReturnable<UnityEngine.Object>
         >
     {
         public async UniTask Prepool(UnityObjectPrefab prefab, IReturnable<UnityEngine.Object> pool, Transform defaultParent)
         {
-            if (prefab.IsNotNull() == false)
+            if (prefab == null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.prefab);
 
             if (pool == null)

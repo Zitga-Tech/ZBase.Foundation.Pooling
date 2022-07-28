@@ -5,7 +5,7 @@ namespace Unity.Pooling
 {
     [Serializable]
     public class ComponentPool<T>
-        : ComponentPool<T, T, ComponentPrefab<T>>
+        : ComponentPool<T, ComponentPrefab<T>>
         where T : UnityEngine.Component
     {
         public ComponentPool()

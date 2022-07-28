@@ -6,9 +6,9 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     [Serializable]
-    public class GameObjectPool<TSource, TPrefab>
-        : UnityPool<GameObject, TSource, TPrefab>
-        where TPrefab : IPrefab<GameObject, TSource>
+    public class GameObjectPool<TPrefab>
+        : UnityPool<GameObject, TPrefab>
+        where TPrefab : IPrefab<GameObject>
     {
         public GameObjectPool()
             : base(null, default)

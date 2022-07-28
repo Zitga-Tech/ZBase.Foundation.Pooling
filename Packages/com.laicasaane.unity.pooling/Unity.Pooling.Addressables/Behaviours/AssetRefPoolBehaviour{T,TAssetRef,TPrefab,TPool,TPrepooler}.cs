@@ -3,7 +3,7 @@
 namespace Unity.Pooling.AddressableAssets
 {
     public class AssetRefPoolBehaviour<T, TAssetRef, TPrefab, TPool, TPrepooler>
-        : UnityPoolBehaviour<T, TAssetRef, TPrefab, TPool, TPrepooler>
+        : UnityPoolBehaviour<T, TPrefab, TPool, TPrepooler>
         where T : UnityEngine.Object
         where TAssetRef : AssetReference
         where TPrefab : AssetRefPrefab<T, TAssetRef>

@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Unity.Pooling
 {
-    public abstract class UnityPoolBehaviour<T, TSource, TPrefab, TPool, TPrepooler>
+    public abstract class UnityPoolBehaviour<T, TPrefab, TPool, TPrepooler>
         : AsyncPoolBehaviour<T, TPool>, IPrepoolable
         where T : UnityEngine.Object
-        where TPrefab : IPrefab<T, TSource>
+        where TPrefab : IPrefab<T>
         where TPool : IUnityPool<T>, IHasPrefab<TPrefab>
-        where TPrepooler : IPrepooler<T, TSource, TPrefab, TPool>, new()
+        where TPrepooler : IPrepooler<T, TPrefab, TPool>, new()
     {
         [SerializeField]
         private bool _prepoolOnStart = false;

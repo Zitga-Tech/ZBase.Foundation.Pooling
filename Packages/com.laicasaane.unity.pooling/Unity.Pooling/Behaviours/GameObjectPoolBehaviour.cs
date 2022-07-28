@@ -3,10 +3,10 @@
 namespace Unity.Pooling
 {
     public class GameObjectPoolBehaviour
-        : UnityPoolBehaviour<GameObject, GameObject
+        : UnityPoolBehaviour<GameObject
             , GameObjectPrefab
             , GameObjectPool
-            , UnityPrepooler<GameObject, GameObject, GameObjectPrefab, GameObjectPool>
+            , UnityPrepooler<GameObject, GameObjectPrefab, GameObjectPool>
         >
     {
     }

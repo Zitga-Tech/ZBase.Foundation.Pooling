@@ -6,15 +6,15 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     [Serializable]
-    public class UnityPrepooler<T, TSource, TPrefab, TPool>
-        : IPrepooler<T, TSource, TPrefab, TPool>
+    public class UnityPrepooler<T, TPrefab, TPool>
+        : IPrepooler<T, TPrefab, TPool>
         where T : UnityEngine.Object
-        where TPrefab : IPrefab<T, TSource>
+        where TPrefab : IPrefab<T>
         where TPool : IReturnable<T>
     {
         public async UniTask Prepool(TPrefab prefab, TPool pool, Transform defaultParent)
         {
-            if (prefab.IsNotNull() == false)
+            if (prefab == null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.prefab);
 
             if (pool == null)

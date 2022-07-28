@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Unity.Pooling
 {
-    public interface IPrepooler<T, TSource, TPrefab, TPool>
-        where TPrefab : IPrefab<T, TSource>
+    public interface IPrepooler<T, TPrefab, TPool>
+        where TPrefab : IPrefab<T>
         where TPool : IReturnable<T>
     {
         UniTask Prepool(TPrefab prefab, TPool pool, Transform defaultParent);

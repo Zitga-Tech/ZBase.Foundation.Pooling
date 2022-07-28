@@ -4,7 +4,7 @@ namespace Unity.Pooling.AddressableAssets
 {
     [Serializable]
     public class AssetNamePrepooler<T, TInstantiator, TPrefab, TPool>
-        : UnityPrepooler<T, string, TPrefab, TPool>
+        : UnityPrepooler<T, TPrefab, TPool>
         where T : UnityEngine.Object
         where TInstantiator : IAssetNameInstantiator<T>, new()
         where TPrefab : AssetNamePrefab<T, TInstantiator>
