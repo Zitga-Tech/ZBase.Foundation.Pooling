@@ -130,7 +130,23 @@ var goPoolCustom = new GameObjectPool<MyGameObjectPrefab>();
 var simpleGOPool = new UnityPool<GameObject, MyGameObjectPrefab>()
 ```
 
+## Behaviours
+
+Only `GameObjectPoolBehaviour` is ready to add onto a `GameObject`.
+
+Other behaviours require declaring non-generic subtypes before using.
+
+```cs
+public class BoxColliderPoolBehaviour : ComponentPoolBehaviour<BoxCollider> { }
+```
+
 # Unity.Pooling.Addressables
+
+This module offers 2 ways to integrate Addressables:
+- `AssetRef*` requires `AssetReference` to refer to the asset
+- `AssetName*` requires a `string` to do that instead
+
+
 
 # Unity.Pooling.Scriptables
 
