@@ -11,11 +11,11 @@ namespace Unity.Pooling
         where TPrefab : IPrefab<T>
     {
         public ComponentPool()
-            : base(null, default)
+            : base()
         { }
 
         public ComponentPool(TPrefab prefab)
-            : base(null, prefab)
+            : base(prefab)
         { }
 
         public ComponentPool(UniqueQueue<int, T> queue, TPrefab prefab)

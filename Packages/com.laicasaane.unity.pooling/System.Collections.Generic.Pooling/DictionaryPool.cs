@@ -7,7 +7,7 @@ namespace System.Collections.Generic.Pooling
         : Pool<Dictionary<TKey, TValue>, DictionaryInstantiator<TKey, TValue>>
     {
         public DictionaryPool()
-            : base(null)
+            : base()
         { }
 
         public DictionaryPool(UniqueQueue<Dictionary<TKey, TValue>> queue)

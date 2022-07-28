@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Pooling;
 using UnityEngine;
 
 namespace Unity.Pooling.AddressableAssets
@@ -8,5 +9,16 @@ namespace Unity.Pooling.AddressableAssets
         : ComponentPool<T, AssetRefComponentPrefab<T>>
         where T : Component
     {
+        public AssetRefComponentPool()
+            : base()
+        { }
+
+        public AssetRefComponentPool(AssetRefComponentPrefab<T> prefab)
+            : base(prefab)
+        { }
+
+        public AssetRefComponentPool(UniqueQueue<int, T> queue, AssetRefComponentPrefab<T> prefab)
+            : base(queue, prefab)
+        { }
     }
 }

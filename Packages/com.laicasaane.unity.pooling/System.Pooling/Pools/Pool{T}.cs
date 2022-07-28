@@ -6,7 +6,7 @@ namespace System.Pooling
         where T : class
     {
         public Pool()
-            : base(null)
+            : base()
         { }
 
         public Pool(UniqueQueue<T> queue)

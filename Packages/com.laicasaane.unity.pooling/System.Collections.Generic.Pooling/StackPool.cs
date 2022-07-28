@@ -6,7 +6,7 @@ namespace System.Collections.Generic.Pooling
     public class StackPool<T> : Pool<Stack<T>, StackInstantiator<T>>
     {
         public StackPool()
-            : base(null)
+            : base()
         { }
 
         public StackPool(UniqueQueue<Stack<T>> queue)

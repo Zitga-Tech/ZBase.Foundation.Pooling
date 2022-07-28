@@ -7,17 +7,17 @@ namespace System.Pooling
         where T : class
         where TInstantiator : IAsyncInstantiable<T>, new()
     {
-        private readonly TInstantiator _instantiator;
+        private readonly TInstantiator _instantiator = new TInstantiator();
         private readonly UniqueQueue<T> _queue;
 
         public AsyncPool()
-            : this(null)
-        { }
+        {
+            _queue = new UniqueQueue<T>();
+        }
 
         public AsyncPool(UniqueQueue<T> queue)
         {
-            _instantiator = new TInstantiator();
-            _queue = queue ?? new UniqueQueue<T>();
+            _queue = queue ?? throw new ArgumentNullException(nameof(queue));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

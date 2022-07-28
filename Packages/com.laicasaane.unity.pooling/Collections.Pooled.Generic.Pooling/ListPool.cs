@@ -6,7 +6,7 @@ namespace Collections.Pooled.Generic.Pooling
     public class ListPool<T> : Pool<List<T>, ListInstantiator<T>>
     {
         public ListPool()
-            : base(null)
+            : base()
         { }
 
         public ListPool(UniqueQueue<List<T>> queue)

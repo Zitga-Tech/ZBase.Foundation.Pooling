@@ -6,17 +6,17 @@ namespace System.Pooling
         where T : class
         where TInstantiator : IInstantiable<T>, new()
     {
-        private readonly TInstantiator _instantiator;
+        private readonly TInstantiator _instantiator = new TInstantiator();
         private readonly UniqueQueue<T> _queue;
 
         public Pool()
-            : this(null)
-        { }
+        {
+            _queue = new UniqueQueue<T>();
+        }
 
         public Pool(UniqueQueue<T> queue)
         {
-            _instantiator = new TInstantiator();
-            _queue = queue ?? new UniqueQueue<T>();
+            _queue = queue ?? throw new ArgumentNullException(nameof(queue));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

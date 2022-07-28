@@ -6,7 +6,7 @@ namespace Collections.Pooled.Generic.Pooling
     public class HashSetPool<T> : Pool<HashSet<T>, HashSetInstantiator<T>>
     {
         public HashSetPool()
-            : base(null)
+            : base()
         { }
 
         public HashSetPool(UniqueQueue<HashSet<T>> queue)

@@ -6,7 +6,7 @@ namespace System.Collections.Generic.Pooling
     public class QueuePool<T> : Pool<Queue<T>, QueueInstantiator<T>>
     {
         public QueuePool()
-            : base(null)
+            : base()
         { }
 
         public QueuePool(UniqueQueue<Queue<T>> queue)

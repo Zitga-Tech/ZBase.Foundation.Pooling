@@ -11,11 +11,11 @@ namespace Unity.Pooling
         where TPrefab : IPrefab<GameObject>
     {
         public GameObjectPool()
-            : base(null, default)
+            : base()
         { }
 
         public GameObjectPool(TPrefab prefab)
-            : base(null, prefab)
+            : base(prefab)
         { }
 
         public GameObjectPool(UniqueQueue<int, GameObject> queue, TPrefab prefab)

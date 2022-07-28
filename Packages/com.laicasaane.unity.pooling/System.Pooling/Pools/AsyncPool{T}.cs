@@ -7,7 +7,7 @@ namespace System.Pooling
         where T : class
     {
         public AsyncPool()
-            : base(null)
+            : base()
         { }
 
         public AsyncPool(UniqueQueue<T> queue)

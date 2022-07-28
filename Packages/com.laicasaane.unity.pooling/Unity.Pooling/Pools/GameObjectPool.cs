@@ -9,11 +9,11 @@ namespace Unity.Pooling
         : GameObjectPool<GameObjectPrefab>
     {
         public GameObjectPool()
-            : base(null, default)
+            : base()
         { }
 
         public GameObjectPool(GameObjectPrefab prefab)
-            : base(null, prefab)
+            : base(prefab)
         { }
 
         public GameObjectPool(UniqueQueue<int, GameObject> queue, GameObjectPrefab prefab)

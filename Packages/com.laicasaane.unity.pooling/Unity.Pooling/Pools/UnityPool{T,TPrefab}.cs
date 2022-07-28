@@ -18,17 +18,20 @@ namespace Unity.Pooling
         private TPrefab _prefab;
 
         public UnityPool()
-            : this(null, default)
-        { }
+        {
+            _queue = new UniqueQueue<int, T>();
+        }
 
         public UnityPool(TPrefab prefab)
-            : this(null, prefab)
-        { }
+        {
+            _queue = new UniqueQueue<int, T>();
+            _prefab = prefab ?? throw new ArgumentNullException(nameof(prefab));
+        }
 
         public UnityPool(UniqueQueue<int, T> queue, TPrefab prefab)
         {
-            _queue = queue ?? new UniqueQueue<int, T>();
-            _prefab = prefab;
+            _queue = queue ?? throw new ArgumentNullException(nameof(queue));
+            _prefab = prefab ?? throw new ArgumentNullException(nameof(prefab));
         }
 
         public TPrefab Prefab
