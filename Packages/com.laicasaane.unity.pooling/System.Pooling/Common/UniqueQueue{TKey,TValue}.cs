@@ -6,25 +6,25 @@ namespace System.Pooling
 {
     public class UniqueQueue<TKey, TValue> : IDisposable
     {
-        private readonly HashSet<TKey> _unique;
-        private readonly Queue<KVPair<TKey, TValue>> _queue;
+        private readonly Queue<TKey> _queue;
+        private readonly Dictionary<TKey, TValue> _unique;
 
         public UniqueQueue()
         {
-            _unique = new HashSet<TKey>();
-            _queue = new Queue<KVPair<TKey, TValue>>();
+            _queue = new Queue<TKey>();
+            _unique = new Dictionary<TKey, TValue>();
         }
 
-        public UniqueQueue(HashSet<TKey> validate, Queue<KVPair<TKey, TValue>> queue)
+        public UniqueQueue(Queue<TKey> queue, Dictionary<TKey, TValue> map)
         {
-            _unique = validate ?? new HashSet<TKey>();
-            _queue = queue ?? new Queue<KVPair<TKey, TValue>>();
+            _queue = queue ?? throw new ArgumentNullException(nameof(queue));
+            _unique = map ?? throw new ArgumentNullException(nameof(map));
         }
 
         public int Count
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => _unique.Count;
+            get => _queue.Count;
         }
 
         public void Dispose()
@@ -33,45 +33,37 @@ namespace System.Pooling
             _queue.Dispose();
         }
 
-        public void Enqueue(in KVPair<TKey, TValue> item)
+        public bool TryEnqueue(TKey key, TValue value)
         {
-            if (item.Key is null)
-                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.key);
+            if (key is null || value is null)
+                return false;
 
-            if (item.Value is null)
-                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.item);
+            if (_unique.ContainsKey(key))
+                return false;
 
-            if (_unique.Contains(item.Key))
-                return;
-
-            _unique.Add(item.Key);
-            _queue.Enqueue(item);
+            _unique.Add(key, value);
+            _queue.Enqueue(key);
+            return true;
         }
 
-        public KVPair<TKey, TValue> Dequeue()
+        public bool TryDequeue(out TKey key, out TValue value)
         {
-            var item = _queue.Dequeue();
-            _unique.Remove(item.Key);
-            return item;
-        }
-
-        public bool TryDequeue(out KVPair<TKey, TValue> item)
-        {
-            if (_queue.TryDequeue(out item))
+            if (_queue.TryDequeue(out key) && _unique.TryGetValue(key, out value))
             {
-                _unique.Remove(item.Key);
+                _unique.Remove(key);
                 return true;
             }
 
+            value = default;
             return false;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Contains(TKey key)
-            => _unique.Contains(key);
+            => _unique.ContainsKey(key);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Contains(in KVPair<TKey, TValue> item)
-            => _unique.Contains(item.Key);
+            => _unique.ContainsKey(item.Key);
     }
 }

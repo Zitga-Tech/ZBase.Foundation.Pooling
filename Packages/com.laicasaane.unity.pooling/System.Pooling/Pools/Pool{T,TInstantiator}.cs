@@ -55,7 +55,7 @@ namespace System.Pooling
                 return;
 
             ReturnPreprocess(instance);
-            _queue.Enqueue(instance);
+            _queue.TryEnqueue(instance);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

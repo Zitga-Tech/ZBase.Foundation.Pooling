@@ -46,6 +46,7 @@ namespace System.Pooling
             switch (argument)
             {
                 case EA.key: return nameof(EA.key);
+                case EA.value: return nameof(EA.value);
                 case EA.index: return nameof(EA.index);
                 case EA.item: return nameof(EA.item);
                 case EA.count: return nameof(EA.count);
@@ -81,6 +82,7 @@ namespace System.Pooling
     {
         item,
         key,
+        value,
         keys,
         count,
         index,

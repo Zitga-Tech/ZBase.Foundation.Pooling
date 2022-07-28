@@ -43,6 +43,7 @@ namespace Unity.Pooling
             set => _prefab = value;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Count() => _queue.Count;
 
         public void Dispose()
@@ -57,16 +58,17 @@ namespace Unity.Pooling
 
             while (countRemove > 0)
             {
-                var instance = _queue.Dequeue();
-                onReleased?.Invoke(instance.Value);
+                if (_queue.TryDequeue(out var _, out var instance))
+                    onReleased?.Invoke(instance);
+
                 countRemove--;
             }
         }
 
         public async UniTask<T> Rent()
         {
-            if (_queue.TryDequeue(out var instance))
-                return instance.Value;
+            if (_queue.TryDequeue(out var _, out var instance))
+                return instance;
 
             return await _prefab.Instantiate();
         }
@@ -77,7 +79,7 @@ namespace Unity.Pooling
                 return;
 
             ReturnPreprocess(instance);
-            _queue.Enqueue(instance.ToKVPair());
+            _queue.TryEnqueue(instance.GetInstanceID(), instance);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
