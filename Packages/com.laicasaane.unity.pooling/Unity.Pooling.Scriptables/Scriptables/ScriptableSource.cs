@@ -5,6 +5,6 @@ namespace Unity.Pooling.Scriptables
 {
     public abstract class ScriptableSource : ScriptableObject
     {
-        public abstract UniTask<UnityEngine.Object> InstantiateAsync(Transform parent);
+        public abstract UniTask<UnityEngine.Object> Instantiate(Transform parent);
     }
 }

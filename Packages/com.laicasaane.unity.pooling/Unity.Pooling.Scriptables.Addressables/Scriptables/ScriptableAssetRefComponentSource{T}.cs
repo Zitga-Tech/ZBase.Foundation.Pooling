@@ -9,7 +9,7 @@ namespace Unity.Pooling.Scriptables.AddressableAssets
         : ScriptableAssetRefSource<AssetReferenceGameObject>
         where T : Component
     {
-        public override async UniTask<Object> InstantiateAsync(Transform parent)
+        public override async UniTask<Object> Instantiate(Transform parent)
         {
             var source = Source;
 

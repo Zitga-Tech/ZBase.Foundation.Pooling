@@ -9,6 +9,6 @@ namespace Unity.Pooling.AddressableAssets
         : IAssetNameInstantiator<T>
         where T : UnityEngine.Object
     {
-        public abstract UniTask<T> InstantiateAsync(string assetName, Transform parent);
+        public abstract UniTask<T> Instantiate(string assetName, Transform parent);
     }
 }

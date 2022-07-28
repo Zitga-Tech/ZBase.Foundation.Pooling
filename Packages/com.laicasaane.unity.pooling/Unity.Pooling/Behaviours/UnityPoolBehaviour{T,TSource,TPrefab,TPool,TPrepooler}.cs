@@ -5,11 +5,11 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     public abstract class UnityPoolBehaviour<T, TSource, TPrefab, TPool, TPrepooler>
-        : AsyncPoolBehaviour<T, TPool>, IAsyncPrepoolable
+        : AsyncPoolBehaviour<T, TPool>, IPrepoolable
         where T : UnityEngine.Object
         where TPrefab : IPrefab<T, TSource>
         where TPool : IUnityPool<T>, IHasPrefab<TPrefab>
-        where TPrepooler : IAsyncPrepooler<T, TSource, TPrefab, TPool>, new()
+        where TPrepooler : IPrepooler<T, TSource, TPrefab, TPool>, new()
     {
         [SerializeField]
         private bool _prepoolOnStart = false;
@@ -39,14 +39,14 @@ namespace Unity.Pooling
         protected async UniTask Start()
         {
             if (_prepoolOnStart)
-                await PrepoolAsync();
+                await Prepool();
 
             await OnStart();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async UniTask PrepoolAsync()
-            => await _prepooler.PrepoolAsync(Pool.Prefab, Pool, this.transform);
+        public async UniTask Prepool()
+            => await _prepooler.Prepool(Pool.Prefab, Pool, this.transform);
 
         protected virtual void OnAwake() { }
 

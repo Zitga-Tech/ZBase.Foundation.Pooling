@@ -8,7 +8,7 @@ namespace Unity.Pooling
     public class ComponentPrefab<T> : UnityPrefab<T, T>
         where T : UnityEngine.Component
     {
-        protected override async UniTask<T> InstantiateAsync(T source, Transform parent)
+        protected override async UniTask<T> Instantiate(T source, Transform parent)
         {
             T instance;
 

@@ -51,10 +51,10 @@ namespace Unity.Pooling
             if (_source is null)
                 throw new NullReferenceException(nameof(Source));
 
-            return await InstantiateAsync(Source, Parent);
+            return await Instantiate(Source, Parent);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected abstract UniTask<T> InstantiateAsync(TSource source, Transform parent);
+        protected abstract UniTask<T> Instantiate(TSource source, Transform parent);
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Unity.Pooling.Scriptables
 {
     public class ScriptablePool<T>
-        : ScriptableObject, IUnityPool<T>, IAsyncPrepoolable, IHasParent
+        : ScriptableObject, IUnityPool<T>, IPrepoolable, IHasParent
         where T : UnityEngine.Object
     {
         [SerializeField]
@@ -45,8 +45,8 @@ namespace Unity.Pooling.Scriptables
             => _pool.Return(instance);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async UniTask PrepoolAsync()
-            => await _prepooler.PrepoolAsync(_prefab, _pool, Parent);
+        public async UniTask Prepool()
+            => await _prepooler.Prepool(_prefab, _pool, Parent);
 
         public void ReleaseInstances(int keep, Action<T> onReleased = null)
         {

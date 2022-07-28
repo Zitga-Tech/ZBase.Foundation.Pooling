@@ -10,7 +10,7 @@ namespace Unity.Pooling.AddressableAssets
         : AssetRefPrefab<T, AssetReferenceGameObject>
         where T : Component
     {
-        protected override async UniTask<T> InstantiateAsync(AssetReferenceGameObject source, Transform parent)
+        protected override async UniTask<T> Instantiate(AssetReferenceGameObject source, Transform parent)
         {
             GameObject gameObject;
 

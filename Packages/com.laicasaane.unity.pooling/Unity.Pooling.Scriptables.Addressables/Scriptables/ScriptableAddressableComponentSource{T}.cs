@@ -8,7 +8,7 @@ namespace Unity.Pooling.Scriptables.AddressableAssets
     public class ScriptableAddressableComponentSource<T> : ScriptableAssetNameSource
         where T : Component
     {
-        public override async UniTask<Object> InstantiateAsync(Transform parent)
+        public override async UniTask<Object> Instantiate(Transform parent)
         {
             var assetName = AssetName;
 

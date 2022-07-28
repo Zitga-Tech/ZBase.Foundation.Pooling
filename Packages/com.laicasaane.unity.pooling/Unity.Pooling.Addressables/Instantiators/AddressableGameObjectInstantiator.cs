@@ -9,7 +9,7 @@ namespace Unity.Pooling.AddressableAssets
     [Serializable]
     public class AddressableGameObjectInstantiator : AssetNameInstantiator<GameObject>
     {
-        public override async UniTask<GameObject> InstantiateAsync(string assetName, Transform parent)
+        public override async UniTask<GameObject> Instantiate(string assetName, Transform parent)
         {
             AsyncOperationHandle<GameObject> handle;
 

@@ -12,7 +12,7 @@ namespace Unity.Pooling.AddressableAssets
     {
         protected readonly TInstantiator Instantiator = new TInstantiator();
 
-        protected override async UniTask<T> InstantiateAsync(string source, Transform parent)
-            => await Instantiator.InstantiateAsync(source, parent);
+        protected override async UniTask<T> Instantiate(string source, Transform parent)
+            => await Instantiator.Instantiate(source, parent);
     }
 }

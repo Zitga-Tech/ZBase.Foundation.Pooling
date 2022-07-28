@@ -40,7 +40,7 @@ namespace Unity.Pooling.Scriptables
             if (_source is null)
                 throw new NullReferenceException(nameof(Source));
 
-            return await _source.InstantiateAsync(Parent);
+            return await _source.Instantiate(Parent);
         }
     }
 }

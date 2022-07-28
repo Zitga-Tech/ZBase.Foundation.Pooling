@@ -7,7 +7,7 @@ namespace Unity.Pooling
     [Serializable]
     public class GameObjectPrefab : UnityPrefab<GameObject, GameObject>
     {
-        protected override async UniTask<GameObject> InstantiateAsync(GameObject source, Transform parent)
+        protected override async UniTask<GameObject> Instantiate(GameObject source, Transform parent)
         {
             GameObject instance;
 

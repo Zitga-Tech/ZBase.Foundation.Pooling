@@ -7,11 +7,11 @@ namespace System.Pooling
     public static partial class AsyncPool_T_Rents
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static async UniTask<TPool> RentAsync<TPool, T>(this TPool pool, T[] output)
+        public static async UniTask<TPool> Rent<TPool, T>(this TPool pool, T[] output)
             where TPool : IAsyncRentable<T>
-            => await RentAsync(pool, output, output?.Length ?? 0);
+            => await Rent(pool, output, output?.Length ?? 0);
 
-        public static async UniTask<TPool> RentAsync<TPool, T>(this TPool pool, T[] output, int count)
+        public static async UniTask<TPool> Rent<TPool, T>(this TPool pool, T[] output, int count)
             where TPool : IAsyncRentable<T>
         {
             if (pool is null)
@@ -32,11 +32,11 @@ namespace System.Pooling
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static async UniTask<IAsyncRentable<T>> RentAsync<T, TOutput>(this IAsyncRentable<T> pool, TOutput output)
+        public static async UniTask<IAsyncRentable<T>> Rent<T, TOutput>(this IAsyncRentable<T> pool, TOutput output)
             where TOutput : ICollection<T>
-            => await RentAsync(pool, output, 1);
+            => await Rent(pool, output, 1);
 
-        public static async UniTask<IAsyncRentable<T>> RentAsync<T, TOutput>(this IAsyncRentable<T> pool, TOutput output, int count)
+        public static async UniTask<IAsyncRentable<T>> Rent<T, TOutput>(this IAsyncRentable<T> pool, TOutput output, int count)
             where TOutput : ICollection<T>
         {
             if (pool is null)

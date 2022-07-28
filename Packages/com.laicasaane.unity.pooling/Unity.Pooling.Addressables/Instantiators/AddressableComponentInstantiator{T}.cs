@@ -10,7 +10,7 @@ namespace Unity.Pooling.AddressableAssets
     public class AddressableComponentInstantiator<T> : AssetNameInstantiator<T>
         where T : Component
     {
-        public override async UniTask<T> InstantiateAsync(string assetName, Transform parent)
+        public override async UniTask<T> Instantiate(string assetName, Transform parent)
         {
             AsyncOperationHandle<GameObject> handle;
 

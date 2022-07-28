@@ -7,12 +7,12 @@ namespace Unity.Pooling
 {
     [Serializable]
     public class UnityPrepooler<T, TSource, TPrefab, TPool>
-        : IAsyncPrepooler<T, TSource, TPrefab, TPool>
+        : IPrepooler<T, TSource, TPrefab, TPool>
         where T : UnityEngine.Object
         where TPrefab : IPrefab<T, TSource>
         where TPool : IReturnable<T>
     {
-        public async UniTask PrepoolAsync(TPrefab prefab, TPool pool, Transform defaultParent)
+        public async UniTask Prepool(TPrefab prefab, TPool pool, Transform defaultParent)
         {
             if (prefab.IsNotNull() == false)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.prefab);

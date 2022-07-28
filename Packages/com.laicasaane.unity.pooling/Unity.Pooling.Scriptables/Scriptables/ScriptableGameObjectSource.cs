@@ -14,7 +14,7 @@ namespace Unity.Pooling.Scriptables
         [SerializeField]
         private GameObject _source;
 
-        public override async UniTask<UnityEngine.Object> InstantiateAsync(Transform parent)
+        public override async UniTask<UnityEngine.Object> Instantiate(Transform parent)
         {
             if (_source == false)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.source);
