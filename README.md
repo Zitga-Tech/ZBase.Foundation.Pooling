@@ -50,7 +50,27 @@ The entire package is built on these 2 main interfaces:
 
 - `Pool<T>` and `AsyncPool<T>` implement the most generic functionality for pooling C# objects.
 
-## Shared pools
+## Instantiator
+
+Actually, `Pool<T, TInstantiator>` and `AsyncPool<T, T Instantiator>` are supertypes of `Pool<T>` and `AsyncPool<T>` respectively.
+
+These supertypes allow customizing the way they create new instances of `T`.
+
+By default, `Pool<T>` and `AsyncPool<T>` employ `System.Activator` to instantiating `T`.
+
+### Example: Implementing a custom instantiator
+
+```cs
+public struct MyClassInstantiator : IInstantiable<MyClass>
+{
+    public MyClass Instantiate() => new MyClass();
+}
+...
+var myPool = new Pool<MyClass, MyClassInstantiator>();
+var myObj  = myPool.Rent();
+```
+
+## Shared Pools
 
 `SharedPool.Of<T>` will return a shared instance (aka singleton) of any type that implements `IPool` interface and have a default constructor.
 
@@ -59,13 +79,56 @@ var sharedMyPool   = SharedPool.Of< Pool<MyClass> >();
 var sharedListPool = SharedPool.Of< ListPool<int> >();
 ```
 
-The reason it is designed this way is to uncouple the singleton pattern from type definition, and to help simplify type reuse.
+The reason for this design is to not force singleton pattern onto any pool, and thus not complicate the pool inheritance tree.
 
-# System.Collections.Generic.Pooling
+On the other hand, the users should have a choice and be mindful about when and where to employ singletons into their own code.
 
-# Collections.Pooled.Generic.Pooling
+## Disposable contexts
+
+-
+
+# Collection Pools
+
+- `System.Collections.Generic.Pooling`
+- `Collections.Pooled.Generic.Pooling`
+
+These 2 modules provide premade collection pools:
+
+- `ListPool<T>`
+- `HashSetPool<T>`
+- `QueuePool<T>`
+- `StackPool<T>`
+- `DictionaryPool<TKey, TValue>`
+
+```cs
+var list  = SharedPool.Of< ListPool<int> >().Rent();
+var myObj = SharedPool.Of< Pool<MyClass> >().Rent();
+
+var dictPool = new DictionaryPool<int, string>();
+var dict     = dictPool.Rent();
+```
 
 # Unity.Pooling
+
+This module provides basic facility to pooling Unity objects, especially `GameObject` and `Component`:
+
+- `UnityPool<T, TPrefab>` is the base for Unity object pools.
+- `IPrefab` to implement custom Unity object instantiators.
+- `UnityPoolBehaviour<T, ...>` is the base for components to be attached on a `GameObject`.
+- `IPrepooler<...>` to implement custom prepooling mechanism.
+
+## Pools
+
+All the pools declared in this module are ready-to-use as they are.
+
+```cs
+var goPool       = new GameObjectPool();
+var colliderPool = new ComponentPool<BoxCollider>();
+...
+var goPoolCustom = new GameObjectPool<MyGameObjectPrefab>();
+...
+var simpleGOPool = new UnityPool<GameObject, MyGameObjectPrefab>()
+```
 
 # Unity.Pooling.Addressables
 
