@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Unity.Pooling
 {
     public abstract class UnityPoolBehaviour<T, TPrefab, TPool, TPrepooler>
-        : AsyncPoolBehaviour<T, TPool>, IPrepoolable
+        : PoolBehaviour<T, TPool>, IPrepoolable
         where T : UnityEngine.Object
         where TPrefab : IPrefab<T>
         where TPool : IUnityPool<T>, IHasPrefab<TPrefab>

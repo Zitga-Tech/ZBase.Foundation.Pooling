@@ -2,16 +2,22 @@
 using System.Pooling;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 namespace Unity.Pooling
 {
-    public abstract class PoolBehaviourBase<T, TPool>
-        : MonoBehaviour, IPool<T>
+    public abstract class PoolBehaviour<T, TPool> : MonoBehaviour, IAsyncPool<T>
         where T : class
-        where TPool : IPool<T>
+        where TPool : IAsyncPool<T>
     {
         [SerializeField]
         private TPool _pool;
+
+        protected TPool Pool
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _pool;
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Count()
@@ -22,8 +28,8 @@ namespace Unity.Pooling
             => _pool.ReleaseInstances(keep, onReleased);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public T Rent()
-            => _pool.Rent();
+        public async UniTask<T> Rent()
+            => await _pool.Rent();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Return(T instance)
