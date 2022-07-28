@@ -1,17 +1,14 @@
 ﻿using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace Unity.Pooling.AddressableAssets
 {
     public class AssetRefGameObjectPoolBehaviour
-        : AssetRefPoolBehaviour<
+        : UnityPoolBehaviour<
             GameObject
-            , AssetReferenceGameObject
             , AssetRefGameObjectPrefab
             , AssetRefGameObjectPool
-            , AssetRefPrepooler<
+            , UnityPrepooler<
                 GameObject
-                , AssetReferenceGameObject
                 , AssetRefGameObjectPrefab
                 , AssetRefGameObjectPool
             >

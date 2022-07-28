@@ -2,17 +2,16 @@
 
 namespace Unity.Pooling.AddressableAssets
 {
-    public class AssetNameGameObjectPoolBehaviour<TInstantiator, TPrefab, TPool>
-        : AssetNamePoolBehaviour<
+    public class AssetNameGameObjectPoolBehaviour<TPrefab, TInstantiator, TPool>
+        : UnityPoolBehaviour<
             GameObject
-            , TInstantiator
             , TPrefab
             , TPool
-            , AssetNamePrepooler<GameObject, TInstantiator, TPrefab, TPool>
+            , UnityPrepooler<GameObject, TPrefab, TPool>
         >
         where TInstantiator : AssetNameInstantiator<GameObject>, new()
         where TPrefab : AssetNameGameObjectPrefab<TInstantiator>
-        where TPool : AssetNameGameObjectPool<TInstantiator, TPrefab>
+        where TPool : AssetNameGameObjectPool<TPrefab, TInstantiator>
     {
     }
 }

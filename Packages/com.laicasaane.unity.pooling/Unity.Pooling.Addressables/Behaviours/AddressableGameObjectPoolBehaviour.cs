@@ -2,8 +2,8 @@
 {
     public class AddressableGameObjectPoolBehaviour
         : AssetNameGameObjectPoolBehaviour<
-            AddressableGameObjectInstantiator
-            , AddressableGameObjectPrefab
+            AssetNameGameObjectPrefab<AddressableGameObjectInstantiator>
+            , AddressableGameObjectInstantiator
             , AddressableGameObjectPool
         >
     {

@@ -4,8 +4,8 @@ namespace Unity.Pooling.AddressableAssets
 {
     public class AddressableComponentPoolBehaviour<T>
         : AssetNameComponentPoolBehaviour<T
+            , AssetNameComponentPrefab<T, AddressableComponentInstantiator<T>>
             , AddressableComponentInstantiator<T>
-            , AddressableComponentPrefab<T>
             , AddressableComponentPool<T>
         >
         where T : Component
