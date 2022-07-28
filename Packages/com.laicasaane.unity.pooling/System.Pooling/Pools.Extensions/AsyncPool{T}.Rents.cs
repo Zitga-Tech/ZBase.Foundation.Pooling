@@ -9,12 +9,10 @@ namespace System.Pooling
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async UniTask<TPool> RentAsync<TPool, T>(this TPool pool, T[] output)
             where TPool : IAsyncRentable<T>
-            where T : class
             => await RentAsync(pool, output, output?.Length ?? 0);
 
         public static async UniTask<TPool> RentAsync<TPool, T>(this TPool pool, T[] output, int count)
             where TPool : IAsyncRentable<T>
-            where T : class
         {
             if (pool is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
@@ -36,12 +34,10 @@ namespace System.Pooling
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async UniTask<IAsyncRentable<T>> RentAsync<T, TOutput>(this IAsyncRentable<T> pool, TOutput output)
             where TOutput : ICollection<T>
-            where T : class
             => await RentAsync(pool, output, 1);
 
         public static async UniTask<IAsyncRentable<T>> RentAsync<T, TOutput>(this IAsyncRentable<T> pool, TOutput output, int count)
             where TOutput : ICollection<T>
-            where T : class
         {
             if (pool is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);

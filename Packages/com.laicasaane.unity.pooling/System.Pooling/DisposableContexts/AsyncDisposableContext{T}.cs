@@ -4,7 +4,6 @@ using Cysharp.Threading.Tasks;
 namespace System.Pooling
 {
     public readonly struct AsyncDisposableContext<T> : IAsyncRentable<Disposable<T>>
-        where T : class
     {
         internal readonly IAsyncPool<T> _pool;
 
@@ -25,7 +24,6 @@ namespace System.Pooling
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AsyncDisposableContext<T> Disposable<T>(this IAsyncPool<T> pool)
-            where T : class
             => new AsyncDisposableContext<T>(pool);
     }
 }

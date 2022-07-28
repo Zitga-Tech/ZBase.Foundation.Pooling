@@ -3,7 +3,6 @@
 namespace System.Pooling
 {
     public readonly struct DisposableContext<T> : IRentable<Disposable<T>>
-        where T : class
     {
         internal readonly IPool<T> _pool;
 
@@ -21,7 +20,6 @@ namespace System.Pooling
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DisposableContext<T> Disposable<T>(this IPool<T> pool)
-            where T : class
             => new DisposableContext<T>(pool);
     }
 }

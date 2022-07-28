@@ -3,7 +3,6 @@
 namespace System.Pooling
 {
     public readonly struct Disposable<T> : IDisposable
-        where T : class
     {
         public readonly T Instance;
 

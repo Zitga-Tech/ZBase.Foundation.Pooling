@@ -7,7 +7,6 @@ namespace System.Pooling
             , T p2
         )
             where TPool : IReturnable<T>
-            where T : class
         {
             if (pool is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
@@ -24,7 +23,6 @@ namespace System.Pooling
             , T p3
         )
             where TPool : IReturnable<T>
-            where T : class
         {
             if (pool is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
@@ -43,7 +41,6 @@ namespace System.Pooling
             , T p4
         )
             where TPool : IReturnable<T>
-            where T : class
         {
             if (pool is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
@@ -64,7 +61,6 @@ namespace System.Pooling
             , T p5
         )
             where TPool : IReturnable<T>
-            where T : class
         {
             if (pool is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
@@ -87,7 +83,6 @@ namespace System.Pooling
             , T p6
         )
             where TPool : IReturnable<T>
-            where T : class
         {
             if (pool is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
@@ -112,7 +107,6 @@ namespace System.Pooling
             , T p7
         )
             where TPool : IReturnable<T>
-            where T : class
         {
             if (pool is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
@@ -139,7 +133,6 @@ namespace System.Pooling
             , T p8
         )
             where TPool : IReturnable<T>
-            where T : class
         {
             if (pool is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
@@ -168,7 +161,6 @@ namespace System.Pooling
             , T p9
         )
             where TPool : IReturnable<T>
-            where T : class
         {
             if (pool is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
@@ -199,7 +191,6 @@ namespace System.Pooling
             , T p10
         )
             where TPool : IReturnable<T>
-            where T : class
         {
             if (pool is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);

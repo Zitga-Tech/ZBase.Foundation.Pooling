@@ -18,7 +18,6 @@ namespace System.Pooling
     <# } #>
     )
             where TPool : IReturnable<T>
-            where T : class
         {
             if (pool is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);

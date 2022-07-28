@@ -8,24 +8,20 @@ namespace System.Pooling
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TPool Rent<TPool, T>(this TPool pool, T[] output)
             where TPool : IRentable<T>
-            where T : class
             => Rent(pool, output.AsSpan());
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TPool Rent<TPool, T>(this TPool pool, T[] output, int count)
             where TPool : IRentable<T>
-            where T : class
             => Rent(pool, output.AsSpan(), count);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TPool Rent<TPool, T>(this TPool pool, in Span<T> output)
             where TPool : IRentable<T>
-            where T : class
             => Rent(pool, output, output.Length);
 
         public static TPool Rent<TPool, T>(this TPool pool, in Span<T> output, int count)
             where TPool : IRentable<T>
-            where T : class
         {
             if (pool is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);
@@ -44,12 +40,10 @@ namespace System.Pooling
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IRentable<T> Rent<T, TOutput>(this IRentable<T> pool, TOutput output)
             where TOutput : ICollection<T>
-            where T : class
             => Rent(pool, output, 1);
 
         public static IRentable<T> Rent<T, TOutput>(this IRentable<T> pool, TOutput output, int count)
             where TOutput : ICollection<T>
-            where T : class
         {
             if (pool is null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.pool);

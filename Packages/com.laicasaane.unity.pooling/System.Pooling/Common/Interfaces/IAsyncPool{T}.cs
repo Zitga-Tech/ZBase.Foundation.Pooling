@@ -1,7 +1,6 @@
 ﻿namespace System.Pooling
 {
-    public interface IAsyncPool<T>
-        : IPool, IAsyncRentable<T>, IReturnable<T>, ICountable
+    public interface IAsyncPool<T> : IPool, IAsyncRentable<T>, IReturnable<T>, ICountable
     {
         /// <summary>
         /// Keeps the specified quantity and releases the pooled instances.

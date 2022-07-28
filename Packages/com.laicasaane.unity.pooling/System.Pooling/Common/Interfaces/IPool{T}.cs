@@ -1,8 +1,6 @@
 ﻿namespace System.Pooling
 {
-    public interface IPool<T>
-        : IPool, IRentable<T>, IReturnable<T>, ICountable
-        where T : class
+    public interface IPool<T> : IPool, IRentable<T>, IReturnable<T>, ICountable
     {
         /// <summary>
         /// Keeps the specified quantity and releases the pooled instances.
