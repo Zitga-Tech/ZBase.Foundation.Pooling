@@ -42,22 +42,24 @@ This module provides a foundation for this entire package and some basic functio
 
 ## Foundation
 
-The 2 main interfaces:
-- `IPool<T>` is the
-- `IAsyncPool<T>`
+The entire package is built on these 2 main interfaces:
+- `IPool<T>` is a synchronous API, mostly for pooling C# objects.
+- `IAsyncPool<T>` is an asynchronous API, mostly for pooling Unity objects.
 
 ## Basic pools
 
-- Basic types `Pool<T>` and `AsyncPool<T>` implement the most generic functionality for pooling C# objects.
+- `Pool<T>` and `AsyncPool<T>` implement the most generic functionality for pooling C# objects.
 
 ## Shared pools
 
-`SharedPool.Of<T>` will return a shared instance of any type that implements `IPool` interface and have a default constructor.
+`SharedPool.Of<T>` will return a shared instance (aka singleton) of any type that implements `IPool` interface and have a default constructor.
 
 ```cs
-var listPool = SharedPool.Of< ListPool<int> >();
-var pool     = SharedPool.Of< Pool<MyClass> >();
+var sharedMyPool   = SharedPool.Of< Pool<MyClass> >();
+var sharedListPool = SharedPool.Of< ListPool<int> >();
 ```
+
+The reason it is designed this way is to uncouple the singleton pattern from type definition, and to help simplify type reuse.
 
 # System.Collections.Generic.Pooling
 
