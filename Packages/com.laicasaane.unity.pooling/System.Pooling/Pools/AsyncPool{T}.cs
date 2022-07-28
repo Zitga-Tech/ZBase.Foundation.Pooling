@@ -6,6 +6,13 @@ namespace System.Pooling
     public class AsyncPool<T> : AsyncPool<T, AsyncInstantiator<T>>
         where T : class
     {
+        public AsyncPool()
+            : base(null)
+        { }
+
+        public AsyncPool(UniqueQueue<T> queue)
+            : base(queue)
+        { }
     }
 
     public struct AsyncInstantiator<T> : IAsyncInstantiable<T>
