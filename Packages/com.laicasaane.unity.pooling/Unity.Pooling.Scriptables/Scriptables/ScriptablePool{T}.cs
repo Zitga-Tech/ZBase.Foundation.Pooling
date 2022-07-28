@@ -76,5 +76,10 @@ namespace Unity.Pooling.Scriptables
 
             throw new InvalidCastException($"Cannot cast {instance.GetType()} into {typeof(T)}");
         }
+
+        protected virtual void OnDestroy()
+        {
+            _pool.Dispose();
+        }
     }
 }
