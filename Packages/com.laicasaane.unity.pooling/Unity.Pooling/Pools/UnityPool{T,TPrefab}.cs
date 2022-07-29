@@ -8,7 +8,7 @@ namespace Unity.Pooling
 {
     [Serializable]
     public class UnityPool<T, TPrefab>
-        : IUnityPool<T>, IHasPrefab<TPrefab>, IDisposable
+        : IUnityPool<T>, IHasPrefab<TPrefab>, IShareable, IDisposable
         where T : UnityEngine.Object
         where TPrefab : IPrefab<T>
     {

@@ -2,7 +2,7 @@
 
 namespace System.Pooling
 {
-    public class Pool<T, TInstantiator> : IPool<T>, IDisposable
+    public class Pool<T, TInstantiator> : IPool<T>, IShareable, IDisposable
         where T : class
         where TInstantiator : IInstantiable<T>, new()
     {

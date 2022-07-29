@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 
 namespace System.Pooling
 {
-    public class AsyncPool<T, TInstantiator> : IAsyncPool<T>, IDisposable
+    public class AsyncPool<T, TInstantiator> : IAsyncPool<T>, IShareable, IDisposable
         where T : class
         where TInstantiator : IAsyncInstantiable<T>, new()
     {

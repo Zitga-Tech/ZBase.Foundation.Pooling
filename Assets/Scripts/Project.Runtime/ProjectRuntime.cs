@@ -1,4 +1,6 @@
+using System.Pooling;
 using Unity.Pooling;
+using Unity.Pooling.AddressableAssets;
 using UnityEngine;
 
 namespace Project.Runtime
@@ -8,6 +10,7 @@ namespace Project.Runtime
         private void Start()
         {
             this.gameObject.AddComponent<ComponentPoolBehaviour<BoxCollider>>();
+            SharedPool.Of<AssetNameGameObjectPool>();
         }
     }
 }
