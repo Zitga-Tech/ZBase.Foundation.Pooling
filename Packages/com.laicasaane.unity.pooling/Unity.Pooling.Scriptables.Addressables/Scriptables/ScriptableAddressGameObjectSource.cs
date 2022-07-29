@@ -10,21 +10,21 @@ namespace Unity.Pooling.Scriptables.AddressableAssets
         , menuName = "Pooling/Scriptables/Sources/Asset Name GameObject"
         , order = 1
     )]
-    public class ScriptableAssetNameGameObjectSource : ScriptableAssetNameSource
+    public class ScriptableAddressGameObjectSource : ScriptableAddressSource
     {
         public override async UniTask<Object> Instantiate(Transform parent)
         {
-            var assetName = AssetName;
+            var source = Source;
 
-            if (string.IsNullOrEmpty(assetName))
+            if (string.IsNullOrEmpty(source))
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.assetName);
 
             GameObject instance;
 
             if (parent)
-                instance = await Addressables.InstantiateAsync(assetName, parent, true);
+                instance = await Addressables.InstantiateAsync(source, parent, true);
             else
-                instance = await Addressables.InstantiateAsync(assetName);
+                instance = await Addressables.InstantiateAsync(source);
 
             return instance;
         }

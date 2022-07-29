@@ -5,20 +5,20 @@ using UnityEngine;
 namespace Unity.Pooling.AddressableAssets
 {
     [Serializable]
-    public class AssetNameComponentPool<T, TPrefab>
+    public class AddressComponentPool<T, TPrefab>
         : ComponentPool<T, TPrefab>
         where T : Component
-        where TPrefab : AssetNameComponentPrefab<T>
+        where TPrefab : AddressComponentPrefab<T>
     {
-        public AssetNameComponentPool()
+        public AddressComponentPool()
             : base()
         { }
 
-        public AssetNameComponentPool(TPrefab prefab)
+        public AddressComponentPool(TPrefab prefab)
             : base(prefab)
         { }
 
-        public AssetNameComponentPool(UniqueQueue<int, T> queue, TPrefab prefab)
+        public AddressComponentPool(UniqueQueue<int, T> queue, TPrefab prefab)
             : base(queue, prefab)
         { }
     }

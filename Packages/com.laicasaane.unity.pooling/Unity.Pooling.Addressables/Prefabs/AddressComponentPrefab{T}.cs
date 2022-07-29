@@ -7,8 +7,8 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 namespace Unity.Pooling.AddressableAssets
 {
     [Serializable]
-    public class AssetNameComponentPrefab<T>
-        : AssetNamePrefab<T>
+    public class AddressComponentPrefab<T>
+        : AddressPrefab<T>
         where T : Component
     {
         protected override async UniTask<T> Instantiate(string source, Transform parent)

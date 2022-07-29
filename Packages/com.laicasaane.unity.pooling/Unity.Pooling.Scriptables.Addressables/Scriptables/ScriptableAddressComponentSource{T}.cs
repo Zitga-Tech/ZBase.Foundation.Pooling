@@ -5,22 +5,22 @@ using UnityEngine.AddressableAssets;
 
 namespace Unity.Pooling.Scriptables.AddressableAssets
 {
-    public class ScriptableAssetNameComponentSource<T> : ScriptableAssetNameSource
+    public class ScriptableAddressComponentSource<T> : ScriptableAddressSource
         where T : Component
     {
         public override async UniTask<Object> Instantiate(Transform parent)
         {
-            var assetName = AssetName;
+            var source = Source;
 
-            if (string.IsNullOrEmpty(assetName))
+            if (string.IsNullOrEmpty(source))
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.assetName);
 
             GameObject gameObject;
 
             if (parent)
-                gameObject = await Addressables.InstantiateAsync(assetName, parent, true);
+                gameObject = await Addressables.InstantiateAsync(source, parent, true);
             else
-                gameObject = await Addressables.InstantiateAsync(assetName);
+                gameObject = await Addressables.InstantiateAsync(source);
 
             return gameObject.GetComponent<T>();
         }

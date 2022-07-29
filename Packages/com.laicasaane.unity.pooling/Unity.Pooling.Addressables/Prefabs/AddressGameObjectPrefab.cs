@@ -7,8 +7,8 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 namespace Unity.Pooling.AddressableAssets
 {
     [Serializable]
-    public class AssetNameGameObjectPrefab
-        : AssetNamePrefab<GameObject>
+    public class AddressGameObjectPrefab
+        : AddressPrefab<GameObject>
     {
         protected override async UniTask<GameObject> Instantiate(string source, Transform parent)
         {

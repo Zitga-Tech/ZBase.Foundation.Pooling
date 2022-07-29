@@ -5,19 +5,19 @@ using UnityEngine;
 namespace Unity.Pooling.AddressableAssets
 {
     [Serializable]
-    public class AssetNameGameObjectPool<TPrefab>
+    public class AddressGameObjectPool<TPrefab>
         : GameObjectPool<TPrefab>
-        where TPrefab : AssetNameGameObjectPrefab
+        where TPrefab : AddressGameObjectPrefab
     {
-        public AssetNameGameObjectPool()
+        public AddressGameObjectPool()
             : base()
         { }
 
-        public AssetNameGameObjectPool(TPrefab prefab)
+        public AddressGameObjectPool(TPrefab prefab)
             : base(prefab)
         { }
 
-        public AssetNameGameObjectPool(UniqueQueue<int, GameObject> queue, TPrefab prefab)
+        public AddressGameObjectPool(UniqueQueue<int, GameObject> queue, TPrefab prefab)
             : base(queue, prefab)
         { }
     }

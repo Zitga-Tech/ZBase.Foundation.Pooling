@@ -4,23 +4,22 @@ using UnityEngine;
 
 namespace Unity.Pooling.Scriptables
 {
-    public class ScriptableComponentSource<T> : ScriptableSource
+    public class ScriptableComponentSource<T> : ScriptableSource<T>
         where T : Component
     {
-        [SerializeField]
-        private T _source;
-
         public override async UniTask<UnityEngine.Object> Instantiate(Transform parent)
         {
-            if (_source == false)
+            var source = Source;
+
+            if (source == false)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.source);
 
             T instance;
 
             if (parent)
-                instance = Instantiate(_source, parent);
+                instance = Instantiate(source, parent);
             else
-                instance = Instantiate(_source);
+                instance = Instantiate(source);
 
             return await UniTask.FromResult(instance);
         }

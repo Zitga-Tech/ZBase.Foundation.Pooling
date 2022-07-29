@@ -1,11 +1,9 @@
 ﻿using System;
-using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace Unity.Pooling.AddressableAssets
 {
     [Serializable]
-    public abstract class AssetNamePrefab<T>
+    public abstract class AddressPrefab<T>
         : UnityPrefab<T, string>
         where T : UnityEngine.Object
     {

@@ -10,7 +10,7 @@ namespace Project.Runtime
         private void Start()
         {
             this.gameObject.AddComponent<ComponentPoolBehaviour<BoxCollider>>();
-            SharedPool.Of<AssetNameGameObjectPool>();
+            SharedPool.Of<AddressGameObjectPool>();
         }
     }
 }

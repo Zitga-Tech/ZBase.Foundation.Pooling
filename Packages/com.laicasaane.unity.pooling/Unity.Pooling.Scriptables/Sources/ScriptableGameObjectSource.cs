@@ -9,22 +9,21 @@ namespace Unity.Pooling.Scriptables
         , menuName = "Pooling/Scriptables/Sources/GameObject"
         , order = 1
     )]
-    public class ScriptableGameObjectSource : ScriptableSource
+    public class ScriptableGameObjectSource : ScriptableSource<GameObject>
     {
-        [SerializeField]
-        private GameObject _source;
-
         public override async UniTask<UnityEngine.Object> Instantiate(Transform parent)
         {
-            if (_source == false)
+            var source = Source;
+
+            if (source == false)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.source);
 
             GameObject instance;
 
             if (parent)
-                instance = Instantiate(_source, parent);
+                instance = Instantiate(source, parent);
             else
-                instance = Instantiate(_source);
+                instance = Instantiate(source);
 
             return await UniTask.FromResult(instance);
         }
