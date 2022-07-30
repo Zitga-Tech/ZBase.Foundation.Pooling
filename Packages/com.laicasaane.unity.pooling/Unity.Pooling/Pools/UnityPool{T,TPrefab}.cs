@@ -28,6 +28,11 @@ namespace Unity.Pooling
             _prefab = prefab ?? throw new ArgumentNullException(nameof(prefab));
         }
 
+        public UnityPool(UniqueQueue<int, T> queue)
+        {
+            _queue = queue ?? throw new ArgumentNullException(nameof(queue));
+        }
+
         public UnityPool(UniqueQueue<int, T> queue, TPrefab prefab)
         {
             _queue = queue ?? throw new ArgumentNullException(nameof(queue));

@@ -16,6 +16,10 @@ namespace Unity.Pooling
             : base(prefab)
         { }
 
+        public ComponentPool(UniqueQueue<int, T> queue)
+            : base(queue)
+        { }
+
         public ComponentPool(UniqueQueue<int, T> queue, ComponentPrefab<T> prefab)
             : base(queue, prefab)
         { }

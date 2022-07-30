@@ -16,6 +16,10 @@ namespace Unity.Pooling
             : base(prefab)
         { }
 
+        public GameObjectPool(UniqueQueue<int, GameObject> queue)
+            : base(queue)
+        { }
+
         public GameObjectPool(UniqueQueue<int, GameObject> queue, GameObjectPrefab prefab)
             : base(queue, prefab)
         { }

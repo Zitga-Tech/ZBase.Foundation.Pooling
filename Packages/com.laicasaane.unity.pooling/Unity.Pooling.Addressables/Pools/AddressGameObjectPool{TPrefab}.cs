@@ -17,6 +17,10 @@ namespace Unity.Pooling.AddressableAssets
             : base(prefab)
         { }
 
+        public AddressGameObjectPool(UniqueQueue<int, GameObject> queue)
+            : base(queue)
+        { }
+
         public AddressGameObjectPool(UniqueQueue<int, GameObject> queue, TPrefab prefab)
             : base(queue, prefab)
         { }
