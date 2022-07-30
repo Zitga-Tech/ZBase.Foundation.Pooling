@@ -9,9 +9,6 @@
 
 The related modules will be enabled automatically when the [com.unity.addressables](https://docs.unity3d.com/Packages/com.unity.addressables@1.19/manual/index.html) package is installed.
 
-## Thread-safety disclaimer
-
-:warning: This package does NOT factor thread-safety into its design.
 
 # Installation
 
@@ -25,7 +22,6 @@ More details [here](https://github.com/openupm/openupm-cli#installation).
 openupm add com.laicasaane.unity.pooling
 ```
 
-
 ## Install via Package Manager
 
 Or, you can add this package by opening the **Package Manager** window and entering
@@ -35,6 +31,7 @@ https://github.com/laicasaane/Unity.Pooling.git?path=Packages/com.laicasaane.uni
 ```
 
 from the `Add package from git URL` option.
+
 
 # System.Pooling
 
@@ -72,7 +69,7 @@ var myObj  = myPool.Rent();
 
 ## Shared Pools
 
-`SharedPool.Of<T>` will return a shared instance (aka singleton) of any type that implements `IPool` interface and have a default constructor.
+`SharedPool.Of<T>` will return a shared instance (aka singleton) of any type that implements `IPool` and `IShareable` interfaces and have a default constructor.
 
 ```cs
 var sharedMyPool   = SharedPool.Of< Pool<MyClass> >();
@@ -83,9 +80,27 @@ The reason for this design is to not force singleton pattern onto any pool, and 
 
 On the other hand, the users should have a choice and be mindful about when and where to employ singletons into their own code.
 
-## Disposable contexts
+## Disposable context
 
--
+This is they way to automatically return instances to the pool at the end of their usage.
+
+- Instead of renting an instance directly from the pool, we'll make a `DisposableContext` first.
+- Use `using` when renting an instance so the disposing mechanism can be automated.
+
+```cs
+var pool           = SharedPool.Of< ListPool<int> >();
+var disposablePool = pool.DisposableContext();
+using var instance = disposablePool.Rent();
+
+using (var otherInstance = disposablePool.Rent())
+{
+    // work with `otherInstance`
+
+} // `otherInstance` will be returned to the pool automatically
+
+// End of the Method
+// `instance` will be returned to the pool automatically
+```
 
 # Collection Pools
 
@@ -114,37 +129,100 @@ This module provides basic facility to pooling Unity objects, especially `GameOb
 
 - `UnityPool<T, TPrefab>` is the base for Unity object pools.
 - `IPrefab` to implement custom Unity object instantiators.
-- `UnityPoolBehaviour<T, ...>` is the base for components to be attached on a `GameObject`.
-- `IPrepooler<...>` to implement custom prepooling mechanism.
+- `IPrepooler<T, TPrefab, TPool>` to implement custom prepooling mechanism.
+- `UnityPoolBehaviour<T, ...>` is the base for pool components attached on a `GameObject`.
 
 ## Pools
 
 All the pools declared in this module are ready-to-use as they are.
 
+- `UnityPool<T, TPrefab>`
+- `GameObjectPool<TPrefab>`
+- `GameObjectPool`
+- `ComponentPool<T, TPrefab>`
+- `ComponentPool<T>`
+
 ```cs
 var goPool       = new GameObjectPool();
 var colliderPool = new ComponentPool<BoxCollider>();
+```
+
+## Prefabs
+
+Prefab is a way to change how pools would instantiate or release their objects.
+
+- `UnityPrefab<T, TSource>`
+- `GameObjectPrefab`
+- `ComponentPrefab<T>`
+
+If customization is needed, a subtype of `UnityPrefab<T, TSource>` must be implemented then passed to the generic pool that accept `TPrefab`.
+
+```cs
+public class CustomGameObjectPrefab : UnityPrefab<GameObject, GameObject>
+{
+    protected override async UniTask<GameObject> Instantiate(GameObject source, Transform parent)
+    {
+        // implement Instiatate method
+    }
+
+    public override void Release(GameObject instance)
+    {
+        // implement Release method
+    }
+}
 ...
-var goPoolCustom = new GameObjectPool<MyGameObjectPrefab>();
+var poolA = new GameObjectPool<CustomGameObjectPrefab>();
+var poolB = new UnityPool<GameObject, CustomGameObjectPrefab>()
+```
+
+Alternately any type implements `IPrefab<T>` works the same way.
+
+```cs
+public class SimpleGameObjectPrefab : IPrefab<GameObject>
+{
+    public async UniTask<GameObject> Instantiate()
+    {
+        // implement Instiatate method
+    }
+
+    public void Release(GameObject instance)
+    {
+        // implement Release method
+    }
+}
 ...
-var simpleGOPool = new UnityPool<GameObject, MyGameObjectPrefab>()
+var poolA = new GameObjectPool<SimpleGameObjectPrefab>();
+var poolB = new UnityPool<GameObject, SimpleGameObjectPrefab>()
 ```
 
 ## Behaviours
 
-Only `GameObjectPoolBehaviour` is ready to add onto a `GameObject`.
+These are wrappers of the pools, derived from `MonoBehaviour`:
 
-Other behaviours require declaring non-generic subtypes before using.
+- `PoolBehaviour<T, TPool>`
+- `UnityPoolBehaviour<T, TPrefab, TPool>`
+- `GameObjectPoolBehaviour`
+- `ComponentPoolBehaviour<T>`
+
+Only `GameObjectPoolBehaviour` is ready to be used.
+
+Others require declaring non-generic subtypes:
 
 ```cs
-public class BoxColliderPoolBehaviour : ComponentPoolBehaviour<BoxCollider> { }
+public class BoxColliderPoolBehaviour
+    : ComponentPoolBehaviour<BoxCollider>
+{ }
+
+public class SpritePoolBehaviour
+    : UnityPoolBehaviour<SpriteRenderer, SpritePrefab, ComponentPool<SpriteRenderer>>
+{ }
 ```
 
 # Unity.Pooling.Addressables
 
-This module offers 2 ways to integrate Addressables:
-- `AssetRef*` requires `AssetReference` to refer to the asset
-- `AssetName*` requires a `string` to do that instead
+This module offers 2 ways to work with Addressables:
+- `Address*` requires a `string` address to load the asset
+- `AssetRef*` requires an `AssetReference` to do that
 
 
 
