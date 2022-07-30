@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Unity.Pooling.Scriptables
 {
     public class ScriptablePool<T>
-        : ScriptableObject, IUnityPool<T>, IPrepoolable, IHasParent
+        : ScriptableObject, IUnityPool<T, UnityObjectPrefab>, IPrepoolable, IHasParent
         where T : UnityEngine.Object
     {
         [SerializeField]
@@ -25,6 +25,15 @@ namespace Unity.Pooling.Scriptables
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => _prepoolOnStart = value;
+        }
+
+        public UnityObjectPrefab Prefab
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _prefab;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set => _prefab = value;
         }
 
         public Transform Parent
@@ -53,7 +62,13 @@ namespace Unity.Pooling.Scriptables
             void OnRelease(UnityEngine.Object instance)
             {
                 if (onReleased != null && instance is T instanceT)
+                {
                     onReleased(instanceT);
+                    return;
+                }
+
+                if (_prefab != null)
+                    _prefab.Release(instance);
             }
 
             _pool.ReleaseInstances(keep, OnRelease);

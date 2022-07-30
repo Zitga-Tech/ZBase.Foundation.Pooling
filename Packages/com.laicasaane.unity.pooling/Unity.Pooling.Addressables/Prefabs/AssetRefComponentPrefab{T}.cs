@@ -21,5 +21,11 @@ namespace Unity.Pooling.AddressableAssets
 
             return gameObject.GetComponent<T>();
         }
+
+        public override void Release(T instance)
+        {
+            if (instance && Source != null)
+                Source.ReleaseInstance(instance.gameObject);
+        }
     }
 }

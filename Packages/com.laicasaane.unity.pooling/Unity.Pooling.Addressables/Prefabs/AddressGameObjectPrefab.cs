@@ -21,5 +21,11 @@ namespace Unity.Pooling.AddressableAssets
 
             return await handle;
         }
+
+        public override void Release(GameObject instance)
+        {
+            if (instance)
+                Addressables.ReleaseInstance(instance);
+        }
     }
 }

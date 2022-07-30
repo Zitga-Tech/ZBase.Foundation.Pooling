@@ -28,5 +28,11 @@ namespace Unity.Pooling.Scriptables.AddressableAssets
 
             return instance;
         }
+
+        public override void Release(Object instance)
+        {
+            if (instance is GameObject gameObject)
+                Addressables.ReleaseInstance(gameObject);
+        }
     }
 }

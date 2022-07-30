@@ -23,5 +23,11 @@ namespace Unity.Pooling.Scriptables
 
             return await UniTask.FromResult(instance);
         }
+
+        public override void Release(UnityEngine.Object instance)
+        {
+            if (instance is T component)
+                Destroy(component.gameObject);
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace Unity.Pooling
         : PoolBehaviour<T, TPool>, IPrepoolable
         where T : UnityEngine.Object
         where TPrefab : IPrefab<T>
-        where TPool : IUnityPool<T>, IHasPrefab<TPrefab>
+        where TPool : IUnityPool<T, TPrefab>
     {
         [SerializeField]
         private bool _prepoolOnStart = false;

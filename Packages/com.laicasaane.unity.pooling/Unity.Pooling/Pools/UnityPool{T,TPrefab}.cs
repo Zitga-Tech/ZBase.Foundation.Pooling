@@ -8,7 +8,7 @@ namespace Unity.Pooling
 {
     [Serializable]
     public class UnityPool<T, TPrefab>
-        : IUnityPool<T>, IHasPrefab<TPrefab>, IShareable, IDisposable
+        : IUnityPool<T, TPrefab>, IShareable, IDisposable
         where T : UnityEngine.Object
         where TPrefab : IPrefab<T>
     {
@@ -59,7 +59,12 @@ namespace Unity.Pooling
             while (countRemove > 0)
             {
                 if (_queue.TryDequeue(out var _, out var instance))
-                    onReleased?.Invoke(instance);
+                {
+                    if (onReleased != null)
+                        onReleased(instance);
+                    else if (_prefab != null)
+                        _prefab.Release(instance);
+                }
 
                 countRemove--;
             }

@@ -56,5 +56,7 @@ namespace Unity.Pooling
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected abstract UniTask<T> Instantiate(TSource source, Transform parent);
+
+        public abstract void Release(T instance);
     }
 }

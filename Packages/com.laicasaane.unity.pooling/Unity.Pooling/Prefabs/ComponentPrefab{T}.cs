@@ -19,5 +19,11 @@ namespace Unity.Pooling
 
             return await UniTask.FromResult(instance);
         }
+
+        public override void Release(T instance)
+        {
+            if (instance)
+                UnityEngine.Object.Destroy(instance.gameObject);
+        }
     }
 }

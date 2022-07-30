@@ -10,7 +10,8 @@ namespace Project.Runtime
         private void Start()
         {
             this.gameObject.AddComponent<ComponentPoolBehaviour<BoxCollider>>();
-            SharedPool.Of<AddressGameObjectPool>();
+            var pool = SharedPool.Of<AddressGameObjectPool>();
+            pool.ReleaseInstances(1);
         }
     }
 }

@@ -11,6 +11,7 @@
         "UniTask",
         "UniTask.Addressables",
         "Unity.Addressables",
+        "Unity.ResourceManager",
         "Unity.Pooling",
         "Unity.Pooling.Addressables"
     ],

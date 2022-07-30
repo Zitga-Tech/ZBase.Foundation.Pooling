@@ -42,5 +42,11 @@ namespace Unity.Pooling.Scriptables
 
             return await _source.Instantiate(Parent);
         }
+
+        public void Release(UnityEngine.Object instance)
+        {
+            if (instance && _source)
+                _source.Release(instance);
+        }
     }
 }
