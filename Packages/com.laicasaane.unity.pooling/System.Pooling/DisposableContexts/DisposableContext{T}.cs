@@ -19,7 +19,7 @@ namespace System.Pooling
     public static partial class PoolDisposableExtensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static DisposableContext<T> Disposable<T>(this IPool<T> pool)
+        public static DisposableContext<T> DisposableContext<T>(this IPool<T> pool)
             => new DisposableContext<T>(pool);
     }
 }

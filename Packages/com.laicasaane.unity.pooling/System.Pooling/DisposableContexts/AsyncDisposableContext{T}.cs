@@ -23,7 +23,7 @@ namespace System.Pooling
     public static partial class AsyncPoolDisposableExtensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static AsyncDisposableContext<T> Disposable<T>(this IAsyncPool<T> pool)
+        public static AsyncDisposableContext<T> DisposableContext<T>(this IAsyncPool<T> pool)
             => new AsyncDisposableContext<T>(pool);
     }
 }
