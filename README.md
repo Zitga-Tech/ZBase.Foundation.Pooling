@@ -35,27 +35,57 @@ from the `Add package from git URL` option.
 
 # System.Pooling
 
-This module provides a foundation for this entire package and some basic functionality for pooling C# objects.
-
 ## Foundation
 
-The entire package is built on these 2 main interfaces:
-- `IPool<T>` is a synchronous API, mostly for pooling C# objects.
-- `IAsyncPool<T>` is an asynchronous API, mostly for pooling Unity objects.
+The entire package is built upon these 2 interfaces:
+- `IPool<T>` defines synchronous APIs, mostly for pooling C# objects.
+- `IAsyncPool<T>` defines asynchronous APIs, mostly for pooling Unity objects.
 
-## Basic pools
+## Pools
 
-- `Pool<T>` and `AsyncPool<T>` implement the most generic functionality for pooling C# objects.
+These are the basic pools that implement the most generic functions for pooling C# objects:
 
-## Instantiator
+- `Pool<T, TInstantiator>`
+- `AsyncPool<T, T Instantiator>`
+- `Pool<T>`
+- `AsyncPool<T>`
 
-Actually, `Pool<T, TInstantiator>` and `AsyncPool<T, T Instantiator>` are supertypes of `Pool<T>` and `AsyncPool<T>` respectively.
+For basic pooling, `Pool<T>` and `AsyncPool<T>` are ready-to-use.
 
-These supertypes allow customizing the way they create new instances of `T`.
+## Instantiators
 
-By default, `Pool<T>` and `AsyncPool<T>` employ `System.Activator` to instantiating `T`.
+It should be noted that `Pool<T>` and `AsyncPool<T>` will create instances of `T` through [`Activator.CreateInstance`](https://docs.microsoft.com/en-us/dotnet/api/system.activator.createinstance) by using these instantiators:
 
-### Example: Implementing a custom instantiator
+- `ActivatorInstantiator<T>`
+- `AsyncActivatorInstantiator<T>`
+
+This module also provides instantiators that use default constructor:
+
+- `DefaultConstructorInstantiator<T>`
+- `AsyncDefaultConstructorInstantiator<T>`
+
+However the type `T` must satisfy this constraint on the instantiators
+
+```cs
+where T : class, new()
+```
+
+- `T` must be a reference type
+- `T` must have a public parameterless constructor (ie. default constructor)
+
+**Example usage**
+
+```cs
+public class MyClass { }
+...
+var pool = new Pool<MyClass, DefaultConstructorInstantiator<MyClass>>(); // Works
+...
+var pool = new Pool<string, DefaultConstructorInstantiator<string>>(); // Error!
+```
+
+### User-defined instantiators
+
+Alternately, users can define custom instantiators for specific types by implement `IInstantiable<T>`:
 
 ```cs
 public struct MyClassInstantiator : IInstantiable<MyClass>
@@ -63,36 +93,42 @@ public struct MyClassInstantiator : IInstantiable<MyClass>
     public MyClass Instantiate() => new MyClass();
 }
 ...
-var myPool = new Pool<MyClass, MyClassInstantiator>();
-var myObj  = myPool.Rent();
+var pool = new Pool<MyClass, MyClassInstantiator>();
 ```
 
-## Shared Pools
+## Shared pools
 
-`SharedPool.Of<T>` will return a shared instance (aka singleton) of any type that implements `IPool` and `IShareable` interfaces and have a default constructor.
+`SharedPool.Of<T>` will return a shared instance (aka singleton) of any type that satisfy this constraint:
 
 ```cs
-var sharedMyPool   = SharedPool.Of< Pool<MyClass> >();
-var sharedListPool = SharedPool.Of< ListPool<int> >();
+where T : IPool, IShareable, new()
 ```
 
-The reason for this design is to not force singleton pattern onto any pool, and thus not complicate the pool inheritance tree.
+- `T` must implement `IPool` and `IShareable`
+- `T` must have a public parameterless constructor (ie. default constructor)
 
-On the other hand, the users should have a choice and be mindful about when and where to employ singletons into their own code.
+**Example usage**
+
+```cs
+var myClassPool = SharedPool.Of< Pool<MyClass> >();
+var listPool    = SharedPool.Of< ListPool<int> >();
+```
 
 ## Disposable context
 
-This is they way to automatically return instances to the pool at the end of their usage.
+Leverage `IDisposable` interface to automatically return instances to the pool at the end of their usage.
 
-- Instead of renting an instance directly from the pool, we'll make a `DisposableContext` first.
-- Use `using` when renting an instance so the disposing mechanism can be automated.
+1. Get the context by calling `.DisposableContext()` (extension method) on the pool.
+2. Apply `using` when renting from the context so the disposing mechanism can be automated.
+
+**Example usage**
 
 ```cs
 var pool           = SharedPool.Of< ListPool<int> >();
-var disposablePool = pool.DisposableContext();
-using var instance = disposablePool.Rent();
+var disposablePool = pool.DisposableContext();         // Get the context
+using var instance = disposablePool.Rent();            // Rent from the context with `using`
 
-using (var otherInstance = disposablePool.Rent())
+using (var otherInstance = disposablePool.Rent())     // Explicit `using` scope
 {
     // work with `otherInstance`
 
@@ -104,10 +140,7 @@ using (var otherInstance = disposablePool.Rent())
 
 # Collection Pools
 
-- `System.Collections.Generic.Pooling`
-- `Collections.Pooled.Generic.Pooling`
-
-These 2 modules provide premade collection pools:
+Are the pools for collection instances (such as `List`, `Dictionary` and so on).
 
 - `ListPool<T>`
 - `HashSetPool<T>`
@@ -115,12 +148,17 @@ These 2 modules provide premade collection pools:
 - `StackPool<T>`
 - `DictionaryPool<TKey, TValue>`
 
+They are implemented the same in these 2 modules:
+
+- `System.Collections.Generic.Pooling`
+- `Collections.Pooled.Generic.Pooling`
+
 ```cs
-var list  = SharedPool.Of< ListPool<int> >().Rent();
-var myObj = SharedPool.Of< Pool<MyClass> >().Rent();
+var listInst    = SharedPool.Of< ListPool<int> >().Rent();
+var myClassInst = SharedPool.Of< Pool<MyClass> >().Rent();
 
 var dictPool = new DictionaryPool<int, string>();
-var dict     = dictPool.Rent();
+var dictInst = dictPool.Rent();
 ```
 
 # Unity.Pooling
@@ -134,7 +172,7 @@ This module provides basic facility to pooling Unity objects, especially `GameOb
 
 ## Pools
 
-All the pools declared in this module are ready-to-use as they are.
+All the pools implemented in this module are ready-to-use.
 
 - `UnityPool<T, TPrefab>`
 - `GameObjectPool<TPrefab>`
@@ -204,7 +242,7 @@ These are wrappers of the pools, derived from `MonoBehaviour`:
 - `GameObjectPoolBehaviour`
 - `ComponentPoolBehaviour<T>`
 
-Only `GameObjectPoolBehaviour` is ready to be used.
+Only `GameObjectPoolBehaviour` is ready-to-use.
 
 Others require declaring non-generic subtypes:
 
@@ -222,9 +260,29 @@ public class SpritePoolBehaviour
 
 This module offers 2 ways to work with Addressables:
 - `Address*` requires a `string` address to load the asset
-- `AssetRef*` requires an `AssetReference` to do that
+- `AssetRef*` requires an `AssetReference`
 
+## Pools
 
+All the pools implemented in this module are ready-to-use.
+
+- `AddressComponentPool<T, TPrefab>`
+- `AddressComponentPool<T>`
+- `AddressGameObjectPool`
+- `AddressGameObjectPool<TPrefab>`
+- `AssetRefComponentPool<T>`
+- `AssetRefGameObjectPool`
+
+## Prefabs
+
+- `AddressPrefab<T>`
+- `AddressComponentPrefab<T>`
+- `AddressGameObjectPrefab`
+- `AssetRefPrefab<T, TAssetRef>`
+- `AssetRefComponentPrefab<T>`
+- `AssetRefGameObjectPrefab`
+
+It should be noted that the prefabs
 
 # Unity.Pooling.Scriptables
 
