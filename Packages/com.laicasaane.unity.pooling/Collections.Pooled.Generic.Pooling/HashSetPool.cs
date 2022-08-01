@@ -3,7 +3,9 @@ using System.Runtime.CompilerServices;
 
 namespace Collections.Pooled.Generic.Pooling
 {
-    public class HashSetPool<T> : Pool<HashSet<T>, HashSetInstantiator<T>>
+    public class HashSetPool<T>
+        : Pool<HashSet<T>
+        , DefaultConstructorInstantiator<HashSet<T>>>
     {
         public HashSetPool()
             : base()
@@ -16,12 +18,5 @@ namespace Collections.Pooled.Generic.Pooling
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override void ReturnPreprocess(HashSet<T> instance)
             => instance.Clear();
-    }
-
-    public struct HashSetInstantiator<T> : IInstantiable<HashSet<T>>
-    {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public HashSet<T> Instantiate()
-            => new HashSet<T>();
     }
 }

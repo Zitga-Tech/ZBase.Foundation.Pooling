@@ -3,7 +3,9 @@ using System.Runtime.CompilerServices;
 
 namespace Collections.Pooled.Generic.Pooling
 {
-    public class StackPool<T> : Pool<Stack<T>, StackInstantiator<T>>
+    public class StackPool<T>
+        : Pool<Stack<T>
+        , DefaultConstructorInstantiator<Stack<T>>>
     {
         public StackPool()
             : base()
@@ -16,12 +18,5 @@ namespace Collections.Pooled.Generic.Pooling
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override void ReturnPreprocess(Stack<T> instance)
             => instance.Clear();
-    }
-
-    public struct StackInstantiator<T> : IInstantiable<Stack<T>>
-    {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Stack<T> Instantiate()
-            => new Stack<T>();
     }
 }

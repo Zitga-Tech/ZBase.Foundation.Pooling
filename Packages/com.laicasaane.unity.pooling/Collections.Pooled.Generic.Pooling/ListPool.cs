@@ -3,7 +3,9 @@ using System.Runtime.CompilerServices;
 
 namespace Collections.Pooled.Generic.Pooling
 {
-    public class ListPool<T> : Pool<List<T>, ListInstantiator<T>>
+    public class ListPool<T>
+        : Pool<List<T>
+        , DefaultConstructorInstantiator<List<T>>>
     {
         public ListPool()
             : base()
@@ -16,12 +18,5 @@ namespace Collections.Pooled.Generic.Pooling
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override void ReturnPreprocess(List<T> instance)
             => instance.Clear();
-    }
-
-    public struct ListInstantiator<T> : IInstantiable<List<T>>
-    {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public List<T> Instantiate()
-            => new List<T>();
     }
 }
