@@ -266,25 +266,25 @@ This module offers 2 ways to work with Addressables:
 
 All the pools implemented in this module are ready-to-use.
 
-- `AddressComponentPool<T, TPrefab>`
-- `AddressComponentPool<T>`
-- `AddressGameObjectPool`
-- `AddressGameObjectPool<TPrefab>`
-- `AssetRefComponentPool<T>`
-- `AssetRefGameObjectPool`
+|String Address                    |AssetReference            |
+|----------------------------------|--------------------------|
+|`AddressComponentPool<T, TPrefab>`|`AssetRefComponentPool<T>`|
+|`AddressComponentPool<T>`         |`AssetRefGameObjectPool`  |
+|`AddressGameObjectPool<TPrefab>`  |                          |
+|`AddressGameObjectPool`           |                          |
 
 ## Prefabs
 
-- `AddressPrefab<T>`
-- `AddressComponentPrefab<T>`
-- `AddressGameObjectPrefab`
-- `AssetRefPrefab<T, TAssetRef>`
-- `AssetRefComponentPrefab<T>`
-- `AssetRefGameObjectPrefab`
+|String Address             |AssetReference                |
+|---------------------------|------------------------------|
+|`AddressPrefab<T>`         |`AssetRefPrefab<T, TAssetRef>`|
+|`AddressComponentPrefab<T>`|`AssetRefComponentPrefab<T>`  |
+|`AddressGameObjectPrefab`  |`AssetRefGameObjectPrefab`    |
 
-It should be noted that the prefabs
+:warning: Notes that the prefabs are using [`Addressables`](https://docs.unity3d.com/Packages/com.unity.addressables@1.19/api/UnityEngine.AddressableAssets.Addressables.InstantiateAsync.html#UnityEngine_AddressableAssets_Addressables_InstantiateAsync_System_Object_Transform_System_Boolean_System_Boolean_) and [`AssetReference`](https://docs.unity3d.com/Packages/com.unity.addressables@1.19/api/UnityEngine.AddressableAssets.AssetReference.InstantiateAsync.html#UnityEngine_AddressableAssets_AssetReference_InstantiateAsync_Transform_System_Boolean_) to instantiate objects. But this behaviour can be changed by declaring subtypes and overriding the `Instantiate` method.
 
 # Unity.Pooling.Scriptables
+
 
 # Unity.Pooling.Scriptables.Addressables
 
