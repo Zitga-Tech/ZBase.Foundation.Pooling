@@ -85,7 +85,7 @@ var pool = new Pool<string, DefaultConstructorInstantiator<string>>(); // Error!
 
 ### User-defined instantiators
 
-Alternately, users can define custom instantiators for specific types by implement `IInstantiable<T>`:
+Alternately, users can define custom instantiators for specific types by implementing `IInstantiable<T>`:
 
 ```cs
 public struct MyClassInstantiator : IInstantiable<MyClass>
@@ -168,7 +168,7 @@ This module provides basic facility to pooling Unity objects, especially `GameOb
 - `UnityPool<T, TPrefab>` is the base for Unity object pools.
 - `IPrefab` to implement custom Unity object instantiators.
 - `IPrepooler<T, TPrefab, TPool>` to implement custom prepooling mechanism.
-- `UnityPoolBehaviour<T, ...>` is the base for pool components attached on a `GameObject`.
+- `UnityPoolBehaviour<T, ...>` is the base for pooling components attached on a `GameObject`.
 
 ## Pools
 
