@@ -1,4 +1,5 @@
 ﻿using System.Pooling;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -10,7 +11,12 @@ namespace Unity.Pooling
         where TPrefab : IPrefab<T>
         where TPool : IReturnable<T>
     {
-        public async UniTask Prepool(TPrefab prefab, TPool pool, Transform defaultParent)
+        public async UniTask Prepool(
+              TPrefab prefab
+            , TPool pool
+            , Transform defaultParent
+            , CancellationToken cancelToken = default
+        )
         {
             if (prefab == null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.prefab);
@@ -26,7 +32,7 @@ namespace Unity.Pooling
 
             for (int i = 0, count = prefab.PrepoolAmount; i < count; i++)
             {
-                var instance = await prefab.Instantiate();
+                var instance = await prefab.Instantiate(cancelToken);
                 pool.Return(instance);
             }
         }

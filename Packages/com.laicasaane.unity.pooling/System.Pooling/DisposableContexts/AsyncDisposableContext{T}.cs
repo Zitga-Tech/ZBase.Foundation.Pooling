@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Threading;
+using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
 
 namespace System.Pooling
@@ -16,6 +17,13 @@ namespace System.Pooling
         public async UniTask<Disposable<T>> Rent()
         {
             var result = await _pool.Rent();
+            return new Disposable<T>(_pool, result);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public async UniTask<Disposable<T>> Rent(CancellationToken cancelToken)
+        {
+            var result = await _pool.Rent(cancelToken);
             return new Disposable<T>(_pool, result);
         }
     }

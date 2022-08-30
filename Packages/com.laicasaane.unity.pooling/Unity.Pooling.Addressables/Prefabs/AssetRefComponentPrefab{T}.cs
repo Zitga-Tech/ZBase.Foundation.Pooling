@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Unity.Pooling.AddressableAssets
 {
@@ -10,14 +12,20 @@ namespace Unity.Pooling.AddressableAssets
         : AssetRefPrefab<T, AssetReferenceGameObject>
         where T : Component
     {
-        protected override async UniTask<T> Instantiate(AssetReferenceGameObject source, Transform parent)
+        protected override async UniTask<T> Instantiate(
+              AssetReferenceGameObject source
+            , Transform parent
+            , CancellationToken cancelToken = default
+        )
         {
-            GameObject gameObject;
+            AsyncOperationHandle<GameObject> handle;
 
             if (parent)
-                gameObject = await source.InstantiateAsync(parent, true);
+                handle = source.InstantiateAsync(parent, true);
             else
-                gameObject = await source.InstantiateAsync();
+                handle = source.InstantiateAsync();
+
+            var gameObject = await handle.WithCancellation(cancelToken);
 
             return gameObject.GetComponent<T>();
         }

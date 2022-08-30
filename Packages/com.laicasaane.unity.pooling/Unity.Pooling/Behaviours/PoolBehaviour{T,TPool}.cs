@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Pooling;
+using System.Threading;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
@@ -30,6 +31,10 @@ namespace Unity.Pooling
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async UniTask<T> Rent()
             => await _pool.Rent();
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public async UniTask<T> Rent(CancellationToken cancelToken)
+            => await _pool.Rent(cancelToken);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Return(T instance)

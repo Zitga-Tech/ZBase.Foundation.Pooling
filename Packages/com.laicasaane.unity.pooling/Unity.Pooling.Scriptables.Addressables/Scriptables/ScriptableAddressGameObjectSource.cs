@@ -1,7 +1,9 @@
 ﻿using System.Pooling;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Unity.Pooling.Scriptables.AddressableAssets
 {
@@ -12,21 +14,21 @@ namespace Unity.Pooling.Scriptables.AddressableAssets
     )]
     public class ScriptableAddressGameObjectSource : ScriptableAddressSource
     {
-        public override async UniTask<Object> Instantiate(Transform parent)
+        public override async UniTask<Object> Instantiate(Transform parent, CancellationToken cancelToken = default)
         {
             var source = Source;
 
             if (string.IsNullOrEmpty(source))
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.assetName);
 
-            GameObject instance;
+            AsyncOperationHandle<GameObject> handle;
 
             if (parent)
-                instance = await Addressables.InstantiateAsync(source, parent, true);
+                handle = Addressables.InstantiateAsync(source, parent, true);
             else
-                instance = await Addressables.InstantiateAsync(source);
+                handle = Addressables.InstantiateAsync(source);
 
-            return instance;
+            return await handle.WithCancellation(cancelToken);
         }
 
         public override void Release(Object instance)

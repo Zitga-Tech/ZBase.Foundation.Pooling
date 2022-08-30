@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Threading;
+using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
 
 namespace System.Pooling
@@ -48,6 +49,14 @@ namespace System.Pooling
                 return instance;
 
             return await _instantiator.Instantiate();
+        }
+
+        public async UniTask<T> Rent(CancellationToken cancelToken)
+        {
+            if (_queue.TryDequeue(out var instance))
+                return instance;
+
+            return await _instantiator.Instantiate(cancelToken);
         }
 
         public void Return(T instance)

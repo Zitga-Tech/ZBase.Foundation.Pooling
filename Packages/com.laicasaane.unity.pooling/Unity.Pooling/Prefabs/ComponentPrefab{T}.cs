@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -8,7 +9,11 @@ namespace Unity.Pooling
     public class ComponentPrefab<T> : UnityPrefab<T, T>
         where T : UnityEngine.Component
     {
-        protected override async UniTask<T> Instantiate(T source, Transform parent)
+        protected override async UniTask<T> Instantiate(
+              T source
+            , Transform parent
+            , CancellationToken cancelToken
+        )
         {
             T instance;
 

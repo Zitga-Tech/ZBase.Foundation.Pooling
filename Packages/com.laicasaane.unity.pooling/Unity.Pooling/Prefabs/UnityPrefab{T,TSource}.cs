@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -54,8 +55,20 @@ namespace Unity.Pooling
             return await Instantiate(Source, Parent);
         }
 
+        public async UniTask<T> Instantiate(CancellationToken cancelToken)
+        {
+            if (_source is null)
+                throw new NullReferenceException(nameof(Source));
+
+            return await Instantiate(Source, Parent, cancelToken);
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected abstract UniTask<T> Instantiate(TSource source, Transform parent);
+        protected abstract UniTask<T> Instantiate(
+              TSource source
+            , Transform parent
+            , CancellationToken cancelToken = default)
+        ;
 
         public abstract void Release(T instance);
     }

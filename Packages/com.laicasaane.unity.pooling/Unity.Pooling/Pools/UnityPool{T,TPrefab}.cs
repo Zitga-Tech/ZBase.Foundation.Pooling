@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Pooling;
+using System.Threading;
 using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -81,6 +82,14 @@ namespace Unity.Pooling
                 return instance;
 
             return await _prefab.Instantiate();
+        }
+
+        public async UniTask<T> Rent(CancellationToken cancelToken)
+        {
+            if (_queue.TryDequeue(out var _, out var instance))
+                return instance;
+
+            return await _prefab.Instantiate(cancelToken);
         }
 
         public void Return(T instance)

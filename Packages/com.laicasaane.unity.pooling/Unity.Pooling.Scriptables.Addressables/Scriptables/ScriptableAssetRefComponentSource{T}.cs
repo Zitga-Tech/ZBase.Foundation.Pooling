@@ -1,7 +1,9 @@
 ﻿using System.Pooling;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Unity.Pooling.Scriptables.AddressableAssets
 {
@@ -9,19 +11,21 @@ namespace Unity.Pooling.Scriptables.AddressableAssets
         : ScriptableAssetRefSource<AssetReferenceGameObject>
         where T : Component
     {
-        public override async UniTask<Object> Instantiate(Transform parent)
+        public override async UniTask<Object> Instantiate(Transform parent, CancellationToken cancelToken = default)
         {
             var source = Source;
 
             if (source == null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.source);
 
-            GameObject gameObject;
+            AsyncOperationHandle<GameObject> handle;
 
             if (parent)
-                gameObject = await source.InstantiateAsync(parent);
+                handle = source.InstantiateAsync(parent);
             else
-                gameObject = await source.InstantiateAsync();
+                handle = source.InstantiateAsync();
+
+            var gameObject = await handle.WithCancellation(cancelToken);
 
             return gameObject.GetComponent<T>();
         }

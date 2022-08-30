@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -7,7 +8,11 @@ namespace Unity.Pooling
     [Serializable]
     public class GameObjectPrefab : UnityPrefab<GameObject, GameObject>
     {
-        protected override async UniTask<GameObject> Instantiate(GameObject source, Transform parent)
+        protected override async UniTask<GameObject> Instantiate(
+              GameObject source
+            , Transform parent
+            , CancellationToken cancelToken
+        )
         {
             GameObject instance;
 

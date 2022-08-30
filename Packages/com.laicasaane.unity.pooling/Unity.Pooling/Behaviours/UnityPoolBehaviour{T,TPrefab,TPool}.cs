@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Threading;
+using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -38,14 +39,14 @@ namespace Unity.Pooling
         protected async UniTask Start()
         {
             if (_prepoolOnStart)
-                await Prepool();
+                await Prepool(this.GetCancellationTokenOnDestroy());
 
             await OnStart();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async UniTask Prepool()
-            => await _prepooler.Prepool(Pool.Prefab, Pool, this.transform);
+        public async UniTask Prepool(CancellationToken cancelToken)
+            => await _prepooler.Prepool(Pool.Prefab, Pool, this.transform, cancelToken);
 
         protected virtual void OnAwake() { }
 

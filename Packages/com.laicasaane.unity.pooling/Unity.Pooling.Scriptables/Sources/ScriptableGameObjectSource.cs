@@ -1,4 +1,5 @@
 ﻿using System.Pooling;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace Unity.Pooling.Scriptables
     )]
     public class ScriptableGameObjectSource : ScriptableSource<GameObject>
     {
-        public override async UniTask<UnityEngine.Object> Instantiate(Transform parent)
+        public override async UniTask<Object> Instantiate(Transform parent, CancellationToken cancelToken = default)
         {
             var source = Source;
 
@@ -28,7 +29,7 @@ namespace Unity.Pooling.Scriptables
             return await UniTask.FromResult(instance);
         }
 
-        public override void Release(UnityEngine.Object instance)
+        public override void Release(Object instance)
         {
             if (instance is GameObject gameObject)
                 Destroy(gameObject);

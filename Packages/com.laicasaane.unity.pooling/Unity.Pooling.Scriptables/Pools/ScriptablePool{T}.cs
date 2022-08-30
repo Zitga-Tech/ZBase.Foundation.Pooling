@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -54,8 +55,8 @@ namespace Unity.Pooling.Scriptables
             => _pool.Return(instance);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async UniTask Prepool()
-            => await _prepooler.Prepool(_prefab, _pool, Parent);
+        public async UniTask Prepool(CancellationToken cancelToken)
+            => await _prepooler.Prepool(_prefab, _pool, Parent, cancelToken);
 
         public void ReleaseInstances(int keep, Action<T> onReleased = null)
         {
@@ -79,6 +80,24 @@ namespace Unity.Pooling.Scriptables
             _pool.Prefab = _prefab;
 
             var instance = await _pool.Rent();
+
+            if (instance is T instanceT)
+                return instanceT;
+
+            if (instance is GameObject gameObject)
+            {
+                if (gameObject.TryGetComponent<T>(out var component))
+                    return component;
+            }
+
+            throw new InvalidCastException($"Cannot cast {instance.GetType()} into {typeof(T)}");
+        }
+
+        public async UniTask<T> Rent(CancellationToken cancelToken)
+        {
+            _pool.Prefab = _prefab;
+
+            var instance = await _pool.Rent(cancelToken);
 
             if (instance is T instanceT)
                 return instanceT;

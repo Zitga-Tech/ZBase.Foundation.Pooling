@@ -1,16 +1,22 @@
 ﻿using System.Pooling;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Unity.Pooling.Scriptables
 {
     public struct UnityObjectPrepooler
-        : IPrepooler<UnityEngine.Object
+        : IPrepooler<Object
             , UnityObjectPrefab
-            , IReturnable<UnityEngine.Object>
+            , IReturnable<Object>
         >
     {
-        public async UniTask Prepool(UnityObjectPrefab prefab, IReturnable<UnityEngine.Object> pool, Transform defaultParent)
+        public async UniTask Prepool(
+              UnityObjectPrefab prefab
+            , IReturnable<Object> pool
+            , Transform defaultParent
+            , CancellationToken cancelToken = default
+        )
         {
             if (prefab == null)
                 ThrowHelper.ThrowArgumentNullException(ExceptionArgument.prefab);
@@ -26,7 +32,7 @@ namespace Unity.Pooling.Scriptables
 
             for (int i = 0, count = prefab.PrepoolAmount; i < count; i++)
             {
-                var instance = await prefab.Instantiate();
+                var instance = await prefab.Instantiate(cancelToken);
                 pool.Return(instance);
             }
         }

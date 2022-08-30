@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -41,6 +42,14 @@ namespace Unity.Pooling.Scriptables
                 throw new NullReferenceException(nameof(Source));
 
             return await _source.Instantiate(Parent);
+        }
+
+        public async UniTask<UnityEngine.Object> Instantiate(CancellationToken cancelToken)
+        {
+            if (_source is null)
+                throw new NullReferenceException(nameof(Source));
+
+            return await _source.Instantiate(Parent, cancelToken);
         }
 
         public void Release(UnityEngine.Object instance)

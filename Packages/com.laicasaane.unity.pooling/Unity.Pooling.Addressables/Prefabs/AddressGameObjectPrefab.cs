@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -10,7 +11,11 @@ namespace Unity.Pooling.AddressableAssets
     public class AddressGameObjectPrefab
         : AddressPrefab<GameObject>
     {
-        protected override async UniTask<GameObject> Instantiate(string source, Transform parent)
+        protected override async UniTask<GameObject> Instantiate(
+              string source
+            , Transform parent
+            , CancellationToken cancelToken
+        )
         {
             AsyncOperationHandle<GameObject> handle;
 
@@ -19,7 +24,7 @@ namespace Unity.Pooling.AddressableAssets
             else
                 handle = Addressables.InstantiateAsync(source);
 
-            return await handle;
+            return await handle.WithCancellation(cancelToken);
         }
 
         public override void Release(GameObject instance)

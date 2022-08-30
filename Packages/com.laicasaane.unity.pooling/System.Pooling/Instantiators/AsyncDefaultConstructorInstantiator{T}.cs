@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Threading;
+using System.Runtime.CompilerServices;
 using Cysharp.Threading.Tasks;
 
 namespace System.Pooling
@@ -11,6 +12,10 @@ namespace System.Pooling
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async UniTask<T> Instantiate()
+            => await UniTask.FromResult(new T());
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public async UniTask<T> Instantiate(CancellationToken cancelToken)
             => await UniTask.FromResult(new T());
     }
 }

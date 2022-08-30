@@ -1,9 +1,10 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
 
 namespace Unity.Pooling
 {
     public interface IPrepoolable
     {
-        UniTask Prepool();
+        UniTask Prepool(CancellationToken cancelToken);
     }
 }
