@@ -6,18 +6,30 @@ namespace System.Pooling
 {
     public class AsyncPool<T, TInstantiator> : IAsyncPool<T>, IShareable, IDisposable
         where T : class
-        where TInstantiator : IAsyncInstantiable<T>, new()
+        where TInstantiator : IAsyncInstantiable<T>
     {
-        private readonly TInstantiator _instantiator = new TInstantiator();
+        private readonly TInstantiator _instantiator;
         private readonly UniqueQueue<T> _queue;
 
         public AsyncPool()
+            : this(new UniqueQueue<T>())
         {
-            _queue = new UniqueQueue<T>();
         }
 
         public AsyncPool(UniqueQueue<T> queue)
         {
+            _instantiator = new ActivatorInstantiator<TInstantiator>().Instantiate();
+            _queue = queue ?? throw new ArgumentNullException(nameof(queue));
+        }
+
+        public AsyncPool(TInstantiator instantiator)
+            : this(instantiator, new UniqueQueue<T>())
+        {
+        }
+
+        public AsyncPool(TInstantiator instantiator, UniqueQueue<T> queue)
+        {
+            _instantiator = instantiator ?? throw new ArgumentNullException(nameof(instantiator));
             _queue = queue ?? throw new ArgumentNullException(nameof(queue));
         }
 

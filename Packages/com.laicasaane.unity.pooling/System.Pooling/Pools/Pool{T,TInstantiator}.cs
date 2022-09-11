@@ -4,18 +4,30 @@ namespace System.Pooling
 {
     public class Pool<T, TInstantiator> : IPool<T>, IShareable, IDisposable
         where T : class
-        where TInstantiator : IInstantiable<T>, new()
+        where TInstantiator : IInstantiable<T>
     {
-        private readonly TInstantiator _instantiator = new TInstantiator();
+        private readonly TInstantiator _instantiator;
         private readonly UniqueQueue<T> _queue;
 
         public Pool()
+            : this(new UniqueQueue<T>())
         {
-            _queue = new UniqueQueue<T>();
         }
 
         public Pool(UniqueQueue<T> queue)
         {
+            _instantiator = new ActivatorInstantiator<TInstantiator>().Instantiate();
+            _queue = queue ?? throw new ArgumentNullException(nameof(queue));
+        }
+
+        public Pool(TInstantiator instantiator)
+            : this(instantiator, new UniqueQueue<T>())
+        {
+        }
+
+        public Pool(TInstantiator instantiator, UniqueQueue<T> queue)
+        {
+            _instantiator = instantiator ?? throw new ArgumentNullException(nameof(instantiator));
             _queue = queue ?? throw new ArgumentNullException(nameof(queue));
         }
 
