@@ -7,7 +7,6 @@ namespace System.Pooling
     /// <see cref="Activator"/>.<see cref="Activator.CreateInstance(Type)"/>.
     /// </summary>
     public struct ActivatorInstantiator<T> : IInstantiable<T>
-        where T : class
     {
         private static readonly Type s_type = typeof(T);
 
