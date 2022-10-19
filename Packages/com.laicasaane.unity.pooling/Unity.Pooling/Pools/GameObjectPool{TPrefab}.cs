@@ -10,6 +10,9 @@ namespace Unity.Pooling
         : UnityPool<GameObject, TPrefab>
         where TPrefab : IPrefab<GameObject>
     {
+        [SerializeField]
+        private bool _dontApplyPrefabParentOnReturn;
+
         public GameObjectPool()
             : base()
         { }
@@ -26,11 +29,26 @@ namespace Unity.Pooling
             : base(queue, prefab)
         { }
 
+        public bool DontApplyPrefabParentOnReturn
+        {
+            get => _dontApplyPrefabParentOnReturn;
+            set => _dontApplyPrefabParentOnReturn = value;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected override void ReturnPreprocess(GameObject instance)
         {
-            if (instance && instance.activeSelf)
-                instance.SetActive(false);
+            if (instance == false)
+            {
+                return;
+            }
+
+            instance.SetActive(false);
+
+            if (_dontApplyPrefabParentOnReturn == false && Prefab != null)
+            {
+                instance.transform.SetParent(Prefab.Parent);
+            }
         }
     }
 }
