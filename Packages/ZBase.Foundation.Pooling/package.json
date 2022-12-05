@@ -1,7 +1,7 @@
 {
   "name": "com.zbase.foundation.pooling",
   "displayName": "ZBase.Foundation.Pooling",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "unity": "2021.3",
   "documentationUrl": "https://github.com/Zitga-Tech/ZBase.Foundation.Pooling/blob/main/README.md",
   "dependencies": {
