@@ -1,36 +1,11 @@
 {
   "dependencies": {
     "com.cysharp.unitask": {
-      "version": "2.3.1",
+      "version": "2.3.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://package.openupm.com"
-    },
-    "com.faster-games.t4": {
-      "version": "1.4.1",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://package.openupm.com"
-    },
-    "com.laicasaane.collections.pooled": {
-      "version": "2.7.0",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "org.nuget.system.runtime.compilerservices.unsafe": "6.0.0"
-      },
-      "url": "https://package.openupm.com"
-    },
-    "com.laicasaane.unity.pooling": {
-      "version": "file:com.laicasaane.unity.pooling",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "com.cysharp.unitask": "2.3.1",
-        "com.laicasaane.collections.pooled": "2.7.0"
-      }
     },
     "com.unity.addressables": {
       "version": "1.19.19",
@@ -54,7 +29,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.15",
+      "version": "3.0.16",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -126,9 +101,28 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "com.zbase.collections.pooled": {
+      "version": "2.8.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.system.runtime.compilerservices.unsafe": "6.0.0"
+      },
+      "url": "https://package.openupm.com"
+    },
+    "com.zbase.foundation.pooling": {
+      "version": "file:ZBase.Foundation.Pooling",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "org.nuget.system.runtime.compilerservices.unsafe": "6.0.0",
+        "com.cysharp.unitask": "2.3.3",
+        "com.zbase.collections.pooled": "2.8.1"
+      }
+    },
     "org.nuget.system.runtime.compilerservices.unsafe": {
       "version": "6.0.0",
-      "depth": 1,
+      "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://package.openupm.com"

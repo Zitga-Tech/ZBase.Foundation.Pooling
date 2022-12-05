@@ -1,7 +1,7 @@
-using System.Pooling;
-using Unity.Pooling;
-using Unity.Pooling.AddressableAssets;
 using UnityEngine;
+using ZBase.Foundation.Pooling;
+using ZBase.Foundation.Pooling.AddressableAssets;
+using ZBase.Foundation.Pooling.UnityPools;
 
 namespace Project.Runtime
 {

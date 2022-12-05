@@ -1,0 +1,17 @@
+{
+    "name": "ZBase.Foundation.Pooling",
+    "rootNamespace": "ZBase.Foundation.Pooling",
+    "references": [
+        "UniTask",
+        "ZBase.Collections.Pooled"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
