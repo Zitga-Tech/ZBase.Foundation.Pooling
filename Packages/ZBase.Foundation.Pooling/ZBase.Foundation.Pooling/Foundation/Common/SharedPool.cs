@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using UnityEngine;
 
 namespace ZBase.Foundation.Pooling
 {
@@ -10,7 +11,21 @@ namespace ZBase.Foundation.Pooling
 
         private static class SharedInstance<T> where T : IPool, IShareable, new()
         {
-            public static readonly T Instance = new T();
+            private static T s_instance;
+
+            public static T Instance => s_instance;
+
+            static SharedInstance()
+            {
+                Init();
+            }
+
+            /// <seealso href="https://docs.unity3d.com/Manual/DomainReloading.html"/>
+            [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+            static void Init()
+            {
+                s_instance = new T();
+            }
         }
     }
 }
