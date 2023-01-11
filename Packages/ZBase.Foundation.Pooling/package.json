@@ -5,7 +5,6 @@
   "unity": "2021.3",
   "documentationUrl": "https://github.com/Zitga-Tech/ZBase.Foundation.Pooling/blob/main/README.md",
   "dependencies": {
-    "org.nuget.system.runtime.compilerservices.unsafe": "6.0.0",
     "com.cysharp.unitask": "2.3.3",
     "com.zbase.collections.pooled": "2.8.1"
   },
