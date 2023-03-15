@@ -8,26 +8,26 @@ namespace Pooling.Sample
     /// <summary>
     /// A concrete implementation of a GameObjectPool. In this example we are using a UnityPrepooler to prepool the GameObjects.
     /// </summary>
-    public class SphereGameObjectPool : GameObjectPool
+    public class CustomGameObjectPool : GameObjectPool
     {
         private readonly UnityPrepooler<GameObject, GameObjectPrefab, GameObjectPool> _prepooler;
         
-        public SphereGameObjectPool() : base()
+        public CustomGameObjectPool() : base()
         {
             _prepooler = new UnityPrepooler<GameObject, GameObjectPrefab, GameObjectPool>();
         }
         
-        public SphereGameObjectPool(GameObjectPrefab prefab) : base(prefab)
+        public CustomGameObjectPool(GameObjectPrefab prefab) : base(prefab)
         {
             _prepooler = new UnityPrepooler<GameObject, GameObjectPrefab, GameObjectPool>();
         }
         
-        public SphereGameObjectPool(UniqueQueue<int, GameObject> queue) : base(queue)
+        public CustomGameObjectPool(UniqueQueue<int, GameObject> queue) : base(queue)
         {
             _prepooler = new UnityPrepooler<GameObject, GameObjectPrefab, GameObjectPool>();
         }
         
-        public SphereGameObjectPool(UniqueQueue<int, GameObject> queue, GameObjectPrefab prefab) : base(queue, prefab)
+        public CustomGameObjectPool(UniqueQueue<int, GameObject> queue, GameObjectPrefab prefab) : base(queue, prefab)
         {
             _prepooler = new UnityPrepooler<GameObject, GameObjectPrefab, GameObjectPool>();
         }

@@ -10,7 +10,8 @@
         "Unity.ResourceManager",
         "ZBase.Collections.Pooled",
         "ZBase.Foundation.Pooling",
-        "ZBase.Foundation.Pooling.Addressables"
+        "ZBase.Foundation.Pooling.Addressables",
+        "Sample.Environment"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

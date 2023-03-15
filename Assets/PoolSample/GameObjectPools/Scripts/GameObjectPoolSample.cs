@@ -1,9 +1,9 @@
-using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using ZBase.Collections.Pooled.Generic;
 using ZBase.Foundation.Pooling;
 using ZBase.Foundation.Pooling.UnityPools;
+using Grid = Sample.Environment.Grid;
 
 namespace Pooling.Sample
 {
@@ -19,23 +19,28 @@ namespace Pooling.Sample
         //Manage lifetime of the pool yourself (in this case, the pool4 will not be registered in the SharedPool)
         public GameObjectPool pool4;
         public List<GameObject> pool4Objects = new List<GameObject>();
-        private void Start()
+
+        private Grid _grid = new Grid(20, 15, true);
+        private async UniTaskVoid Start()
         {
+            /*
             //GameObjectPool do not have implementation of Prepool
             var pool1 = new GameObjectPool();
             pool1.Prefab = new GameObjectPrefab() {Parent = poolParent1, Source = this.prefab1};
-            pool1.Rent().Forget();
+            var item = await pool1.Rent();
+            item.transform.position = this._grid.GetAvailableSlot().position;
+            */
 
             /*
-             //Create a new SphereGameObjectPool and prepool 10 objects
-             //This pool is not registered in the SharedPool, so you can't get it later using SharedPool.Of<SphereGameObjectPool>()
-            var pool = new SphereGameObjectPool();
+             //Create a new CustomGameObjectPool and prepool 10 objects
+             //This pool is not registered in the SharedPool, so you can't get it later using SharedPool.Of<CustomGameObjectPool>()
+            var pool = new CustomGameObjectPool();
             pool.Prefab = new GameObjectPrefab() {Parent = poolParent1, PrepoolAmount = 10, Source = this.prefab2};
             pool.Prepool();
             */
-            //Create a new SphereGameObjectPool and prepool 10 objects
-            //This pool will be automatically registered in the SharedPool, so you can globally get it later using SharedPool.Of<SphereGameObjectPool>()
-            var pool2 = SharedPool.Of<SphereGameObjectPool>();
+            //Create a new CustomGameObjectPool and prepool 10 objects
+            //This pool will be automatically registered in the SharedPool, so you can globally get it later using SharedPool.Of<CustomGameObjectPool>()
+            var pool2 = SharedPool.Of<CustomGameObjectPool>();
             pool2.Prefab = new GameObjectPrefab() {Parent = poolParent1, PrepoolAmount = 10, Source = this.prefab1};
             pool2.Prepool();
             
@@ -44,30 +49,29 @@ namespace Pooling.Sample
 
         private async void OnGUI()
         {
-            //manually get the SphereGameObjectPool then rent and spawn some objects
-            if (GUI.Button(new Rect(0, 0, 300, 50), "Spawn in SphereGameObjectPool"))
+            //manually get the CustomGameObjectPool then rent and spawn some objects
+            if (GUI.Button(new Rect(0, 0, 300, 50), "Spawn in Shared Pool"))
             {
-                var pool = SharedPool.Of<SphereGameObjectPool>();
-                for (int i = 0; i < 13; i++)
+                var pool = SharedPool.Of<CustomGameObjectPool>();
+                for (int i = 0; i < 50; i++)
                 {
                     var go = await pool.Rent();
-                    go.transform.position = new Vector3(UnityEngine.Random.Range(-10, 10),
-                        UnityEngine.Random.Range(-10, 10), UnityEngine.Random.Range(-10, 10));
+                    go.transform.position = this._grid.GetAvailableSlot().position;
                     go.SetActive(true);
                     this.myGameObjects.Add(go);
                 }
             }
 
-            //manually get the SphereGameObjectPool then return and despawn some objects
-            if (GUI.Button(new Rect(0, 100, 300, 50), "Despawn in SphereGameObjectPool"))
+            //manually get the CustomGameObjectPool then return and despawn some objects
+            if (GUI.Button(new Rect(0, 100, 300, 50), "Despawn in SharedPool"))
             {
-                var pool = SharedPool.Of<SphereGameObjectPool>();
+                var pool = SharedPool.Of<CustomGameObjectPool>();
                 //despawn first 7 objects
-                for (int i = 0; i < 13; i++)
+                for (int i = 0; i < 50; i++)
                 {
                     var go = this.myGameObjects[i];
                     pool.Return(go);
-                    //myGameObjects.RemoveAt(i);
+                    this._grid.FreeSlot(go.transform.position);
                 }
 
                 /*
@@ -75,30 +79,30 @@ namespace Pooling.Sample
                  */
             }
             
-            if (GUI.Button(new Rect(0, 200, 150, 50), "Spawn in pool4"))
+            if (GUI.Button(new Rect(0, 200, 150, 50), "Spawn in Pool 4"))
             {
                 for (int i = 0; i < 100; i++)
                 {
                     var go = await this.pool4.Rent();
-                    go.transform.position = new Vector3(UnityEngine.Random.Range(-10, 10),
-                        UnityEngine.Random.Range(-10, 10), UnityEngine.Random.Range(-10, 10));
+                    go.transform.position = this._grid.GetAvailableSlot().position;
                     go.SetActive(true);
                     this.pool4Objects.Add(go);
                 }
-                Debug.Log("Rent 100 game objects in pool4");
-                Debug.Log("There is " + this.pool4.Count() + " objects in pool4");
+                Debug.Log("Rent 100 game objects in Pool 4");
+                Debug.Log("There is " + this.pool4.Count() + " objects in Pool 4");
             }
             
-            if (GUI.Button(new Rect(0, 300, 150, 50), "Despawn in pool4"))
+            if (GUI.Button(new Rect(0, 300, 150, 50), "Despawn in Pool 4"))
             {
                 //return random 50 times in pool4, may some objects will be returned multiple times
                 for (int i = 0; i < 50; i++)
                 {
                     var go = this.pool4Objects[UnityEngine.Random.Range(0, this.pool4Objects.Count)];
                     this.pool4.Return(go);
+                    this._grid.FreeSlot(go.transform.position);
                 }
-                Debug.Log("Return random 50 times game objects in pool4");
-                Debug.Log("There is " + this.pool4.Count() + " objects in pool4");
+                Debug.Log("Return random 50 times game objects in Pool 4");
+                Debug.Log("There is " + this.pool4.Count() + " objects in Pool 4");
             }
             
         }

@@ -25,6 +25,10 @@ MonoBehaviour:
     m_Address: Character_AddressPool_P01
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 5fa68afe6708644fda728daf092224b3
+    m_Address: Character_AddressPool_P02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e0f6fa325fd1a464cbecb4e3b9f30872, type: 2}
   m_SchemaSet:
