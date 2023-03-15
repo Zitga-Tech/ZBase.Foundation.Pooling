@@ -17,8 +17,12 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: d9910c93167875b4c99382800fc0d05e
   m_SerializeEntries:
-  - m_GUID: 83afb3fa82487e04b9731fca92fb5685
-    m_Address: Assets/Scripts/Project.Runtime/GameObject.prefab
+  - m_GUID: d313163ceba02498b974cf73b0605e8a
+    m_Address: Character_P01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1c14710c0d49c480497e5be810eb4fc4
+    m_Address: Character_AddressPool_P01
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

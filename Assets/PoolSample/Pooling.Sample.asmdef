@@ -1,0 +1,24 @@
+{
+    "name": "Project.Runtime",
+    "rootNamespace": "Pooling.Sample",
+    "references": [
+        "Unity.TextMeshPro",
+        "UnityEngine.UI",
+        "UniTask",
+        "UniTask.Addressables",
+        "Unity.Addressables",
+        "Unity.ResourceManager",
+        "ZBase.Collections.Pooled",
+        "ZBase.Foundation.Pooling",
+        "ZBase.Foundation.Pooling.Addressables"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
