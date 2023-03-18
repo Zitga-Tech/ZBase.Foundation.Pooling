@@ -6,7 +6,7 @@ using UnityEngine;
 using ZBase.Foundation.Pooling;
 using ZBase.Foundation.Pooling.UnityPools;
 
-namespace Project.Runtime
+namespace Pooling.Sample
 {
     public class Demo : MonoBehaviour
     {
@@ -19,12 +19,15 @@ namespace Project.Runtime
         private StackPool<int> _stackPool;
         private QueuePool<int> _queuePool;
 
+        private ZBase.Collections.Pooled.Generic.List<int> myList;
+
         [SerializeField] private GameObject prefab;
         [SerializeField] private RectTransform canvas;
 
         async void Start()
         {
             this._listPool = new ListPool<int>();
+            
             var rentList = this._listPool.Rent();
             for (int i = 0; i < 10; i++)
             {
@@ -34,7 +37,9 @@ namespace Project.Runtime
             this._listPool.Return(rentList);
         
             this._hashSetPool = SharedPool.Of<HashSetPool<int>>();
+            
             var rentHashSet = this._hashSetPool.Rent();
+            
             for (int i = 0; i < 10; i++)
             {
                 rentHashSet.Add(i);

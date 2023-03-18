@@ -1,5 +1,5 @@
 {
-    "name": "Project.Runtime",
+    "name": "Pooling.Sample",
     "rootNamespace": "Pooling.Sample",
     "references": [
         "Unity.TextMeshPro",
