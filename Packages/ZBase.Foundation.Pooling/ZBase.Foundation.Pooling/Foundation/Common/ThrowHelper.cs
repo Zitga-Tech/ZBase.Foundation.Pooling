@@ -9,6 +9,11 @@ namespace ZBase.Foundation.Pooling
 {
     public static class ThrowHelper
     {
+        public static InvalidCastException ThrowInvalidCast<TDest>(Type source)
+        {
+            return new InvalidCastException($"Cannot cast {source} into {typeof(TDest)}");
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ThrowCountArgumentOutOfRange_ArgumentOutOfRange_NeedNonNegNum()
         {

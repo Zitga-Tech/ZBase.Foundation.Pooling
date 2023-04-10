@@ -91,7 +91,7 @@ namespace ZBase.Foundation.Pooling.ScriptablePools
                     return component;
             }
 
-            throw new InvalidCastException($"Cannot cast {instance.GetType()} into {typeof(T)}");
+            throw ThrowHelper.ThrowInvalidCast<T>(instance.GetType());
         }
 
         public async UniTask<T> Rent(CancellationToken cancelToken)
@@ -109,7 +109,7 @@ namespace ZBase.Foundation.Pooling.ScriptablePools
                     return component;
             }
 
-            throw new InvalidCastException($"Cannot cast {instance.GetType()} into {typeof(T)}");
+            throw ThrowHelper.ThrowInvalidCast<T>(instance.GetType());
         }
 
         protected virtual void OnDestroy()
