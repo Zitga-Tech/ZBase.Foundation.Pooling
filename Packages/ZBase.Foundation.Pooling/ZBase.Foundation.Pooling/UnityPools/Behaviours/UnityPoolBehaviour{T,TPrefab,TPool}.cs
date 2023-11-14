@@ -36,7 +36,7 @@ namespace ZBase.Foundation.Pooling.UnityPools
             OnAwake();
         }
 
-        protected async UniTask Start()
+        protected async void Start()
         {
             if (_prepoolOnStart)
                 await Prepool(this.GetCancellationTokenOnDestroy());
@@ -44,13 +44,12 @@ namespace ZBase.Foundation.Pooling.UnityPools
             await OnStart();
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async UniTask Prepool(CancellationToken cancelToken)
             => await _prepooler.Prepool(Pool.Prefab, Pool, this.transform, cancelToken);
 
         protected virtual void OnAwake() { }
 
-        protected async UniTask OnStart()
+        protected virtual async UniTask OnStart()
             => await UniTask.Delay(0);
     }
 }

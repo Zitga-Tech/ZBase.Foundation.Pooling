@@ -37,7 +37,7 @@ namespace ZBase.Foundation.Pooling
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Count() => _queue.Count;
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             _queue.Dispose();
         }

@@ -65,8 +65,7 @@ namespace ZBase.Foundation.Pooling.ScriptablePools
                     return;
                 }
 
-                if (_prefab != null)
-                    _prefab.Release(instance);
+                _prefab?.Release(instance);
             }
 
             _pool.ReleaseInstances(keep, OnRelease);

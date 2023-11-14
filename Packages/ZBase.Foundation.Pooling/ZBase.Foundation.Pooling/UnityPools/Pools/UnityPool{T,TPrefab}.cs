@@ -51,7 +51,7 @@ namespace ZBase.Foundation.Pooling.UnityPools
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Count() => _queue.Count;
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             _queue.Dispose();
         }
@@ -67,8 +67,8 @@ namespace ZBase.Foundation.Pooling.UnityPools
                 {
                     if (onReleased != null)
                         onReleased(instance);
-                    else if (_prefab != null)
-                        _prefab.Release(instance);
+                    else
+                        _prefab?.Release(instance);
                 }
 
                 countRemove--;
