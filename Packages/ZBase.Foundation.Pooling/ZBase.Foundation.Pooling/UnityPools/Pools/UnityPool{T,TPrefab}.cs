@@ -77,18 +77,24 @@ namespace ZBase.Foundation.Pooling.UnityPools
 
         public async UniTask<T> Rent()
         {
-            if (_queue.TryDequeue(out var _, out var instance))
-                return instance;
+            if (_queue.TryDequeue(out var _, out var instance) == false)
+            {
+                instance = await _prefab.Instantiate();
+            }
 
-            return await _prefab.Instantiate();
+            await RentPostprocess(instance, default);
+            return instance;
         }
 
         public async UniTask<T> Rent(CancellationToken cancelToken)
         {
-            if (_queue.TryDequeue(out var _, out var instance))
-                return instance;
+            if (_queue.TryDequeue(out var _, out var instance) == false)
+            {
+                instance = await _prefab.Instantiate(cancelToken);
+            }
 
-            return await _prefab.Instantiate(cancelToken);
+            await RentPostprocess(instance, cancelToken);
+            return instance;
         }
 
         public void Return(T instance)
@@ -99,6 +105,10 @@ namespace ZBase.Foundation.Pooling.UnityPools
             ReturnPreprocess(instance);
             _queue.TryEnqueue(instance.GetInstanceID(), instance);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected virtual UniTask RentPostprocess(T instance, CancellationToken cancelToken)
+            => UniTask.CompletedTask;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected virtual void ReturnPreprocess(T instance) { }

@@ -56,10 +56,13 @@ namespace ZBase.Foundation.Pooling
 
         public T Rent()
         {
-            if (_queue.TryDequeue(out var instance))
-                return instance;
+            if (_queue.TryDequeue(out var instance) == false)
+            {
+                instance = _instantiator.Instantiate();
+            }
 
-            return _instantiator.Instantiate();
+            RentPostprocess(instance);
+            return instance;
         }
 
         public void Return(T instance)
@@ -70,6 +73,9 @@ namespace ZBase.Foundation.Pooling
             ReturnPreprocess(instance);
             _queue.TryEnqueue(instance);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected virtual void RentPostprocess(T instance) { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected virtual void ReturnPreprocess(T instance) { }

@@ -52,10 +52,6 @@ namespace ZBase.Foundation.Pooling.ScriptablePools
             => _pool.Count();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Return(T instance)
-            => _pool.Return(instance);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async UniTask Prepool(CancellationToken cancelToken)
             => await _prepooler.Prepool(_prefab, _pool, Parent, cancelToken);
 
@@ -83,12 +79,18 @@ namespace ZBase.Foundation.Pooling.ScriptablePools
             var instance = await _pool.Rent();
 
             if (instance is T instanceT)
+            {
+                await RentPostprocess(instanceT, default);
                 return instanceT;
+            }
 
             if (instance is GameObject gameObject)
             {
                 if (gameObject.TryGetComponent<T>(out var component))
+                {
+                    await RentPostprocess(component, default);
                     return component;
+                }
             }
 
             throw ThrowHelper.ThrowInvalidCast<T>(instance.GetType());
@@ -101,20 +103,42 @@ namespace ZBase.Foundation.Pooling.ScriptablePools
             var instance = await _pool.Rent(cancelToken);
 
             if (instance is T instanceT)
+            {
+                await RentPostprocess(instanceT, cancelToken);
                 return instanceT;
+            }
 
             if (instance is GameObject gameObject)
             {
                 if (gameObject.TryGetComponent<T>(out var component))
+                {
+                    await RentPostprocess(component, cancelToken);
                     return component;
+                }
             }
 
             throw ThrowHelper.ThrowInvalidCast<T>(instance.GetType());
+        }
+
+        public void Return(T instance)
+        {
+            if (instance == false)
+                return;
+
+            ReturnPreprocess(instance);
+            _pool.Return(instance);
         }
 
         protected virtual void OnDestroy()
         {
             _pool.Dispose();
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected virtual UniTask RentPostprocess(T instance, CancellationToken cancelToken)
+            => UniTask.CompletedTask;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected virtual void ReturnPreprocess(T instance) { }
     }
 }
