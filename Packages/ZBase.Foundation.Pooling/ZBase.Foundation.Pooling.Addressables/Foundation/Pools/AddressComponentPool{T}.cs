@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using ZBase.Foundation.Pooling;
 
 namespace ZBase.Foundation.Pooling.AddressableAssets
 {
