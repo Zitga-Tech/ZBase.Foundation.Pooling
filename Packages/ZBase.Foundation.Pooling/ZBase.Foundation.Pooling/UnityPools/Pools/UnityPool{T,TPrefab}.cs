@@ -8,14 +8,15 @@ namespace ZBase.Foundation.Pooling.UnityPools
 {
     [Serializable]
     public class UnityPool<T, TPrefab>
-        : IUnityPool<T, TPrefab>, IShareable, IDisposable
+        : IUnityPool<T, TPrefab>, IPrepoolable, IShareable, IDisposable
         where T : UnityEngine.Object
         where TPrefab : IPrefab<T>
     {
-        private readonly UniqueQueue<int, T> _queue;
-
         [SerializeField]
         private TPrefab _prefab;
+
+        private readonly UniqueQueue<int, T> _queue;
+        private readonly UnityPrepooler<T, TPrefab, UnityPool<T, TPrefab>> _prepooler = default;
 
         public UnityPool()
         {
@@ -50,6 +51,10 @@ namespace ZBase.Foundation.Pooling.UnityPools
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Count() => _queue.Count;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public async UniTask Prepool(CancellationToken cancelToken)
+            => await _prepooler.Prepool(_prefab, this, null, cancelToken);
 
         public virtual void Dispose()
         {
