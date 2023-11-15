@@ -4,8 +4,7 @@ using ZBase.Foundation.Pooling.UnityPools;
 
 namespace ZBase.Foundation.Pooling.ScriptablePools
 {
-    [Serializable]
-    public class UnityObjectPool : UnityPool<UnityEngine.Object, UnityObjectPrefab>
+    internal class ScriptablePool : UnityPool<UnityEngine.Object, ScriptablePrefab>
     {
         [SerializeField]
         private bool _dontApplyPrefabParentOnReturn;

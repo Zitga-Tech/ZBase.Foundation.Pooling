@@ -5,14 +5,14 @@ using ZBase.Foundation.Pooling.UnityPools;
 
 namespace ZBase.Foundation.Pooling.ScriptablePools
 {
-    public struct UnityObjectPrepooler
+    internal struct ScriptablePrepooler
         : IPrepooler<Object
-            , UnityObjectPrefab
+            , ScriptablePrefab
             , IReturnable<Object>
         >
     {
         public async UniTask Prepool(
-              UnityObjectPrefab prefab
+              ScriptablePrefab prefab
             , IReturnable<Object> pool
             , Transform defaultParent
             , CancellationToken cancelToken = default

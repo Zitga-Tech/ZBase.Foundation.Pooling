@@ -8,17 +8,17 @@ using ZBase.Foundation.Pooling.UnityPools;
 namespace ZBase.Foundation.Pooling.ScriptablePools
 {
     public class ScriptablePool<T>
-        : ScriptableObject, IUnityPool<T, UnityObjectPrefab>, IPrepoolable, IHasParent
+        : ScriptableObject, IUnityPool<T, ScriptablePrefab>, IPrepoolable, IHasParent
         where T : UnityEngine.Object
     {
         [SerializeField]
-        private UnityObjectPrefab _prefab;
+        private ScriptablePrefab _prefab;
 
         [SerializeField]
         private bool _prepoolOnStart = false;
 
-        private readonly UnityObjectPool _pool = new UnityObjectPool();
-        private readonly UnityObjectPrepooler _prepooler = default;
+        private readonly ScriptablePool _pool = new ScriptablePool();
+        private readonly ScriptablePrepooler _prepooler = default;
 
         public bool PrepoolOnStart
         {
@@ -29,7 +29,7 @@ namespace ZBase.Foundation.Pooling.ScriptablePools
             set => _prepoolOnStart = value;
         }
 
-        public UnityObjectPrefab Prefab
+        public ScriptablePrefab Prefab
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => _prefab;
