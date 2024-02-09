@@ -76,7 +76,6 @@ namespace ZBase.Foundation.Pooling
                 case EA.prefab: return nameof(EA.prefab);
                 case EA._source: return nameof(EA._source);
                 case EA.source: return nameof(EA.source);
-                case EA.Source: return nameof(EA.Source);
                 case EA.assetName: return nameof(EA.assetName);
             }
 
@@ -113,7 +112,6 @@ namespace ZBase.Foundation.Pooling
         prefab,
         _source,
         source,
-        Source,
         assetName
     }
 

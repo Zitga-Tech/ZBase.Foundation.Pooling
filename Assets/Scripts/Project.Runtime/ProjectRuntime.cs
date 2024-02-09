@@ -1,17 +1,38 @@
+using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
-using ZBase.Foundation.Pooling;
-using ZBase.Foundation.Pooling.AddressableAssets;
-using ZBase.Foundation.Pooling.UnityPools;
 
 namespace Project.Runtime
 {
     public class ProjectRuntime : MonoBehaviour
     {
-        private void Start()
+        [SerializeField]
+        private MeshRenderer _prefab;
+
+        [SerializeField]
+        private List<Object> _instances;
+
+        private void Update()
         {
-            this.gameObject.AddComponent<ComponentPoolBehaviour<BoxCollider>>();
-            var pool = SharedPool.Of<AddressGameObjectPool>();
-            pool.ReleaseInstances(1);
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                var count = 100;
+                var allocator = Allocator.Temp;
+                var newInstanceIDs = new NativeArray<int>(count, allocator);
+                var newTransformInstanceIDs = new NativeArray<int>(count, Allocator.Temp);
+                var sourceInstanceID = _prefab.gameObject.GetInstanceID();
+
+                GameObject.InstantiateGameObjects(
+                      sourceInstanceID
+                    , count
+                    , newInstanceIDs
+                    , newTransformInstanceIDs
+                );
+
+                GameObject.SetGameObjectsActive(newInstanceIDs, false);
+                _instances = new List<Object>(count);
+                Resources.InstanceIDToObjectList(newInstanceIDs, _instances);
+            }
         }
     }
 }
