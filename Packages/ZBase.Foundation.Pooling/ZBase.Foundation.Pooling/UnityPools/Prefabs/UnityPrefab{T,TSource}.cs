@@ -50,7 +50,9 @@ namespace ZBase.Foundation.Pooling.UnityPools
         public async UniTask<T> Instantiate()
         {
             if (_source is null)
-                throw new NullReferenceException(nameof(Source));
+            {
+                ThrowHelper.ThrowNullReferenceException(ExceptionArgument._source);
+            }
 
             return await Instantiate(Source, Parent);
         }
@@ -58,7 +60,9 @@ namespace ZBase.Foundation.Pooling.UnityPools
         public async UniTask<T> Instantiate(CancellationToken cancelToken)
         {
             if (_source is null)
-                throw new NullReferenceException(nameof(Source));
+            {
+                ThrowHelper.ThrowNullReferenceException(ExceptionArgument._source);
+            }
 
             return await Instantiate(Source, Parent, cancelToken);
         }

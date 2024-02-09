@@ -9,7 +9,7 @@ namespace ZBase.Foundation.Pooling
 {
     public static class ThrowHelper
     {
-        public static InvalidCastException ThrowInvalidCast<TDest>(Type source)
+        public static InvalidCastException GetInvalidCastException<TDest>(Type source)
         {
             return new InvalidCastException($"Cannot cast {source} into {typeof(TDest)}");
         }
@@ -26,15 +26,16 @@ namespace ZBase.Foundation.Pooling
             throw GetArgumentOutOfRangeException(EA.count, ER.ArgOutOfRange_Count);
         }
 
-        private static ArgumentNullException GetArgumentNullException(EA argument)
-        {
-            return new ArgumentNullException(GetArgumentName(argument));
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ThrowArgumentNullException(EA argument)
         {
             throw GetArgumentNullException(argument);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ThrowNullReferenceException(EA argument)
+        {
+            throw GetNullReferenceException(argument);
         }
 
         public static void ThrowNotSupportedException(ER resource)
@@ -42,6 +43,19 @@ namespace ZBase.Foundation.Pooling
             throw new NotSupportedException(GetResourceString(resource));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ArgumentNullException GetArgumentNullException(EA argument)
+        {
+            return new ArgumentNullException(GetArgumentName(argument));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static NullReferenceException GetNullReferenceException(EA argument)
+        {
+            return new NullReferenceException(GetArgumentName(argument));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static ArgumentOutOfRangeException GetArgumentOutOfRangeException(EA argument, ER resource)
         {
             return new ArgumentOutOfRangeException(GetArgumentName(argument), GetResourceString(resource));
@@ -60,7 +74,9 @@ namespace ZBase.Foundation.Pooling
                 case EA.pool: return nameof(EA.pool);
                 case EA.output: return nameof(EA.output);
                 case EA.prefab: return nameof(EA.prefab);
+                case EA._source: return nameof(EA._source);
                 case EA.source: return nameof(EA.source);
+                case EA.Source: return nameof(EA.Source);
                 case EA.assetName: return nameof(EA.assetName);
             }
 
@@ -95,7 +111,9 @@ namespace ZBase.Foundation.Pooling
         pool,
         output,
         prefab,
+        _source,
         source,
+        Source,
         assetName
     }
 

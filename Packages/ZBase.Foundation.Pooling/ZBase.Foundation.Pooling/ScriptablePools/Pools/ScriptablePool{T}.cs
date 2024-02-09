@@ -44,7 +44,15 @@ namespace ZBase.Foundation.Pooling.ScriptablePools
             get => _prefab.Parent;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set => _prefab.Parent = value ?? throw new ArgumentNullException(nameof(value));
+            set
+            {
+                if (value == false)
+                {
+                    ThrowHelper.ThrowArgumentNullException(ExceptionArgument.value);
+                }
+
+                _prefab.Parent = value;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -92,7 +100,7 @@ namespace ZBase.Foundation.Pooling.ScriptablePools
                 }
             }
 
-            throw ThrowHelper.ThrowInvalidCast<T>(instance.GetType());
+            throw ThrowHelper.GetInvalidCastException<T>(instance.GetType());
         }
 
         public async UniTask<T> Rent(CancellationToken cancelToken)
@@ -116,7 +124,7 @@ namespace ZBase.Foundation.Pooling.ScriptablePools
                 }
             }
 
-            throw ThrowHelper.ThrowInvalidCast<T>(instance.GetType());
+            throw ThrowHelper.GetInvalidCastException<T>(instance.GetType());
         }
 
         public void Return(T instance)
