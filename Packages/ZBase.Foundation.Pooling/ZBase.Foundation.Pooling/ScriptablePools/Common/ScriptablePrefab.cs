@@ -39,7 +39,7 @@ namespace ZBase.Foundation.Pooling.ScriptablePools
 
         public async UniTask<UnityEngine.Object> Instantiate()
         {
-            if (_source is null)
+            if (_source == false)
             {
                 ThrowHelper.ThrowNullReferenceException(ExceptionArgument._source);
             }
@@ -49,7 +49,7 @@ namespace ZBase.Foundation.Pooling.ScriptablePools
 
         public async UniTask<UnityEngine.Object> Instantiate(CancellationToken cancelToken)
         {
-            if (_source is null)
+            if (_source == false)
             {
                 ThrowHelper.ThrowNullReferenceException(ExceptionArgument._source);
             }

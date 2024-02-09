@@ -14,12 +14,17 @@ namespace ZBase.Foundation.Pooling.UnityPools
             , CancellationToken cancelToken
         )
         {
+            if (source == false)
+            {
+                ThrowHelper.ThrowArgumentNullException(ExceptionArgument.source);
+            }
+
             GameObject instance;
 
             if (parent)
-                instance = UnityEngine.Object.Instantiate(Source, parent, true);
+                instance = UnityEngine.Object.Instantiate(source, parent, true);
             else
-                instance = UnityEngine.Object.Instantiate(Source);
+                instance = UnityEngine.Object.Instantiate(source);
 
             return await UniTask.FromResult(instance);
         }
